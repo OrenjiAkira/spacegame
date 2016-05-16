@@ -30,6 +30,14 @@ void Physics_update();
 /* () -> void 
 Atualiza a posição e velocidade de todos os corpos físicos. */
 
+Vector* Physics_getPos(int id);
+/* (int) -> Vector*
+Retorna a posição de um corpo físico. */
+
+void Physics_kill(int id);
+/* (int) -> void
+Destrói um corpo físico. */
+
 void Physics_gravitate(int id);
 /* (int) -> void
 Calcula a atração gravitacional entre um corpo
@@ -40,6 +48,10 @@ do corpo cujo id é passado como parâmetro é modificada. */
 void Physics_accelerate(int id, int dir_id);
 /* (int, int) -> void
 Propulsiona um corpo físico. */
+
+void Physics_changedir(int id, int dir);
+/* (int, int) -> void
+Muda a direção de propulsão um corpo físico. */
 
 void Physics_print(int id);
 /* (int) -> void

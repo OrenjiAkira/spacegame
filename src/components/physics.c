@@ -20,8 +20,6 @@ struct _physics {
     bool active;
 };
 
-static Queue QUEUE;
-
 static Physics PHYSICS[PHYSICS_POOL_SIZE];
 
 static void Physics_wraparound(int id) {
@@ -40,7 +38,51 @@ static void Physics_slowdown(int id) {
         Vector_magnitude(&PHYSICS[id].speed, SPEEDLIMIT);
 }
 
-static void Physics_gravitate(int id) {
+void Physics_init() {
+    int id;
+    for (id = 0; id < PHYSICS_POOL_SIZE; ++id)
+        PHYSICS[id].active = false;
+}
+
+int Physics_new(float m, float r, float x, float y, float vx, float vy) {
+    int id;
+    for (id = 0; id < PHYSICS_POOL_SIZE; ++id) {
+        if (!PHYSICS[id].active) {
+            Vector_set(&PHYSICS[id].pos, x, y);
+            Vector_set(&PHYSICS[id].speed, vx, vy);
+            PHYSICS[id].mass = m;
+            PHYSICS[id].radius = r;
+            PHYSICS[id].active = true;
+            return id;
+        }
+    }
+    pool_overflow(Physics);
+}
+
+void Physics_update() {
+    int id;
+    for (id = 0; id < PHYSICS_POOL_SIZE; ++id) {
+        if (PHYSICS[id].active) {
+            Physics_slowdown(id);
+            Vector_add(&PHYSICS[id].pos, &PHYSICS[id].speed);
+            Physics_wraparound(id);
+        }
+    }
+}
+
+Vector* Physics_getPos(int id) {
+    return (PHYSICS[id].active ? &PHYSICS[id].pos : NULL);
+}
+
+void Physics_kill(int id) {
+    if (id < 0 || id >= PHYSICS_POOL_SIZE) {
+        printf("%d not within pool range\n", id);
+        return;
+    }
+    PHYSICS[id].active = false;
+}
+
+void Physics_gravitate(int id) {
     Vector accvec;
     float acc;
     int jd;
@@ -71,98 +113,28 @@ static void Physics_gravitate(int id) {
     }
 }
 
-static void Physics_changedir(int id, int dir) {
-    if (!PHYSICS[id].alive) return;
-
-    PHYSICS[id].direction = (dir);
-}
-
-static void Physics_accelerate(int id) {
+void Physics_accelerate(int id) {
     Vector accvec;
 
     /* Verificar se o corpo está vivo */
     if (!PHYSICS[id].alive) return;
-
-    /* Pegamos a direção normalizada e a
-    multiplicamos pela aceleração escalar;
-    e assim obtemos a aceleração vetorial.
-    Por fim, somamos a aceleração na velocidade. */
 
     Vector_copy(&accvec, Direction_getVector(PHYSICS[id].direction));
     Vector_mult(&accvec, ACC);
     Vector_add(&PHYSICS[id].speed, &accvec);
 }
 
-static void Physics_kill(int id) {
-    if (id < 0 || id >= PHYSICS_POOL_SIZE) {
-        printf("%d not within pool range\n", id);
-        return;
-    }
-    PHYSICS[id].active = false;
+void Physics_changedir(int id, int dir) {
+    if (!PHYSICS[id].alive) return;
+
+    PHYSICS[id].direction = (dir);
 }
-
-static void Physics_readqueue() {
-    Message *msg;
-
-    Queue_push(&QUEUE, STOP, NULL, NULL);
-    while( (msg = Queue_pop(&QUEUE))->message != STOP) ) {
-        switch (msg->message) {
-            case PHYSICS_KILL:
-                Physics_kill(msg->e->physics);
-                break;
-            case PHYSICS_UPDT:
-                Physics_gravitate(msg->e->physics);
-                break;
-            case PHYSICS_CHNG:
-                break;
-            case PHYSICS_MOVE:
-                Physics_accelerate(msg->e->physics);
-                break;
-            default:
-                break;
-        }
-    }
-}
-
-void Physics_init() {
-    int id;
-    for (id = 0; id < PHYSICS_POOL_SIZE; ++id)
-        PHYSICS[id].active = false;
-}
-
-int Physics_new(float m, float r, float x, float y, float vx, float vy) {
-    int id;
-    for (id = 0; id < PHYSICS_POOL_SIZE; ++id) {
-        if (!PHYSICS[id].active) {
-            Vector_set(&PHYSICS[id].pos, x, y);
-            Vector_set(&PHYSICS[id].speed, vx, vy);
-            PHYSICS[id].mass = m;
-            PHYSICS[id].radius = r;
-            PHYSICS[id].active = true;
-            return id;
-        }
-    }
-    pool_overflow(Physics);
-}
-
-void Physics_update() {
-    int id;
-    Physics_readqueue();
-    for (id = 0; id < PHYSICS_POOL_SIZE; ++id) {
-        if (PHYSICS[id].active) {
-            Physics_slowdown(id);
-            Vector_add(&PHYSICS[id].pos, &PHYSICS[id].speed);
-            Physics_wraparound(id);
-        }
-    }
-}
-
 
 void Physics_print(int id) {
-    printf("Body has %f units of mass and %f units of radius. It is in position:\n", PHYSICS[i].mass, PHYSICS[i].radius);
-    Vector_print(&PHYSICS[i].pos);
+    printf("Body has %f units of mass and %f units of radius. It is in position:\n", PHYSICS[id].mass, PHYSICS[id].radius);
+    Vector_print(&PHYSICS[id].pos);
     printf("It has speed of:\n");
-    Vector_print(&PHYSICS[i].speed);
+    Vector_print(&PHYSICS[id].speed);
 }
 
 

@@ -14,29 +14,6 @@ struct _drawquad {
 
 static DrawQuad DRAWQUADS[DRAWQUAD_POOL_SIZE];
 
-static void DrawQuad_readqueue() {
-    Message *msg;
-    int *q;
-
-    Queue_push(&QUEUE, STOP, NULL, NULL);
-    while( (msg = Queue_pop(&QUEUE))->message != STOP) ) {
-        switch (msg->message) {
-            case UPDT:
-                DrawQuad_next(msg->e->drawquad);
-                break;
-            case CHNG:
-                q = (int*)msg->params;
-                DrawQuad_change(msg->e->drawquad, *q);
-                break;
-            case KILL:
-                DrawQuad_kill(msg->e->drawquad);
-                break;
-            default:
-                break;
-        }
-    }
-}
-
 void DrawQuad_init() {
     int id;
     for (id = 0; id < DRAWQUAD_POOL_SIZE; ++id)
@@ -68,12 +45,30 @@ int DrawQuad_new(int w, int h, int qw, int qh) {
     pool_overflow(DrawQuad);
 }
 
-void DrawQuad_update() {
-    
+void DrawQuad_kill(int id) {
+    if (!DRAWQUADS[id].active) return;
+    free(DRAWQUADS[id].quads);
+    DRAWQUADS[id].active = false;
 }
 
+void DrawQuad_next(int id) {
+    if (!DRAWQUADS[id].active) return;
+    DRAWQUADS[id].current = (DRAWQUADS[id].current + 1) % DRAWQUADS[id].count;
+}
 
+void DrawQuad_prev(int id) {
+    if (!DRAWQUADS[id].active) return;
+    DRAWQUADS[id].current = (DRAWQUADS[id].current + DRAWQUADS[id].count - 1) % DRAWQUADS[id].count;
+}
 
+void DrawQuad_change(int id, int quad) {
+    if (!DRAWQUADS[id].active) return;
+    DRAWQUADS[id].current = quad % DRAWQUADS[id].count;
+}
 
+SDL_Rect* DrawQuad_getQuad(int id) {
+    if (!DRAWQUADS[id].active) return;
+    return &DRAWQUADS[id].quads[DRAWQUADS[id].current];
+}
 
 
