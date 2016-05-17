@@ -31,7 +31,7 @@ Verifica o progresso do timer especificado.
 Retorna um valor de 0 a 100 se o timer
 estiver ativo; senão retorna -1. */
 
-bool Timer_done(int id);
+bool Timer_isDone(int id);
 /* (int) -> bool
 Retorna true se o timer especificado haver
 terminado. Retorna false caso contrário. */

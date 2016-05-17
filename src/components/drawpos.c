@@ -8,6 +8,7 @@
 
 struct _drawpos {
     SDL_Rect pos;
+    Vector offset;
     int phys_id;
     bool active;
 };
@@ -17,8 +18,8 @@ static DrawPos DRAWPOS[DRAWPOS_POOL_SIZE];
 static void DrawPos_align(int id) {
     Vector *position = Physics_getPos(DRAWPOS[id].phys_id);
 
-    DRAWPOS[id].pos.x = UNIT_X * position->x / MAP_WIDTH;
-    DRAWPOS[id].pos.y = UNIT_Y * position->y / MAP_HEIGHT;
+    DRAWPOS[id].pos.x = Map_getUnitX() * position->x / Map_getWidth() - DRAWPOS[id].offset.x;
+    DRAWPOS[id].pos.y = Map_getUnitY() * position->y / Map_getHeight() - DRAWPOS[id].offset.y;
 }
 
 void DrawPos_init() {
@@ -28,7 +29,7 @@ void DrawPos_init() {
         DRAWPOS[id].active = false;
 }
 
-int DrawPos_new(int body_id, int qw, int qh) {
+int DrawPos_new(int body_id, int qw, int qh, float ox, float oy) {
     int id;
 
     for (id = 0; id < DRAWPOS_POOL_SIZE; ++id)
@@ -37,13 +38,15 @@ int DrawPos_new(int body_id, int qw, int qh) {
             DRAWPOS[id].active = true;
             DRAWPOS[id].pos.w = qw;
             DRAWPOS[id].pos.h = qh;
+            Vector_set(&DRAWPOS[id].offset, ox, oy);
             DrawPos_align(id);
             return id;
         }
 }
 
 void DrawPos_kill(int id) {
-
+    if (!DRAWPOS[id].active) return;
+    DRAWPOS[id].active = false;
 }
 
 void DrawPos_update() {

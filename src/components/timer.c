@@ -28,7 +28,7 @@ int Timer_new(double secs) {
 
     for (int id = 0; id < TIMER_POOL_SIZE; ++id) {
         if (!TIMERS[id].active) {
-            TIMERS[id].counter = TIMERS[id].total = FRAMES*secs;
+            TIMERS[id].counter = TIMERS[id].total = (int)(Time_getFramerate() * secs);
             TIMERS[id].active = true;
             return id;
         }
@@ -48,7 +48,7 @@ float Timer_progress(int id) {
     return (TIMERS[id].active ? 100.0*( (TIMERS[id].total - TIMERS[id].counter) / TIMERS[id].total ) : -1);
 }
 
-bool Timer_done(int id) {
+bool Timer_isDone(int id) {
     bool done = false;
     if (TIMERS[id].active)
         if (TIMERS[id].counter <= 0) {

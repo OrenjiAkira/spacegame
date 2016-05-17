@@ -1,14 +1,11 @@
 
 #include "utility/macros.h"
-#include "utility/messages.h"
-#include "utility/queue.h"
 #include "utility/vector.h"
 #include "utility/direction.h"
 #include "components/physics.h"
 
 #include <stdio.h>
 #include <stdbool.h>
-#include <string.h>
 #include <math.h>
 
 struct _physics {
@@ -23,14 +20,14 @@ struct _physics {
 static Physics PHYSICS[PHYSICS_POOL_SIZE];
 
 static void Physics_wraparound(int id) {
-    while (PHYSICS[id].pos.x > MAP_WIDTH/2)
-        PHYSICS[id].pos.x -= MAP_WIDTH;
-    while (PHYSICS[id].pos.x < -MAP_WIDTH/2)
-        PHYSICS[id].pos.x += MAP_WIDTH;
-    while (PHYSICS[id].pos.y > MAP_HEIGHT/2)
-        PHYSICS[id].pos.y -= MAP_HEIGHT;
-    while (PHYSICS[id].pos.y < -MAP_HEIGHT/2)
-        PHYSICS[id].pos.y += MAP_HEIGHT;
+    while (PHYSICS[id].pos.x > Map_getWidth()/2)
+        PHYSICS[id].pos.x -= Map_getWidth();
+    while (PHYSICS[id].pos.x < -Map_getWidth()/2)
+        PHYSICS[id].pos.x += Map_getWidth();
+    while (PHYSICS[id].pos.y > Map_getHeight()/2)
+        PHYSICS[id].pos.y -= Map_getHeight();
+    while (PHYSICS[id].pos.y < -Map_getHeight()/2)
+        PHYSICS[id].pos.y += Map_getHeight();
 }
 
 static void Physics_slowdown(int id) {
@@ -75,10 +72,7 @@ Vector* Physics_getPos(int id) {
 }
 
 void Physics_kill(int id) {
-    if (id < 0 || id >= PHYSICS_POOL_SIZE) {
-        printf("%d not within pool range\n", id);
-        return;
-    }
+    if (!PHYSICS[id].active) return;
     PHYSICS[id].active = false;
 }
 
@@ -96,10 +90,10 @@ void Physics_gravitate(int id) {
             Vector_sub(&accvec, &PHYSICS[id].pos);
 
             /* Verificando plano toroidal */
-            if (fabs(accvec.x) > MAP_WIDTH/2)
-                accvec.x = MAP_WIDTH - accvec.x;
-            if (fabs(accvec.y) > MAP_HEIGHT/2)
-                accvec.y = MAP_HEIGHT - accvec.y;
+            if (fabs(accvec.x) > Map_getWidth()/2)
+                accvec.x = Map_getWidth() - accvec.x;
+            if (fabs(accvec.y) > Map_getHeight()/2)
+                accvec.y = Map_getHeight() - accvec.y;
                 
             /* Calculando aceleração:
             F = R = acc * mass_a = (mass_a * mass_b * GCONST / dist^2)

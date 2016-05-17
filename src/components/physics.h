@@ -3,14 +3,11 @@
 
 #include "utility/entity.h"
 
-#define PHYSICS_POOL_SIZE ENTITY_POOL_SIZE
-
-#define MAP_WIDTH 64
-#define MAP_HEIGHT 48
-
 #define GCONST 6.67e-11
 #define SPEEDLIMIT 0.5
 #define ACC 0.005
+
+#define PHYSICS_POOL_SIZE ENTITY_POOL_SIZE
 
 typedef struct _physics Physics;
 /* Physics
