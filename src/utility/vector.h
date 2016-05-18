@@ -3,7 +3,10 @@
 
 #define EPSILON 2e-8
 
-typedef struct _vector Vector;
+typedef struct _vector {
+    float x;
+    float y;
+} Vector;
 /* Vector
 Struct de vetor.
 Todo elemento que usa cálculos vetoriais

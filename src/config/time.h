@@ -8,11 +8,15 @@ typedef struct _time Time;
 void Time_init();
 /* () -> void */
 
+double Time_getFrameunit();
+/* 
+ */
+
 int Time_getFramerate();
 /* 
  */
 
-int Time_getFrameunit();
+int Time_getFramemilisec();
 /* 
  */
 

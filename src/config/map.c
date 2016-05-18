@@ -1,5 +1,9 @@
 
-#include "map.h"
+#include "window.h"
+#include "config/conf.h"
+#include "config/map.h"
+
+#include <stdio.h>
 
 struct _map {
     float width;
@@ -13,6 +17,8 @@ static Map MAPCONF;
 void Map_init() {
     char *map_str = Conf_get(CONF_MAP);
     sscanf(map_str, "%f %f", &MAPCONF.width, &MAPCONF.height);
+    MAPCONF.unit_x = WINDOW_WIDTH/MAPCONF.width;
+    MAPCONF.unit_y = WINDOW_HEIGHT/MAPCONF.height;
 }
 
 float Map_getWidth() {

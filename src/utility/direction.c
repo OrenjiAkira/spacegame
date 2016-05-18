@@ -12,9 +12,11 @@ void Direction_init() {
     int id;
 
     for (id = 0; id < DIRECTION_POOL_SIZE; ++id) {
-        Vector_set( &DIRECTIONS[id], angle, cos(angle), -sin(angle) );
+        Vector_set( &DIRECTIONS[id], cos(angle), -sin(angle) );
         angle += 2 * PI / DIRECTION_POOL_SIZE;
     }
 }
 
-Vector* Direction_getVector(int id) return &DIRECTIONS[id];
+Vector* Direction_getVector(int id) {
+    return &DIRECTIONS[id];
+}

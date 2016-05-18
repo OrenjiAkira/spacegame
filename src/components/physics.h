@@ -42,7 +42,7 @@ e todos os outros existentes. Adiciona a aceleração
 vetorial calculada na velocidade. Apenas a velocidade
 do corpo cujo id é passado como parâmetro é modificada. */
 
-void Physics_accelerate(int id, int dir_id);
+void Physics_accelerate(int id);
 /* (int, int) -> void
 Propulsiona um corpo físico. */
 

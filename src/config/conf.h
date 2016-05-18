@@ -1,6 +1,8 @@
 #ifndef GAME_CONF_H
 #define GAME_CONF_H
 
+#define BUFFER_SIZE 128
+
 enum _config {
     CONF_FRAMERATE,
     CONF_MAP,

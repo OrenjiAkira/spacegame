@@ -5,11 +5,6 @@
 #include <float.h>
 #include <math.h>
 
-struct _vector {
-    float x;
-    float y;
-};
-
 void Vector_set(Vector *v, float x, float y) {
     v->x = x;
     v->y = y;

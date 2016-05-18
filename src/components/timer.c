@@ -1,4 +1,5 @@
 
+#include "config/time.h"
 #include "utility/macros.h"
 #include "components/timer.h"
 
@@ -16,7 +17,7 @@ static Timer TIMERS[TIMER_POOL_SIZE];
 void Timer_init() {
     int id;
 
-    for (int id = 0; id < TIMER_POOL_SIZE; ++id) {
+    for (id = 0; id < TIMER_POOL_SIZE; ++id) {
         TIMERS[id].active = false;
         TIMERS[id].counter = 0;
         TIMERS[id].total = 0;
@@ -26,10 +27,11 @@ void Timer_init() {
 int Timer_new(double secs) {
     int id;
 
-    for (int id = 0; id < TIMER_POOL_SIZE; ++id) {
+    for (id = 0; id < TIMER_POOL_SIZE; ++id) {
         if (!TIMERS[id].active) {
             TIMERS[id].counter = TIMERS[id].total = (int)(Time_getFramerate() * secs);
             TIMERS[id].active = true;
+            printf("NEW TIMER: %d\n", TIMERS[id].counter);
             return id;
         }
     }
@@ -39,9 +41,10 @@ int Timer_new(double secs) {
 void Timer_update() {
     int id;
 
-    for (int id = 0; id < TIMER_POOL_SIZE; ++id)
-        if (TIMERS[id].active && TIMERS[id].counter <= 0)
-            --TIMERS[id].counter;
+    for (id = 0; id < TIMER_POOL_SIZE; ++id)
+        if (TIMERS[id].active && TIMERS[id].counter >= 0){
+            printf("%d\n", --TIMERS[id].counter);
+        }
 }
 
 float Timer_progress(int id) {
@@ -50,11 +53,15 @@ float Timer_progress(int id) {
 
 bool Timer_isDone(int id) {
     bool done = false;
-    if (TIMERS[id].active)
+    printf("TIMER #%d PROGRESS: %f\n", id, Timer_progress(id));
+    if (id == -1) done = true;
+    else if (TIMERS[id].active) {
         if (TIMERS[id].counter <= 0) {
             TIMERS[id].active = false;
             done = true;
         }
+    }
+            
     return done;
 }
 

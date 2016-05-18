@@ -1,5 +1,6 @@
 
 #include "utility/macros.h"
+#include "components/drawquad.h"
 
 #include <SDL.h>
 #include <stdio.h>
@@ -10,7 +11,7 @@ struct _drawquad {
     int current;
     int count;
     bool active;
-}
+};
 
 static DrawQuad DRAWQUADS[DRAWQUAD_POOL_SIZE];
 
@@ -34,8 +35,8 @@ int DrawQuad_new(int w, int h, int qw, int qh) {
         DRAWQUADS[id].quads = (SDL_Rect*)malloc( DRAWQUADS[id].count * sizeof(SDL_Rect) );
         for (i = 0; i < cols; ++i) {
             for (j = 0; j < rows; ++j) {
-                DRAWQUADS[id].quads[i*rows + j].x = j*qw;
-                DRAWQUADS[id].quads[i*rows + j].y = k*qh;
+                DRAWQUADS[id].quads[i*rows + j].x = i*qw;
+                DRAWQUADS[id].quads[i*rows + j].y = j*qh;
                 DRAWQUADS[id].quads[i*rows + j].w = qw;
                 DRAWQUADS[id].quads[i*rows + j].h = qh;
             }
@@ -67,8 +68,12 @@ void DrawQuad_change(int id, int quad) {
 }
 
 SDL_Rect* DrawQuad_getQuad(int id) {
-    if (!DRAWQUADS[id].active) return;
+    if (!DRAWQUADS[id].active) return NULL;
     return &DRAWQUADS[id].quads[DRAWQUADS[id].current];
 }
 
-
+void DrawQuad_close() {
+    int id;
+    for (id = 0; id < DRAWQUAD_POOL_SIZE; ++id)
+        DrawQuad_kill(id);
+}

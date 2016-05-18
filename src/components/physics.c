@@ -1,4 +1,5 @@
 
+#include "config/map.h"
 #include "utility/macros.h"
 #include "utility/vector.h"
 #include "utility/direction.h"
@@ -83,7 +84,7 @@ void Physics_gravitate(int id) {
     
     for (jd = 0; jd < PHYSICS_POOL_SIZE; ++jd) {
         /* Iteramos por todos os elementos físicos. */
-        if (jd != id && PHYSICS[jd].alive) {
+        if (jd != id && PHYSICS[jd].active) {
 
             /* Adquirindo vetor distância */
             Vector_copy(&accvec, &PHYSICS[jd].pos);
@@ -111,7 +112,7 @@ void Physics_accelerate(int id) {
     Vector accvec;
 
     /* Verificar se o corpo está vivo */
-    if (!PHYSICS[id].alive) return;
+    if (!PHYSICS[id].active) return;
 
     Vector_copy(&accvec, Direction_getVector(PHYSICS[id].direction));
     Vector_mult(&accvec, ACC);
@@ -119,7 +120,7 @@ void Physics_accelerate(int id) {
 }
 
 void Physics_changedir(int id, int dir) {
-    if (!PHYSICS[id].alive) return;
+    if (!PHYSICS[id].active) return;
 
     PHYSICS[id].direction = (dir);
 }

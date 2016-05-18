@@ -1,37 +1,41 @@
 
 #include "utility/macros.h"
 #include "utility/entity.h"
+#include "components/drawquad.h"
 #include "components/timer.h"
 #include "entities/planet.h"
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
 
 static Entity *PLANETS[PLANET_POOL_SIZE];
 
 void Planet_init() {
     int id;
-    for (id = 0; i < PLANET_POOL_SIZE; ++id)
+    for (id = 0; id < PLANET_POOL_SIZE; ++id)
         PLANETS[id] = NULL;
 }
 
-int Planet_new(int physics, int drawpos, int sprite, int quad) {
-    Entity* planet;
+int Planet_new(int physics, int drawquad, int drawpos, int sprite) {
     int id;
 
-    foreach(PLANETS, Entity*, id, planet) {
-        if (planet == NULL) {
+    for (id = 0; id < PLANET_POOL_SIZE; ++id) {
+        if (PLANETS[id] == NULL) {
             /* Alocar memória */
-            planet = (Entity*)malloc( sizeof(Entity) );
+            PLANETS[id] = (Entity*)malloc( sizeof(Entity) );
 
             /* Definir componentes pelos parâmetros */
-            planet->physics = physics;
-            planet->sprite = sprite;
-            planet->drawpos = drawpos;
+            PLANETS[id]->physics = physics;
+            PLANETS[id]->sprite = sprite;
+            PLANETS[id]->drawpos = drawpos;
+            PLANETS[id]->drawquad = drawquad;
 
-            /* Definir componentes iniciais */
-            planet->drawquad = quad;
-            planet->timer_1 = planet->timer_2 = TIMER_FREE;
+            /* Componentes inicialmente não utilizados */
+            PLANETS[id]->timer_1 = PLANETS[id]->timer_2 = -1;
             
-            /* componentes não utilizados */
-            planet->direction = PLANETS[id]->textbox = -1;
+            /* Componentes não utilizados nunca */
+            PLANETS[id]->textbox = -1;
 
             return id;
         }
@@ -40,14 +44,14 @@ int Planet_new(int physics, int drawpos, int sprite, int quad) {
 }
 
 void Planet_update() {
-    Entity* planet;
     int id;
 
-    foreach(PLANETS, Entity*, id, planet) {
-        if (planet != NULL) {
-            if ( Timer_done(planet->timer_1) ) {
-                DrawQuad_next(planet->drawquad);
-                planet->timer_1 = Timer_new(12);
+    for (id = 0; id < PLANET_POOL_SIZE; ++id) {
+        if (PLANETS[id] != NULL) {
+            if ( Timer_isDone(PLANETS[id]->timer_1) ) {
+                DrawQuad_next(PLANETS[id]->drawquad);
+                PLANETS[id]->timer_1 = Timer_new(1.0/10);
+                printf("CHANGE QUAD!\n");
             }
         }
     }
@@ -62,7 +66,7 @@ void Planet_destroy(int id) {
 
 void Planet_close() {
     int id;
-    for (id = 0; i < PLANET_POOL_SIZE; ++id) {
+    for (id = 0; id < PLANET_POOL_SIZE; ++id) {
         Planet_destroy(id);
     }
 }

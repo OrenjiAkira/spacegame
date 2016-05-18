@@ -3,6 +3,8 @@
 
 #include "utility/entity.h"
 
+#include <SDL.h>
+
 #define DRAWPOS_POOL_SIZE ENTITY_POOL_SIZE
 
 typedef struct _drawpos DrawPos;
@@ -14,8 +16,8 @@ void DrawPos_init();
 /* () -> void
 Inicializa pool de DrawPos. */
 
-int DrawPos_new(int w, int h, int qw, int qh);
-/* (int, int, int, int) -> int
+int DrawPos_new(int body_id, int qw, int qh, float ox, float oy);
+/* (int, int, int, float, float) -> int
 Cria um novo DrawPos e retorna o seu id. */
 
 void DrawPos_kill(int id);

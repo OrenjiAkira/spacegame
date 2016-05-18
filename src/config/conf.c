@@ -1,4 +1,5 @@
 
+#include "config/path.h"
 #include "config/conf.h"
 
 #include <stdio.h>
@@ -12,7 +13,11 @@ void Conf_init() {
     char section[32];
     int n;
 
-    fp = fopen("data", "r");
+    buffer[0] = '\0';
+    strcat(buffer, Path_toExecutable());
+    strcat(buffer, "data\0");
+
+    fp = fopen(buffer, "r");
 
     do {
         /* buffer = whole new line */

@@ -12,4 +12,25 @@ typedef struct _sprite Sprite;
  */
 
 
+void Sprite_init();
+/* () -> void
+ */
+
+int Sprite_new(char* filename, int dpos_id, int dquad_id);
+/* (char*, int, int) -> void
+ */
+
+void Sprite_kill(int id);
+/* (int) -> void
+ */
+
+void Sprite_update();
+/* () -> void
+ */
+
+void Sprite_close();
+/* () -> void
+ */
+
+
 #endif

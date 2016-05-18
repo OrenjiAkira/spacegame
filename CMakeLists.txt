@@ -3,10 +3,20 @@ project(new_space C)
 
 set(
     source
+    src/config/conf.c
+    src/config/map.c
+    src/config/path.c
+    src/config/time.c
     src/utility/vector.c
-    src/utility/entity.c
+    src/utility/direction.c
     src/components/physics.c
+    src/components/drawquad.c
+    src/components/drawpos.c
+    src/components/sprite.c
+    src/components/timer.c
     src/entities/planet.c
+    src/window.c
+    src/game.c
     src/main.c
 )
 
@@ -32,4 +42,8 @@ target_link_libraries(
     ${SDL2_IMAGE_LIBRARY}
     ${SDL2_TTF_LIBRARY}
     m)
+
+configure_file(data ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/data COPYONLY)
+file(COPY assets DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+
 

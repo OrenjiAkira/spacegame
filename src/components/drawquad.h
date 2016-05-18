@@ -3,6 +3,8 @@
 
 #include "utility/entity.h"
 
+#include <SDL.h>
+
 #define DRAWQUAD_POOL_SIZE ENTITY_POOL_SIZE
 
 typedef struct _drawquad DrawQuad;
@@ -41,5 +43,9 @@ Altera o quad ativo de um DrawQuad para um quad especificado. */
 SDL_Rect* DrawQuad_getQuad(int id);
 /* (int) -> SDL_Rect*
 Retorna o quad ativo de um DrawQuad. */
+
+void DrawQuad_close();
+/* () -> void
+ */
 
 #endif
