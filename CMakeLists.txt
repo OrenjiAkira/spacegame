@@ -7,16 +7,21 @@ set(
     src/config/map.c
     src/config/path.c
     src/config/time.c
+    src/config/font.c
     src/utility/vector.c
     src/utility/direction.c
     src/components/physics.c
     src/components/drawquad.c
     src/components/drawpos.c
     src/components/sprite.c
+    src/components/textbox.c
     src/components/timer.c
-    src/entities/planet.c
     src/entities/picture.c
+    src/entities/planet.c
+    src/entities/ship.c
+    src/controllers/space.c
     src/window.c
+    src/input.c
     src/game.c
     src/main.c
 )

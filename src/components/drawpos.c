@@ -73,3 +73,7 @@ SDL_Rect* DrawPos_getPos(int id) {
     return &DRAWPOS[id].pos;
 }
 
+Vector* DrawPos_getOffset(int id) {
+    if (id == -1 || !DRAWPOS[id].active) return NULL;
+    return &DRAWPOS[id].offset;
+}

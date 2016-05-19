@@ -11,7 +11,6 @@ struct _window {
     SDL_Renderer *renderer;
 };
 
-static SDL_Event EVENTS;
 static Window WINDOW;
 
 void Window_init() {
@@ -33,13 +32,9 @@ SDL_Renderer* Window_getRenderer() {
     return WINDOW.renderer;
 }
 
-bool Window_update() {
-    bool quit = false;
-    while( SDL_PollEvent( &EVENTS ) != 0 )
-        if( EVENTS.type == SDL_QUIT )
-            quit = true;
+void Window_update() {
+    SDL_RenderPresent( WINDOW.renderer );
     SDL_Delay( Time_getFramemilisec() );
-    return quit;
 }
 
 void Window_close() {

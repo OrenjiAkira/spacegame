@@ -17,7 +17,7 @@ SDL_Renderer* Window_getRenderer();
 /* () -> SDL_Surface*
  */
 
-bool Window_update();
+void Window_update();
 /* () -> void
  */
 

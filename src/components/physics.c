@@ -50,6 +50,7 @@ int Physics_new(float m, float r, float x, float y, float vx, float vy) {
             Vector_set(&PHYSICS[id].speed, vx, vy);
             PHYSICS[id].mass = m;
             PHYSICS[id].radius = r;
+            PHYSICS[id].direction = 0;
             PHYSICS[id].active = true;
             return id;
         }
@@ -121,8 +122,7 @@ void Physics_accelerate(int id) {
 
 void Physics_changedir(int id, int dir) {
     if (!PHYSICS[id].active) return;
-
-    PHYSICS[id].direction = (dir);
+    PHYSICS[id].direction = (PHYSICS[id].direction + dir + DIRECTION_POOL_SIZE) % DIRECTION_POOL_SIZE;
 }
 
 void Physics_print(int id) {

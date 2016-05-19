@@ -26,23 +26,25 @@ void DrawQuad_init() {
 int DrawQuad_new(int w, int h, int qw, int qh) {
     int id, rows, cols, i, j;
     for (id = 0; id < DRAWQUAD_POOL_SIZE; ++id) {
-        rows = h / qh;
-        cols = w / qw;
-        DRAWQUADS[id].current = 0;
-        DRAWQUADS[id].count = cols * rows;
-        DRAWQUADS[id].active = true;
+        if (!DRAWQUADS[id].active) {
+            rows = h / qh;
+            cols = w / qw;
+            DRAWQUADS[id].current = 0;
+            DRAWQUADS[id].count = cols * rows;
+            DRAWQUADS[id].active = true;
 
-        /* Colocamos todos os quads num vetor linear */
-        DRAWQUADS[id].quads = (SDL_Rect*)malloc( DRAWQUADS[id].count * sizeof(SDL_Rect) );
-        for (i = 0; i < cols; ++i) {
-            for (j = 0; j < rows; ++j) {
-                DRAWQUADS[id].quads[i*rows + j].x = i*qw;
-                DRAWQUADS[id].quads[i*rows + j].y = j*qh;
-                DRAWQUADS[id].quads[i*rows + j].w = qw;
-                DRAWQUADS[id].quads[i*rows + j].h = qh;
+            /* Colocamos todos os quads num vetor linear */
+            DRAWQUADS[id].quads = (SDL_Rect*)malloc( DRAWQUADS[id].count * sizeof(SDL_Rect) );
+            for (i = 0; i < cols; ++i) {
+                for (j = 0; j < rows; ++j) {
+                    DRAWQUADS[id].quads[i*rows + j].x = i*qw;
+                    DRAWQUADS[id].quads[i*rows + j].y = j*qh;
+                    DRAWQUADS[id].quads[i*rows + j].w = qw;
+                    DRAWQUADS[id].quads[i*rows + j].h = qh;
+                }
             }
+            return id;
         }
-        return id;
     }
     pool_overflow(DrawQuad);
 }

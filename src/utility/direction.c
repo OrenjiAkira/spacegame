@@ -13,7 +13,7 @@ void Direction_init() {
 
     for (id = 0; id < DIRECTION_POOL_SIZE; ++id) {
         Vector_set( &DIRECTIONS[id], cos(angle), -sin(angle) );
-        angle += 2 * PI / DIRECTION_POOL_SIZE;
+        angle -= 2 * PI / DIRECTION_POOL_SIZE;
     }
 }
 

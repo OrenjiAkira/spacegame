@@ -125,13 +125,10 @@ void Sprite_update() {
     int i, layer;
 
     SDL_RenderClear( screen );
-
     for (layer = 0; layer < LAYER_COUNT; ++layer)
         for (i = 0; i < SPRITE_POOL_SIZE; ++i)
             if (LAYERS[layer][i] != -1)
                 Sprite_draw(LAYERS[layer][i]);
-
-    SDL_RenderPresent( screen );
 }
 
 void Sprite_close() {

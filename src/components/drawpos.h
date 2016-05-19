@@ -2,6 +2,7 @@
 #define GAME_DRAWPOS_H
 
 #include "utility/entity.h"
+#include "utility/vector.h"
 
 #include <SDL.h>
 
@@ -31,5 +32,9 @@ Atualiza a posição de uma entidade. */
 SDL_Rect* DrawPos_getPos(int id);
 /* (int) -> SDL_Rect*
 Retorna o quad ativo de um DrawPos. */
+
+Vector* DrawPos_getOffset(int id);
+/* (int) -> Vector*
+Retorna o offset de um DrawPos. */
 
 #endif

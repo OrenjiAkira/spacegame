@@ -2,6 +2,7 @@
 #define GAME_PHYSICS_H
 
 #include "utility/entity.h"
+#include "utility/vector.h"
 
 #define GCONST 6.67e-11
 #define SPEEDLIMIT 0.5
