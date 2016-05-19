@@ -15,6 +15,7 @@ set(
     src/components/sprite.c
     src/components/timer.c
     src/entities/planet.c
+    src/entities/picture.c
     src/window.c
     src/game.c
     src/main.c

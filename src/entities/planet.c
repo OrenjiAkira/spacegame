@@ -51,7 +51,6 @@ void Planet_update() {
             if ( Timer_isDone(PLANETS[id]->timer_1) ) {
                 DrawQuad_next(PLANETS[id]->drawquad);
                 PLANETS[id]->timer_1 = Timer_new(1.0/10);
-                printf("CHANGE QUAD!\n");
             }
         }
     }

@@ -1,4 +1,5 @@
 
+#include "window.h"
 #include "config/map.h"
 #include "utility/macros.h"
 #include "utility/vector.h"
@@ -19,17 +20,22 @@ struct _drawpos {
 static DrawPos DRAWPOS[DRAWPOS_POOL_SIZE];
 
 static void DrawPos_align(int id) {
-    Vector *position = Physics_getPos(DRAWPOS[id].phys_id);
-
-    DRAWPOS[id].pos.x = Map_getUnitX() * position->x - DRAWPOS[id].offset.x;
-    DRAWPOS[id].pos.y = Map_getUnitY() * position->y - DRAWPOS[id].offset.y;
+    Vector *position;
+    
+    if (DRAWPOS[id].phys_id != -1) {
+        position = Physics_getPos(DRAWPOS[id].phys_id);
+        DRAWPOS[id].pos.x = Map_getUnitX() * (position->x + Map_getWidth()/2) - DRAWPOS[id].offset.x;
+        DRAWPOS[id].pos.y = Map_getUnitY() * (position->y + Map_getHeight()/2) - DRAWPOS[id].offset.y;
+    }
+    
 }
 
 void DrawPos_init() {
     int id;
 
-    for (id = 0; id < DRAWPOS_POOL_SIZE; ++id)
+    for (id = 0; id < DRAWPOS_POOL_SIZE; ++id) {
         DRAWPOS[id].active = false;
+    }
 }
 
 int DrawPos_new(int body_id, int qw, int qh, float ox, float oy) {
@@ -63,6 +69,7 @@ void DrawPos_update() {
 }
 
 SDL_Rect* DrawPos_getPos(int id) {
-    return (DRAWPOS[id].active ? &DRAWPOS[id].pos : NULL);
+    if (id == -1 || !DRAWPOS[id].active) return NULL;
+    return &DRAWPOS[id].pos;
 }
 

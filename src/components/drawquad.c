@@ -17,9 +17,10 @@ static DrawQuad DRAWQUADS[DRAWQUAD_POOL_SIZE];
 
 void DrawQuad_init() {
     int id;
-    for (id = 0; id < DRAWQUAD_POOL_SIZE; ++id)
+    for (id = 0; id < DRAWQUAD_POOL_SIZE; ++id) {   
         DRAWQUADS[id].active = false;
         DRAWQUADS[id].quads = NULL;
+    }
 }
 
 int DrawQuad_new(int w, int h, int qw, int qh) {
@@ -49,6 +50,7 @@ int DrawQuad_new(int w, int h, int qw, int qh) {
 void DrawQuad_kill(int id) {
     if (!DRAWQUADS[id].active) return;
     free(DRAWQUADS[id].quads);
+    DRAWQUADS[id].quads = NULL;
     DRAWQUADS[id].active = false;
 }
 
@@ -68,7 +70,7 @@ void DrawQuad_change(int id, int quad) {
 }
 
 SDL_Rect* DrawQuad_getQuad(int id) {
-    if (!DRAWQUADS[id].active) return NULL;
+    if (id == -1 || !DRAWQUADS[id].active) return NULL;
     return &DRAWQUADS[id].quads[DRAWQUADS[id].current];
 }
 

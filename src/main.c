@@ -78,8 +78,8 @@ int main(int argc, char *argv[]) {
     quit = load( argv[0] );
 
     while (!quit) {
-        printf("Running at [%d FPS]\n", Time_getFramerate());
-        printf("Frame: %lu\n", framecount++);
+        printf("[Running at %d FPS]\n", Time_getFramerate());
+        printf("Framecount: %lu\n\n", framecount++);
         quit = update();
     }
 

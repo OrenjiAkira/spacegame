@@ -19,8 +19,14 @@ void Window_init() {
         printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
 
     WINDOW.window = SDL_CreateWindow( "Space Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN );
+    if (WINDOW.window == NULL)
+        printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
+
     WINDOW.renderer = SDL_CreateRenderer(WINDOW.window, -1, SDL_RENDERER_ACCELERATED);
-    SDL_SetRenderDrawColor( WINDOW.renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+    if (WINDOW.renderer == NULL)
+        printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
+
+    SDL_SetRenderDrawColor( WINDOW.renderer, 0xFF, 0x00, 0xFF, 0xFF );
 }
 
 SDL_Renderer* Window_getRenderer() {
