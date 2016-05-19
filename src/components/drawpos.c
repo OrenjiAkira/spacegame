@@ -56,7 +56,7 @@ int DrawPos_new(int body_id, int qw, int qh, float ox, float oy) {
 }
 
 void DrawPos_kill(int id) {
-    if (!DRAWPOS[id].active) return;
+    if (id == -1 || !DRAWPOS[id].active) return;
     DRAWPOS[id].active = false;
 }
 

@@ -4,6 +4,8 @@
 #include "components/drawquad.h"
 #include "components/physics.h"
 #include "components/timer.h"
+#include "components/sprite.h"
+#include "components/textbox.h"
 #include "entities/ship.h"
 
 #include <stdio.h>
@@ -47,14 +49,23 @@ void Ship_update() {
 
     for (id = 0; id < SHIP_POOL_SIZE; ++id) {
         if (SHIPS[id] != NULL) {
+            if ( Physics_isColliding(SHIPS[id]->physics) ) {
+                printf("BOOM YOU ARE DEAD\n");
+                Ship_destroy(id);
+                return;
+            }
             Physics_gravitate(SHIPS[id]->physics);
             Physics_print(SHIPS[id]->physics);
+            Physics_checkCollision(SHIPS[id]->physics);
         }
     }
 }
 
 void Ship_destroy(int id) {
     if (SHIPS[id] != NULL) {
+        Physics_kill(SHIPS[id]->physics);
+        Sprite_kill(SHIPS[id]->sprite);
+        Textbox_kill(SHIPS[id]->textbox);
         free(SHIPS[id]);
         SHIPS[id] = NULL;
     }

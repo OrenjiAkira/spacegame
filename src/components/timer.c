@@ -18,9 +18,8 @@ void Timer_init() {
     int id;
 
     for (id = 0; id < TIMER_POOL_SIZE; ++id) {
+        TIMERS[id].counter = TIMERS[id].total = 0;
         TIMERS[id].active = false;
-        TIMERS[id].counter = 0;
-        TIMERS[id].total = 0;
     }
 }
 
@@ -44,6 +43,12 @@ void Timer_update() {
         if (TIMERS[id].active && TIMERS[id].counter >= 0){
             --TIMERS[id].counter;
         }
+}
+
+void Timer_kill(int id) {
+    if (id == -1 || !TIMERS[id].active) return;
+    TIMERS[id].counter = TIMERS[id].total = 0;
+    TIMERS[id].active = false;
 }
 
 float Timer_progress(int id) {

@@ -113,11 +113,15 @@ int Sprite_new(char* filename, int dpos_id, int dquad_id, int layer) {
 }
 
 void Sprite_kill(int id) {
-    if (!SPRITES[id].active) return;
+    if (id == -1 || !SPRITES[id].active) return;
     Sprite_removeFromLayer(id);
     SDL_DestroyTexture(SPRITES[id].texture);
     SPRITES[id].texture = NULL;
     SPRITES[id].active = false;
+    DrawQuad_kill(SPRITES[id].dquad_id);
+    DrawPos_kill(SPRITES[id].dpos_id);
+    SPRITES[id].dquad_id = -1;
+    SPRITES[id].dpos_id = -1;
 }
 
 void Sprite_update() {

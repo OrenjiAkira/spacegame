@@ -50,7 +50,7 @@ int DrawQuad_new(int w, int h, int qw, int qh) {
 }
 
 void DrawQuad_kill(int id) {
-    if (!DRAWQUADS[id].active) return;
+    if (id == -1 || !DRAWQUADS[id].active) return;
     free(DRAWQUADS[id].quads);
     DRAWQUADS[id].quads = NULL;
     DRAWQUADS[id].active = false;

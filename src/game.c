@@ -107,6 +107,8 @@ void Game_load() {
     printf("ship id: %d\n", PLAYER2);
 
     SpaceController_load();
+
+    printf("UNITS: \n [ %f, %f ]\n", Map_getUnitX(), Map_getUnitY());
 }
 
 void Game_setPlayer1(int id) {
@@ -144,7 +146,7 @@ bool Game_update() {
     Window_update();
 
     printf("[Running at %d FPS]\n", Time_getFramerate());
-    printf("Framecount: %lu\n\n", framecount++);
+    printf("Framecount: %lu\n\n", ++framecount);
 
     return QUIT;
 }

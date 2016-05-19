@@ -15,6 +15,7 @@ struct _physics {
     float mass;
     float radius;
     int direction;
+    bool collision;
     bool active;
 };
 
@@ -51,6 +52,7 @@ int Physics_new(float m, float r, float x, float y, float vx, float vy) {
             PHYSICS[id].mass = m;
             PHYSICS[id].radius = r;
             PHYSICS[id].direction = 0;
+            PHYSICS[id].collision = false;
             PHYSICS[id].active = true;
             return id;
         }
@@ -74,7 +76,7 @@ Vector* Physics_getPos(int id) {
 }
 
 void Physics_kill(int id) {
-    if (!PHYSICS[id].active) return;
+    if (id == -1 || !PHYSICS[id].active) return;
     PHYSICS[id].active = false;
 }
 
@@ -107,6 +109,30 @@ void Physics_gravitate(int id) {
             Vector_add(&PHYSICS[id].speed, &accvec);
         }
     }
+}
+
+bool Physics_isColliding(int id) {
+    if (id == -1 || !PHYSICS[id].active) return false;
+    return PHYSICS[id].collision;
+}
+
+void Physics_checkCollision(int id) {
+    Vector distvec;
+    float sqrdist;
+    int jd;
+
+    for (jd = 0; jd < PHYSICS_POOL_SIZE; ++jd) {
+        if (jd != id && PHYSICS[jd].active) {
+            Vector_copy(&distvec, &PHYSICS[jd].pos);
+            Vector_sub(&distvec, &PHYSICS[id].pos);
+            sqrdist = Vector_get_sqrlen(&distvec);
+            if ( sqrdist < (PHYSICS[id].radius + PHYSICS[jd].radius) * (PHYSICS[id].radius + PHYSICS[jd].radius) ) {
+                PHYSICS[id].collision = true;
+                return;
+            }
+        }
+    }
+    PHYSICS[id].collision = false;
 }
 
 void Physics_accelerate(int id) {

@@ -77,10 +77,11 @@ int Textbox_new(char* text, int dpos_id, int align, int size, int color) {
 }
 
 void Textbox_kill(int id) {
-    if (!TEXTBOX[id].active) return;
+    if (id == -1 || !TEXTBOX[id].active) return;
     SDL_DestroyTexture(TEXTBOX[id].texture);
     TEXTBOX[id].active = false;
     TEXTBOX[id].texture = NULL;
+    DrawPos_kill(TEXTBOX[id].dpos_id);
     TEXTBOX[id].dpos_id = -1;
 }
 

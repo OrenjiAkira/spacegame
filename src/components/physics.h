@@ -43,6 +43,16 @@ e todos os outros existentes. Adiciona a aceleração
 vetorial calculada na velocidade. Apenas a velocidade
 do corpo cujo id é passado como parâmetro é modificada. */
 
+bool Physics_isColliding(int id);
+/* (int) -> bool
+Retorna true se o checkCollision() achou alguma
+colisão. Retorna false se não. */
+
+void Physics_checkCollision(int id);
+/* (int) -> void
+Verifica colisões. Se houver alguma, aciona
+a bool de colisão na struct de física. */
+
 void Physics_accelerate(int id);
 /* (int, int) -> void
 Propulsiona um corpo físico. */
