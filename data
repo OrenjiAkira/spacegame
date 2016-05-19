@@ -1,0 +1,17 @@
+# Time Config
+framerate 60
+
+# Map config
+map 64 48
+
+# Planets (mass, rad, x, y)
+planet 9e+9 4 0 0
+
+# Ships (name, mass, rad, x, y)
+ship1 grumpy_cat 59700000 2 -16 -8 0  0.158
+ship2 nyan_cat   59700000 2  16  8 0 -0.158
+
+# Bullet Config (mass, rad, lifetime)
+bullet 6000 0.5 4
+
+EOF
