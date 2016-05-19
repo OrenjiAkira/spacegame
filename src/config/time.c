@@ -14,8 +14,7 @@ struct _time {
 static Time TIMECONF;
 
 void Time_init() {
-    char *framerate_str = Conf_get(CONF_FRAMERATE);
-    sscanf(framerate_str, "%d", &TIMECONF.framerate);
+    Conf_getFramerateValue(&TIMECONF.framerate);
     TIMECONF.frameunit = 1.0/TIMECONF.framerate;
     TIMECONF.framems = (int)(1000*TIMECONF.frameunit);
 }

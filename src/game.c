@@ -13,13 +13,12 @@
 #include <stdio.h>
 
 void Game_init() {
-    char* load_str = Conf_get(CONF_PLANET);
     int phys, dquad, dpos, sprite;
     int planet, bg;
     float m, r, x, y;
 
     /* Planet */
-    sscanf(load_str, "%f %f %f %f", &m, &r, &x, &y);
+    Conf_getPlanetValues(&m, &r, &x, &y);
     phys = Physics_new(m, r, x, y, 0, 0);
     dquad = DrawQuad_new(1408, 128, 128, 128);
     dpos = DrawPos_new(phys, 128, 128, 64, 64);

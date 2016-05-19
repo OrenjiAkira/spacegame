@@ -15,8 +15,7 @@ struct _map {
 static Map MAPCONF;
 
 void Map_init() {
-    char *map_str = Conf_get(CONF_MAP);
-    sscanf(map_str, "%f %f", &MAPCONF.width, &MAPCONF.height);
+    Conf_getMapValues(&MAPCONF.width, &MAPCONF.height);
     MAPCONF.unit_x = WINDOW_WIDTH/MAPCONF.width;
     MAPCONF.unit_y = WINDOW_HEIGHT/MAPCONF.height;
 }

@@ -44,6 +44,31 @@ void Conf_init() {
     fclose(fp);
 }
 
-char* Conf_get(int section_name) {
+char* Conf_getString(int section_name) {
     return CONFIG[section_name];
+}
+
+void Conf_getFramerateValue(int* f) {
+    char *load_str = CONFIG[CONF_FRAMERATE];
+    sscanf(load_str, "%d", f);
+}
+
+void Conf_getMapValues(float* w, float* h) {
+    char *load_str = CONFIG[CONF_MAP];
+    sscanf(load_str, "%f %f", w, h);
+}
+
+void Conf_getPlanetValues(float* m, float* r, float* x, float* y) {
+    char *load_str = CONFIG[CONF_PLANET];
+    sscanf(load_str, "%f %f %f %f", m, r, x, y);
+}
+
+void Conf_getShipValues(int ship, char* name, float* m, float* r, float* x, float* y, float* vx, float* vy) {
+    char *load_str = ship == 0 ? CONFIG[CONF_SHIP1] : CONFIG[CONF_SHIP2];
+    sscanf(load_str, "%s %f %f %f %f %f %f", name, m, r, x, y, vx, vy);
+}
+
+void Conf_getBulletValues(float* m, float* r, float* lifetime) {
+    char *load_str = CONFIG[CONF_PLANET];
+    sscanf(load_str, "%f %f %f", m, r, lifetime);
 }

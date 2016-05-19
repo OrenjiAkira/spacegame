@@ -4,6 +4,7 @@
 #include "utility/vector.h"
 
 #define DIRECTION_POOL_SIZE 12
+#define PI 3.1415926535898
 
 void Direction_init();
 

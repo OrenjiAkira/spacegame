@@ -25,7 +25,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -g -O0 -std=c89 -pedantic-errors")
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
 
-add_executable(space ${source})
+add_executable(game ${source})
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_IMAGE REQUIRED)
@@ -38,7 +38,7 @@ include_directories(
     src)
 
 target_link_libraries(
-    space
+    game
     ${SDL2_LIBRARY}
     ${SDL2_IMAGE_LIBRARY}
     ${SDL2_TTF_LIBRARY}

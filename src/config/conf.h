@@ -18,9 +18,30 @@ void Conf_init();
 Lê o arquivo de configuração e
 guarda strings de leitura em um vetor. */
 
-char* Conf_get(int section_name);
+char* Conf_getString(int section_name);
 /* (int) -> char*
 Devolve uma string de configuração
 de uma seção especificada. */
+
+void Conf_getFramerateValue(int* f);
+/* () -> void
+ */
+
+void Conf_getMapValues(float* w, float* h);
+/* () -> void
+ */
+
+void Conf_getPlanetValues(float* m, float* r, float* x, float* y);
+/* () -> void
+ */
+
+void Conf_getShipValues(int ship, char* name, float* m, float* r, float* x, float* y, float* vx, float* vy);
+/* () -> void
+ */
+
+void Conf_getBulletValues(float* m, float* r, float* lifetime);
+/* () -> void
+ */
+
 
 #endif
