@@ -1,7 +1,7 @@
 
 #include "game.h"
 #include "input.h"
-#include "entities/ship.h"
+#include "action.h"
 #include "controllers/space.h"
 
 static int P1, P2;
@@ -21,15 +21,15 @@ static void keyhold(int key) {
         case P1_PAUSE:
             break;
         case P1_UP:
-            Ship_accelerate(P1);
+            Action_add(ACTION_MOVEFWD, P1);
             break;
         case P1_DOWN:
             break;
         case P1_LEFT:
-            Ship_turnLeft(P1);
+            Action_add(ACTION_TURNLFT, P1);
             break;
         case P1_RIGHT:
-            Ship_turnRight(P1);
+            Action_add(ACTION_TURNRGT, P1);
             break;
         case P2_MARU:
             break;
@@ -38,15 +38,15 @@ static void keyhold(int key) {
         case P2_PAUSE:
             break;
         case P2_UP:
-            Ship_accelerate(P2);
+            Action_add(ACTION_MOVEFWD, P2);
             break;
         case P2_DOWN:
             break;
         case P2_LEFT:
-            Ship_turnLeft(P2);
+            Action_add(ACTION_TURNLFT, P2);
             break;
         case P2_RIGHT:
-            Ship_turnRight(P2);
+            Action_add(ACTION_TURNRGT, P2);
             break;
         default:
             break;

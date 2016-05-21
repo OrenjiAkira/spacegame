@@ -1,7 +1,7 @@
 #ifndef GAME_TEXTBOX_H
 #define GAME_TEXTBOX_H
 
-#include "utility/entity.h"
+#include "entity.h"
 
 #define TEXTBOX_POOL_SIZE ENTITY_POOL_SIZE
 

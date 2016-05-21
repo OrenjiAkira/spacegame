@@ -1,7 +1,7 @@
 #ifndef GAME_TIMER_H
 #define GAME_TIMER_H
 
-#include "utility/entity.h"
+#include "entity.h"
 
 #include <stdbool.h>
 
@@ -24,6 +24,10 @@ Cria um novo timer e devolve seu id. */
 void Timer_update();
 /* () -> int
 Avança cada um dos timers. */
+
+void Timer_kill(int id);
+/* (int) -> void
+Termina um timer mesmo que não tenha acabado. */
 
 float Timer_progress(int id);
 /* (int) -> float

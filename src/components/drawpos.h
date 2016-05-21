@@ -1,7 +1,7 @@
 #ifndef GAME_DRAWPOS_H
 #define GAME_DRAWPOS_H
 
-#include "utility/entity.h"
+#include "entity.h"
 #include "utility/vector.h"
 
 #include <SDL.h>

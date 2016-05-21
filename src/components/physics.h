@@ -1,8 +1,10 @@
 #ifndef GAME_PHYSICS_H
 #define GAME_PHYSICS_H
 
-#include "utility/entity.h"
+#include "entity.h"
 #include "utility/vector.h"
+
+#include <stdbool.h>
 
 #define GCONST 6.67e-11
 #define SPEEDLIMIT 0.5

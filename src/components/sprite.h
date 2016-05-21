@@ -1,7 +1,7 @@
 #ifndef GAME_SPRITE_H
 #define GAME_SPRITE_H
 
-#include "utility/entity.h"
+#include "entity.h"
 
 #define SPRITE_POOL_SIZE ENTITY_POOL_SIZE
 #define LAYER_COUNT 4

@@ -1,6 +1,7 @@
 
 #include "game.h"
 #include "input.h"
+#include "action.h"
 
 #include <SDL.h>
 #include <stdio.h>

@@ -1,7 +1,7 @@
 #ifndef GAME_DRAWQUAD_H
 #define GAME_DRAWQUAD_H
 
-#include "utility/entity.h"
+#include "entity.h"
 
 #include <SDL.h>
 

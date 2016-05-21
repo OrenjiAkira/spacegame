@@ -7,10 +7,6 @@ void Game_init(char *execpath);
 /* () -> void
  */
 
-void Game_load();
-/* () -> void
- */
-
 void Game_setPlayer1(int id);
 /* (int) -> void
  */
@@ -36,5 +32,7 @@ void Game_quit();
  */
 
 void Game_close();
+/* () -> void
+ */
 
 #endif

@@ -57,17 +57,17 @@ void DrawQuad_kill(int id) {
 }
 
 void DrawQuad_next(int id) {
-    if (!DRAWQUADS[id].active) return;
+    if (id == -1 || !DRAWQUADS[id].active) return;
     DRAWQUADS[id].current = (DRAWQUADS[id].current + 1) % DRAWQUADS[id].count;
 }
 
 void DrawQuad_prev(int id) {
-    if (!DRAWQUADS[id].active) return;
+    if (id == -1 || !DRAWQUADS[id].active) return;
     DRAWQUADS[id].current = (DRAWQUADS[id].current + DRAWQUADS[id].count - 1) % DRAWQUADS[id].count;
 }
 
 void DrawQuad_change(int id, int quad) {
-    if (!DRAWQUADS[id].active) return;
+    if (id == -1 || !DRAWQUADS[id].active) return;
     DRAWQUADS[id].current = quad % DRAWQUADS[id].count;
 }
 

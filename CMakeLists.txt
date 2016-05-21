@@ -16,12 +16,18 @@ set(
     src/components/sprite.c
     src/components/textbox.c
     src/components/timer.c
-    src/entities/picture.c
-    src/entities/planet.c
-    src/entities/ship.c
+    src/actions/movefwd.c
+    src/actions/turndir.c
+    src/actions/autodie.c
+    src/actions/gravity.c
+    src/actions/collide.c
+    src/actions/animate.c
     src/controllers/space.c
     src/window.c
+    src/action.c
+    src/entity.c
     src/input.c
+    src/factory.c
     src/game.c
     src/main.c
 )
