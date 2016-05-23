@@ -81,11 +81,7 @@ static void Sprite_draw(int id) {
 
 void Sprite_init() {
     int id, l;
-    int imgFlags = IMG_INIT_PNG;
     
-    if( !( IMG_Init( imgFlags ) & imgFlags ) )
-        printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
-
     for (id = 0; id < SPRITE_POOL_SIZE; ++id) {
         for (l = 0; l < LAYER_COUNT; ++l) LAYERS[l][id] = -1;
 
@@ -141,6 +137,4 @@ void Sprite_close() {
     for (id = 0; id < SPRITE_POOL_SIZE; ++id) {   
         Sprite_kill(id);
     }
-
-    IMG_Quit();
 }

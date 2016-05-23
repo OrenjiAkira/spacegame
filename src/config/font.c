@@ -16,8 +16,6 @@ static Font FONTCONF;
 void Font_init() {
     char fontpath[128];
 
-    if( TTF_Init() == -1 ) printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
-
     FONTCONF.color[FONTCOLOR_WHITE].r = 255;
     FONTCONF.color[FONTCOLOR_WHITE].g = 255;
     FONTCONF.color[FONTCOLOR_WHITE].b = 255;
@@ -57,5 +55,4 @@ void Font_close() {
         TTF_CloseFont(FONTCONF.font[i]);
         FONTCONF.font[i] = NULL;
     }
-    TTF_Quit();
 }

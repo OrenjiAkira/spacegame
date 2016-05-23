@@ -56,16 +56,16 @@ int Game_getPlayer2() {
 }
 
 void Game_init(char *execpath) {
+    /* Window */
+    Window_init();
+    Input_init();
+
     /* Configuration */
     Path_init(execpath);
     Conf_init();
     Time_init();
     Map_init();
     Font_init();
-
-    /* Window */
-    Window_init();
-    Input_init();
 
     /* Utilities */
     Direction_init();
