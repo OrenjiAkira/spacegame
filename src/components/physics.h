@@ -34,6 +34,10 @@ Vector* Physics_getPos(int id);
 /* (int) -> Vector*
 Retorna a posição de um corpo físico. */
 
+int Physics_getDirection(int id);
+/* (int) -> Vector*
+Retorna o índice da direção de um corpo físico. */
+
 void Physics_kill(int id);
 /* (int) -> void
 Destrói um corpo físico. */

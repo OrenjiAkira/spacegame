@@ -2,12 +2,47 @@
 #include "game.h"
 #include "input.h"
 #include "action.h"
+#include "factory.h"
+#include "entity.h"
 #include "controllers/space.h"
 
 static int P1, P2;
 
 static void keypress(int key) {
-
+    switch (key) {
+        case P1_MARU:
+            Action_add(ACTION_SHOOTIT, P1);
+            break;
+        case P1_BATSU:
+            break;
+        case P1_PAUSE:
+            break;
+        case P1_UP:
+            break;
+        case P1_DOWN:
+            break;
+        case P1_LEFT:
+            break;
+        case P1_RIGHT:
+            break;
+        case P2_MARU:
+            Action_add(ACTION_SHOOTIT, P2);
+            break;
+        case P2_BATSU:
+            break;
+        case P2_PAUSE:
+            break;
+        case P2_UP:
+            break;
+        case P2_DOWN:
+            break;
+        case P2_LEFT:
+            break;
+        case P2_RIGHT:
+            break;
+        default:
+            break;
+    }
 }
 static void keyrelease(int key) {
     

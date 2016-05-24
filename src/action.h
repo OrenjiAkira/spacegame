@@ -15,6 +15,7 @@ enum _action_pools {
     ACTION_AUTODIE,
     ACTION_GRAVITY,
     ACTION_COLLIDE,
+    ACTION_SHOOTIT,
     ACTION_ANIMATE,
     ACTION_LIST_SIZE
 };

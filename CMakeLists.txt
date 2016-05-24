@@ -21,6 +21,7 @@ set(
     src/actions/autodie.c
     src/actions/gravity.c
     src/actions/collide.c
+    src/actions/shootit.c
     src/actions/animate.c
     src/controllers/space.c
     src/window.c

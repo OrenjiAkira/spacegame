@@ -75,6 +75,10 @@ Vector* Physics_getPos(int id) {
     return (PHYSICS[id].active ? &PHYSICS[id].pos : NULL);
 }
 
+int Physics_getDirection(int id) {
+    return (PHYSICS[id].active ? PHYSICS[id].direction : -1);
+}
+
 void Physics_kill(int id) {
     if (id == -1 || !PHYSICS[id].active) return;
     PHYSICS[id].active = false;

@@ -6,6 +6,7 @@
 #include "actions/autodie.h"
 #include "actions/gravity.h"
 #include "actions/collide.h"
+#include "actions/shootit.h"
 #include "actions/animate.h"
 
 #include <stdio.h>
@@ -39,9 +40,10 @@ void Action_update() {
     TurnLft( ACTIONS[ACTION_TURNLFT] );
     TurnRgt( ACTIONS[ACTION_TURNRGT] );
     MoveFwd( ACTIONS[ACTION_MOVEFWD] );
-    /*AutoDie( ACTIONS[ACTION_AUTODIE] );*/
+    AutoDie( ACTIONS[ACTION_AUTODIE] );
     Gravity( ACTIONS[ACTION_GRAVITY] );
     Collide( ACTIONS[ACTION_COLLIDE] );
+    ShootIt( ACTIONS[ACTION_SHOOTIT] );
     Animate( ACTIONS[ACTION_ANIMATE] );
 }
 

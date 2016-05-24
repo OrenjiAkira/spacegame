@@ -23,25 +23,13 @@ void Factory_loadBackground();
 
 /* New entity from game */
 
-void Factory_newBullet();
+void Factory_newBullet(int origin_body, float m, float r, float lt);
 /* () -> void
  */
 
-void Factory_newExplosion();
+void Factory_newExplosion(int origin_body);
 /* () -> void
  */
-
-void Factory_newImage();
-/* () -> void
- */
-
-
-
-
-
-
-
-
 
 
 #endif

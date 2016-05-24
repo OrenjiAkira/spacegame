@@ -4,6 +4,8 @@
 #include "action.h"
 #include "config/conf.h"
 #include "config/font.h"
+#include "utility/direction.h"
+#include "utility/vector.h"
 #include "components/physics.h"
 #include "components/drawpos.h"
 #include "components/drawquad.h"
@@ -82,10 +84,59 @@ void Factory_loadBackground() {
 
 /* New entity from game */
 
-void Factory_newBullet();
+void Factory_newBullet(int origin_body, float m, float r, float lt) {
+    Vector pos, aux;
+    int phys, dquad, dpos, sprite;
+    int dir, bullet;
+        
+    /* Calculando posição de disparo
+    (aux é uma distância offset para
+    não haver collisão imediata) */
+    dir = Physics_getDirection(origin_body);
+    Vector_copy(&aux, Direction_getVector(dir));
+    Vector_mult(&aux, (r + 2.5));
+    Vector_copy(&pos, Physics_getPos(origin_body));
+    Vector_add(&pos, &aux);
 
-void Factory_newExplosion();
+    /* Calculando velocidade de disparo
+    (aux aqui é a velocidade mesmo,
+    apenas aproveitei a struct para
+    economizar memória mesmo) */
+    Vector_copy(&aux, Direction_getVector(dir));
+    Vector_mult(&aux, SPEEDLIMIT);
 
-void Factory_newImage();
+    /* Criando entidade */
+    phys = Physics_new(m, r, pos.x, pos.y, aux.x, aux.y);
+    dquad = DrawQuad_new(48, 16, 16, 16);
+    dpos = DrawPos_new(phys, 16, 16, 8, 8);
+    sprite = Sprite_new("bullet.png", dpos, dquad, 1);
+    bullet = Entity_new(phys, dquad, dpos, sprite, -1);
+
+    /* Feio: adicionando tempo do AUTODIE na mão */
+    Entity_get(bullet)->timer_2 = Timer_new(lt);
+
+    /* Adicionando ações */
+    Action_add(ACTION_AUTODIE, bullet);
+    Action_add(ACTION_GRAVITY, bullet);
+    Action_add(ACTION_COLLIDE, bullet);
+    Action_add(ACTION_ANIMATE, bullet);
+
+    /* NOTES TO MYSELF:
+    1. Encapsular a chamada dessa função em uma action (+verificação de existência da entidade).
+    [done]
+    2. Modificar o controller para chamar a action e não essa função.
+    [done]
+    3. Ativar o AUTODIE.
+    [done]
+    4. Modificar essa função para receber parâmetros vindos de uma action.
+    [done]
+    5. Melhorar a leitura do tempo de vida do AUTODIE.
+    6. Pensar em parâmetros para as actions? */
+
+}
+
+void Factory_newExplosion(int origin_body) {
+
+}
 
 

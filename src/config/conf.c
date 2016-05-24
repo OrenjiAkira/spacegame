@@ -69,6 +69,6 @@ void Conf_getShipValues(int ship, char* name, float* m, float* r, float* x, floa
 }
 
 void Conf_getBulletValues(float* m, float* r, float* lifetime) {
-    char *load_str = CONFIG[CONF_PLANET];
+    char *load_str = CONFIG[CONF_BULLETS];
     sscanf(load_str, "%f %f %f", m, r, lifetime);
 }
