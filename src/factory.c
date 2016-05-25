@@ -120,19 +120,6 @@ void Factory_newBullet(int origin_body, float m, float r, float lt) {
     Action_add(ACTION_GRAVITY, bullet);
     Action_add(ACTION_COLLIDE, bullet);
     Action_add(ACTION_ANIMATE, bullet);
-
-    /* NOTES TO MYSELF:
-    1. Encapsular a chamada dessa função em uma action (+verificação de existência da entidade).
-    [done]
-    2. Modificar o controller para chamar a action e não essa função.
-    [done]
-    3. Ativar o AUTODIE.
-    [done]
-    4. Modificar essa função para receber parâmetros vindos de uma action.
-    [done]
-    5. Melhorar a leitura do tempo de vida do AUTODIE.
-    6. Pensar em parâmetros para as actions? */
-
 }
 
 void Factory_newExplosion(int origin_body) {
