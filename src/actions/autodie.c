@@ -11,7 +11,7 @@ void AutoDie(int *POOL) {
     Entity *entity;
     FOREACH_VALID_ENTITY(POOL) {
         GET_ENTITY(ACTION_AUTODIE);
-        if ( entity->timer_2 != -1 && Timer_isDone(entity->timer_2) ) {
+        if ( entity->timers[TIMER_COUNTDOWN1] != -1 && Entity_isTimerDone(POOL[i], TIMER_COUNTDOWN1) ) {
             Entity_destroy(POOL[i]);
             Action_remove(ACTION_AUTODIE, POOL[i]);
         }

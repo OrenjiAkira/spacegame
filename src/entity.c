@@ -20,7 +20,7 @@ void Entity_init() {
 }
 
 int Entity_new(int physics, int drawquad, int drawpos, int sprite, int textbox) {
-    int id;
+    int id, t;
 
     for (id = 0; id < ENTITY_POOL_SIZE; ++id) {
         if (ENTITIES[id] == NULL) {
@@ -35,7 +35,7 @@ int Entity_new(int physics, int drawquad, int drawpos, int sprite, int textbox) 
             ENTITIES[id]->textbox = textbox;
 
             /* Componentes inicialmente não utilizados */
-            ENTITIES[id]->timer_1 = ENTITIES[id]->timer_2 = -1;
+            for (t = 0; t < TIMER_TYPES_TOTAL; ++t) ENTITIES[id]->timers[t] = -1;
 
             return id;
         }
@@ -47,25 +47,32 @@ Entity* Entity_get(int id) {
     return ENTITIES[id];
 }
 
+void Entity_addTimer(int id, int timer_type, double secs) {
+    VERIFY_ENTITY(id);
+    ENTITIES[id]->timers[timer_type] = Timer_new(secs);
+}
+
+bool Entity_isTimerDone(int id, int timer_type) {
+    if (ENTITIES[id] == NULL) return true; /* ??? Don't know what might happen */
+    return Timer_isDone(ENTITIES[id]->timers[timer_type]);
+}
+
 void Entity_destroy(int id) {
-    int a;
-    if (ENTITIES[id] != NULL) {
-        for (a = 0; a < ACTION_LIST_SIZE; ++a) Action_remove(a, id);
-        Physics_kill(ENTITIES[id]->physics);
-        Sprite_kill(ENTITIES[id]->sprite);
-        Textbox_kill(ENTITIES[id]->textbox);
-        Timer_kill(ENTITIES[id]->timer_1);
-        Timer_kill(ENTITIES[id]->timer_2);
-        free(ENTITIES[id]);
-        ENTITIES[id] = NULL;
-    }
+    int a, t;
+    if (ENTITIES[id] == NULL) return;
+    
+    for (a = 0; a < ACTION_LIST_SIZE; ++a) Action_remove(a, id);
+    for (t = 0; t < TIMER_TYPES_TOTAL; ++t) Timer_kill(ENTITIES[id]->timers[t]);
+    Physics_kill(ENTITIES[id]->physics);
+    Sprite_kill(ENTITIES[id]->sprite);
+    Textbox_kill(ENTITIES[id]->textbox);
+    free(ENTITIES[id]);
+    ENTITIES[id] = NULL;
 }
 
 void Entity_close() {
     int id;
-    for (id = 0; id < ENTITY_POOL_SIZE; ++id) {
-        Entity_destroy(id);
-    }
+    for (id = 0; id < ENTITY_POOL_SIZE; ++id) Entity_destroy(id);
 }
 
 

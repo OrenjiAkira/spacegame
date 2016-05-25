@@ -61,10 +61,16 @@ static void keyhold(int key) {
         case P1_DOWN:
             break;
         case P1_LEFT:
-            Action_add(ACTION_TURNLFT, P1);
+            if ( Entity_isTimerDone(P1, TIMER_INPUTDELAY1) ) {
+                Entity_addTimer(P1, TIMER_INPUTDELAY1, 0.1);
+                Action_add(ACTION_TURNLFT, P1);
+            }
             break;
         case P1_RIGHT:
-            Action_add(ACTION_TURNRGT, P1);
+            if ( Entity_isTimerDone(P1, TIMER_INPUTDELAY1) ) {
+                Entity_addTimer(P1, TIMER_INPUTDELAY1, 0.1);
+                Action_add(ACTION_TURNRGT, P1);
+            }
             break;
         case P2_MARU:
             break;
@@ -78,10 +84,16 @@ static void keyhold(int key) {
         case P2_DOWN:
             break;
         case P2_LEFT:
-            Action_add(ACTION_TURNLFT, P2);
+            if ( Entity_isTimerDone(P2, TIMER_INPUTDELAY1) ) {
+                Entity_addTimer(P2, TIMER_INPUTDELAY1, 0.1);
+                Action_add(ACTION_TURNLFT, P2);
+            }
             break;
         case P2_RIGHT:
-            Action_add(ACTION_TURNRGT, P2);
+            if ( Entity_isTimerDone(P2, TIMER_INPUTDELAY1) ) {
+                Entity_addTimer(P2, TIMER_INPUTDELAY1, 0.1);
+                Action_add(ACTION_TURNRGT, P2);
+            }
             break;
         default:
             break;

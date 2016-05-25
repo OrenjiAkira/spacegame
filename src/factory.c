@@ -113,7 +113,7 @@ void Factory_newBullet(int origin_body, float m, float r, float lt) {
     bullet = Entity_new(phys, dquad, dpos, sprite, -1);
 
     /* Feio: adicionando tempo do AUTODIE na mão */
-    Entity_get(bullet)->timer_2 = Timer_new(lt);
+    Entity_addTimer(bullet, TIMER_COUNTDOWN1, lt);
 
     /* Adicionando ações */
     Action_add(ACTION_AUTODIE, bullet);

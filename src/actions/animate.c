@@ -11,9 +11,9 @@ void Animate(int *POOL) {
     Entity *entity;
     FOREACH_VALID_ENTITY(POOL) {
         GET_ENTITY(ACTION_ANIMATE);
-        if ( Timer_isDone(entity->timer_1) ) {
+        if ( Timer_isDone(entity->timers[TIMER_ANIMATION]) ) {
             DrawQuad_next(entity->drawquad);
-            entity->timer_1 = Timer_new(1.0/10);
+            Entity_addTimer(POOL[i], TIMER_ANIMATION, 0.1);
         }
     }   
 }
