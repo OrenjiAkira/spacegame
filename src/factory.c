@@ -112,7 +112,7 @@ void Factory_newBullet(int origin_body, float m, float r, float lt) {
     sprite = Sprite_new("bullet.png", dpos, dquad, 1);
     bullet = Entity_new(phys, dquad, dpos, sprite, -1);
 
-    /* Feio: adicionando tempo do AUTODIE na mão */
+    /* Definindo tempo de vida da bullet */
     Entity_addTimer(bullet, TIMER_COUNTDOWN1, lt);
 
     /* Adicionando ações */
