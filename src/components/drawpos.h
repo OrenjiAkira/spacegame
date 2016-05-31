@@ -33,6 +33,10 @@ SDL_Rect* DrawPos_getPos(int id);
 /* (int) -> SDL_Rect*
 Retorna o quad ativo de um DrawPos. */
 
+void DrawPos_setPos(int id, Vector *pos);
+/* (int, Vector*) -> void
+Modifica a posição de um DrawPos. */
+
 Vector* DrawPos_getOffset(int id);
 /* (int) -> Vector*
 Retorna o offset de um DrawPos. */

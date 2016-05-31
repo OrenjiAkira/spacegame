@@ -19,13 +19,17 @@ struct _drawpos {
 
 static DrawPos DRAWPOS[DRAWPOS_POOL_SIZE];
 
+static void DrawPos_alignWithoutPhysics(int id, Vector *position) {
+    DRAWPOS[id].pos.x = Map_getUnitX() * (position->x + Map_getWidth()/2) - DRAWPOS[id].offset.x;
+    DRAWPOS[id].pos.y = Map_getUnitY() * (position->y + Map_getHeight()/2) - DRAWPOS[id].offset.y;
+}
+
 static void DrawPos_align(int id) {
     Vector *position;
     
     if (DRAWPOS[id].phys_id != -1) {
         position = Physics_getPos(DRAWPOS[id].phys_id);
-        DRAWPOS[id].pos.x = Map_getUnitX() * (position->x + Map_getWidth()/2) - DRAWPOS[id].offset.x;
-        DRAWPOS[id].pos.y = Map_getUnitY() * (position->y + Map_getHeight()/2) - DRAWPOS[id].offset.y;
+        DrawPos_alignWithoutPhysics(id, position);
     }
     
 }
@@ -71,6 +75,11 @@ void DrawPos_update() {
 SDL_Rect* DrawPos_getPos(int id) {
     if (id == -1 || !DRAWPOS[id].active) return NULL;
     return &DRAWPOS[id].pos;
+}
+
+void DrawPos_setPos(int id, Vector *pos) {
+    if (id == -1 || !DRAWPOS[id].active) return;
+    DrawPos_alignWithoutPhysics(id, pos);
 }
 
 Vector* DrawPos_getOffset(int id) {

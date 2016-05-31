@@ -123,7 +123,26 @@ void Factory_newBullet(int origin_body, float m, float r, float lt) {
 }
 
 void Factory_newExplosion(int origin_body) {
+    Vector pos;
+    int dquad, dpos, sprite;
+    int explosion;
+    
+    printf("[ NEW EXPLOSION ]\n");
 
+    dpos = DrawPos_new(-1, 64, 64, 32, 32);
+    Vector_copy(&pos, Physics_getPos(origin_body));
+    DrawPos_setPos(dpos, &pos);
+
+    dquad = DrawQuad_new(512, 64, 64, 64);
+    sprite = Sprite_new("explosion.png", dpos, dquad, 1);
+
+    explosion = Entity_new(-1, dquad, dpos, sprite, -1);
+
+    Entity_addTimer(explosion, TIMER_COUNTDOWN1, 0.8); /* 8 frames */
+
+    /* Adicionando ações */
+    Action_add(ACTION_AUTODIE, explosion);
+    Action_add(ACTION_ANIMATE, explosion);
 }
 
 
