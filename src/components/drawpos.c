@@ -1,7 +1,7 @@
 
+#include "game.h"
 #include "window.h"
 #include "config/map.h"
-#include "utility/macros.h"
 #include "utility/vector.h"
 #include "components/physics.h"
 #include "components/drawpos.h"
@@ -19,7 +19,7 @@ struct _drawpos {
 
 static DrawPos DRAWPOS[DRAWPOS_POOL_SIZE];
 
-static void DrawPos_alignWithoutPhysics(int id, Vector *position) {
+static void DrawPos_alignWithoutPhysics(int id, Vector* position) {
     DRAWPOS[id].pos.x = Map_getUnitX() * (position->x + Map_getWidth()/2) - DRAWPOS[id].offset.x;
     DRAWPOS[id].pos.y = Map_getUnitY() * (position->y + Map_getHeight()/2) - DRAWPOS[id].offset.y;
 }
@@ -56,7 +56,7 @@ int DrawPos_new(int body_id, int qw, int qh, float ox, float oy) {
             return id;
         }
     }
-    pool_overflow(DrawPos);
+    POOL_OVERFLOW(DrawPos);
 }
 
 void DrawPos_kill(int id) {

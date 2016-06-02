@@ -1,6 +1,6 @@
 
+#include "game.h"
 #include "config/time.h"
-#include "utility/macros.h"
 #include "components/timer.h"
 
 #include <stdbool.h>
@@ -33,7 +33,7 @@ int Timer_new(double secs) {
             return id;
         }
     }
-    pool_overflow(Timer);
+    POOL_OVERFLOW(Timer);
 }
 
 void Timer_update() {

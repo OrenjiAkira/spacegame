@@ -8,6 +8,7 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 static float MASS = 0, RADIUS = 0, LIFETIME = 0;
 static bool isSet = false;

@@ -1,7 +1,7 @@
 
+#include "game.h"
 #include "entity.h"
 #include "action.h"
-#include "utility/macros.h"
 #include "components/physics.h"
 #include "components/sprite.h"
 #include "components/textbox.h"
@@ -40,7 +40,7 @@ int Entity_new(int physics, int drawquad, int drawpos, int sprite, int textbox) 
             return id;
         }
     }
-    pool_overflow(Entity);
+    POOL_OVERFLOW(Entity);
 }
 
 Entity* Entity_get(int id) {
@@ -68,6 +68,8 @@ void Entity_destroy(int id) {
     Textbox_kill(ENTITIES[id]->textbox);
     free(ENTITIES[id]);
     ENTITIES[id] = NULL;
+    if (id == Game_getPlayer1()) Game_setPlayer1(-1);
+    if (id == Game_getPlayer2()) Game_setPlayer2(-1);
 }
 
 void Entity_close() {

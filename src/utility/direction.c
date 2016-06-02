@@ -1,5 +1,4 @@
 
-#include "utility/macros.h"
 #include "utility/vector.h"
 #include "utility/direction.h"
 

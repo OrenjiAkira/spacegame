@@ -6,12 +6,12 @@
 #include "entity.h"
 #include "controllers/space.h"
 
-static int P1, P2;
+#include <stdlib.h>
 
 static void keypress(int key) {
     switch (key) {
         case P1_MARU:
-            Action_add(ACTION_SHOOTIT, P1);
+            Action_add(ACTION_SHOOTIT, Game_getPlayer1());
             break;
         case P1_BATSU:
             break;
@@ -26,7 +26,7 @@ static void keypress(int key) {
         case P1_RIGHT:
             break;
         case P2_MARU:
-            Action_add(ACTION_SHOOTIT, P2);
+            Action_add(ACTION_SHOOTIT, Game_getPlayer2());
             break;
         case P2_BATSU:
             break;
@@ -56,20 +56,20 @@ static void keyhold(int key) {
         case P1_PAUSE:
             break;
         case P1_UP:
-            Action_add(ACTION_MOVEFWD, P1);
+            Action_add(ACTION_MOVEFWD, Game_getPlayer1());
             break;
         case P1_DOWN:
             break;
         case P1_LEFT:
-            if ( Entity_isTimerDone(P1, TIMER_INPUTDELAY1) ) {
-                Entity_addTimer(P1, TIMER_INPUTDELAY1, 0.1);
-                Action_add(ACTION_TURNLFT, P1);
+            if ( Game_getPlayer1() != -1 && Entity_isTimerDone(Game_getPlayer1(), TIMER_INPUTDELAY1) ) {
+                Entity_addTimer(Game_getPlayer1(), TIMER_INPUTDELAY1, 0.1);
+                Action_add(ACTION_TURNLFT, Game_getPlayer1());
             }
             break;
         case P1_RIGHT:
-            if ( Entity_isTimerDone(P1, TIMER_INPUTDELAY1) ) {
-                Entity_addTimer(P1, TIMER_INPUTDELAY1, 0.1);
-                Action_add(ACTION_TURNRGT, P1);
+            if ( Game_getPlayer1() != -1 && Entity_isTimerDone(Game_getPlayer1(), TIMER_INPUTDELAY1) ) {
+                Entity_addTimer(Game_getPlayer1(), TIMER_INPUTDELAY1, 0.1);
+                Action_add(ACTION_TURNRGT, Game_getPlayer1());
             }
             break;
         case P2_MARU:
@@ -79,20 +79,20 @@ static void keyhold(int key) {
         case P2_PAUSE:
             break;
         case P2_UP:
-            Action_add(ACTION_MOVEFWD, P2);
+            Action_add(ACTION_MOVEFWD, Game_getPlayer2());
             break;
         case P2_DOWN:
             break;
         case P2_LEFT:
-            if ( Entity_isTimerDone(P2, TIMER_INPUTDELAY1) ) {
-                Entity_addTimer(P2, TIMER_INPUTDELAY1, 0.1);
-                Action_add(ACTION_TURNLFT, P2);
+            if ( Game_getPlayer2() != -1 && Entity_isTimerDone(Game_getPlayer2(), TIMER_INPUTDELAY1) ) {
+                Entity_addTimer(Game_getPlayer2(), TIMER_INPUTDELAY1, 0.1);
+                Action_add(ACTION_TURNLFT, Game_getPlayer2());
             }
             break;
         case P2_RIGHT:
-            if ( Entity_isTimerDone(P2, TIMER_INPUTDELAY1) ) {
-                Entity_addTimer(P2, TIMER_INPUTDELAY1, 0.1);
-                Action_add(ACTION_TURNRGT, P2);
+            if ( Game_getPlayer2() != -1 && Entity_isTimerDone(Game_getPlayer2(), TIMER_INPUTDELAY1) ) {
+                Entity_addTimer(Game_getPlayer2(), TIMER_INPUTDELAY1, 0.1);
+                Action_add(ACTION_TURNRGT, Game_getPlayer2());
             }
             break;
         default:
@@ -101,8 +101,6 @@ static void keyhold(int key) {
 }
 
 void SpaceController_load() {
-    P1 = Game_getPlayer1();
-    P2 = Game_getPlayer2();
     Input_registerPress(keypress);
     Input_registerRelease(keyrelease);
     Input_registerHold(keyhold);

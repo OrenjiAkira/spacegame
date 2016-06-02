@@ -1,6 +1,6 @@
 
+#include "game.h"
 #include "config/map.h"
-#include "utility/macros.h"
 #include "utility/vector.h"
 #include "utility/direction.h"
 #include "components/physics.h"
@@ -57,7 +57,7 @@ int Physics_new(float m, float r, float x, float y, float vx, float vy) {
             return id;
         }
     }
-    pool_overflow(Physics);
+    POOL_OVERFLOW(Physics);
 }
 
 void Physics_update() {

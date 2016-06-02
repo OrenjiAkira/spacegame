@@ -1,7 +1,7 @@
 
+#include "game.h"
 #include "window.h"
 #include "config/font.h"
-#include "utility/macros.h"
 #include "utility/vector.h"
 #include "components/drawpos.h"
 #include "components/textbox.h"
@@ -73,7 +73,7 @@ int Textbox_new(char* text, int dpos_id, int align, int size, int color) {
             return id;
         }
     }
-    pool_overflow(Textbox);
+    POOL_OVERFLOW(Textbox);
 }
 
 void Textbox_kill(int id) {

@@ -1,7 +1,7 @@
 
 #include "window.h"
+#include "game.h"
 #include "config/path.h"
-#include "utility/macros.h"
 #include "components/drawpos.h"
 #include "components/drawquad.h"
 #include "components/sprite.h"
@@ -105,7 +105,7 @@ int Sprite_new(char* filename, int dpos_id, int dquad_id, int layer) {
             return id;
         }
     }
-    pool_overflow(Sprite);
+    POOL_OVERFLOW(Sprite);
 }
 
 void Sprite_kill(int id) {

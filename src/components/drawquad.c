@@ -1,5 +1,5 @@
 
-#include "utility/macros.h"
+#include "game.h"
 #include "components/drawquad.h"
 
 #include <SDL.h>
@@ -46,7 +46,7 @@ int DrawQuad_new(int w, int h, int qw, int qh) {
             return id;
         }
     }
-    pool_overflow(DrawQuad);
+    POOL_OVERFLOW(DrawQuad);
 }
 
 void DrawQuad_kill(int id) {

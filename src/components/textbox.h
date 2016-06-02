@@ -6,6 +6,9 @@
 #define TEXTBOX_POOL_SIZE ENTITY_POOL_SIZE
 
 typedef struct _textbox Textbox;
+/* Textbox
+Struct de caixa de texto. Entidades que possuem
+algum texto usam esse componente para se desenhá-lo. */
 
 enum _textalign {
     TEXTALIGN_LEFT,
@@ -15,23 +18,25 @@ enum _textalign {
 
 void Textbox_init();
 /* () -> void
- */
+Inicializa pool de textbox */
 
 int Textbox_new(char* text, int dpos_id, int align, int size, int color);
-/* (char*, int, int, int) -> int
- */
+/* (char*, int, int, int, int) -> int
+Cria um textbox e retorna seu id. Recebe o texto a ser desenhado,
+um id de drawpos, um índice de alinhamento de texto (declarado
+acima no enum), um índice de tamanho fonte, e outro de cor,
+ambos declarados em "config/font.c". */
 
 void Textbox_kill(int id);
 /* (int) -> void
- */
+Libera o espaço de um textbox. */
 
 void Textbox_update();
 /* () -> void
- */
+Desenha os textbox ativos da pool. */
 
 void Textbox_close();
 /* () -> void
- */
-
+Libera a pool inteira, destruindo textbox ativos. */
 
 #endif

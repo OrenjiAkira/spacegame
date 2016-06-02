@@ -9,7 +9,6 @@
 #include "config/map.h"
 #include "config/font.h"
 #include "config/time.h"
-#include "utility/macros.h"
 #include "utility/vector.h"
 #include "utility/direction.h"
 #include "components/physics.h"

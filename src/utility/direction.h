@@ -7,7 +7,11 @@
 #define PI 3.1415926535898
 
 void Direction_init();
+/* () -> void
+Cria todas as direções existentes e utilizáveis no jogo. */
 
 Vector* Direction_getVector(int id);
+/* (int) -> Vector*
+Recebe o id de uma direção, e retorna seu vetor normalizado (de magnitude 1). */
 
 #endif
