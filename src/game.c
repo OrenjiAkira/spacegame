@@ -16,16 +16,16 @@
 #include "components/sprite.h"
 #include "components/textbox.h"
 #include "components/timer.h"
-#include "scenes/gameplay.h"
+#include "scenes/pressstart.h"
 
 #include <stdio.h>
 #include <stdbool.h>
 
-static long unsigned int framecount = 0;
+/*static long unsigned int framecount = 0;*/
 static bool QUIT = false;
 
 static void Game_load() {
-    GamePlay_load();
+    PressStart_load();
     printf("UNITS: \n [ %f, %f ]\n", Map_getUnitX(), Map_getUnitY());
 }
 
@@ -77,10 +77,10 @@ bool Game_update() {
     Textbox_update();
 
     Window_update();
-
+/*
     printf("[Running at %d FPS]\n", Time_getFramerate());
     printf("Framecount: %lu\n\n", ++framecount);
-
+*/
     return QUIT;
 }
 

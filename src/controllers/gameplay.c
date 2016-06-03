@@ -1,5 +1,4 @@
 
-#include "game.h"
 #include "input.h"
 #include "action.h"
 #include "entity.h"
@@ -28,7 +27,7 @@ static void keypress(int key) {
         case P1_RIGHT:
             break;
         case P2_MARU:
-        printf("\n\n[ PLAYER2: %d ]\\n", GamePlay_getPlayer2());
+            printf("\n\n[ PLAYER2: %d ]\\n", GamePlay_getPlayer2());
             Action_add(ACTION_SHOOTIT, GamePlay_getPlayer2());
             break;
         case P2_BATSU:
@@ -47,9 +46,10 @@ static void keypress(int key) {
             break;
     }
 }
-static void keyrelease(int key) {
 
+static void keyrelease(int key) {
 }
+
 static void keyhold(int key) {
     switch (key) {
         case P1_MARU:

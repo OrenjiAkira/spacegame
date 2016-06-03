@@ -23,12 +23,12 @@ static Textbox TEXTBOX[TEXTBOX_POOL_SIZE];
 static void Textbox_align(int id, int align) {
     SDL_Rect *pos = DrawPos_getPos(TEXTBOX[id].dpos_id);
     Vector *offset = DrawPos_getOffset(TEXTBOX[id].dpos_id);
-    offset->y = -16;
 
+    offset->y += pos->h/2;
     if (align == TEXTALIGN_CENTER) {
-        offset->x = pos->w/2;
-    } else if (align == TEXTALIGN_CENTER) {
-        offset->x = pos->w;
+        offset->x += pos->w/2;
+    } else if (align == TEXTALIGN_RIGHT) {
+        offset->x += pos->w;
     }
 }
 
@@ -53,12 +53,11 @@ static void Textbox_loadTexture(int id, char* text, int size, int color) {
 
 void Textbox_init() {
     int id;
-    
+
     for (id = 0; id < TEXTBOX_POOL_SIZE; ++id) {
         TEXTBOX[id].active = false;
         TEXTBOX[id].texture = NULL;
         TEXTBOX[id].dpos_id = -1;
-
     }
 }
 
@@ -98,7 +97,3 @@ void Textbox_close() {
         Textbox_kill(id);
     }
 }
-
-
-
-

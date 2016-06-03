@@ -1,5 +1,4 @@
 
-#include "game.h"
 #include "action.h"
 #include "entity.h"
 #include "config/conf.h"
@@ -43,7 +42,7 @@ static void GamePlay_loadPlayer1() {
     dquad = DrawQuad_new(768, 64, 64, 64);
     dpos = DrawPos_new(phys, 64, 64, 32, 32);
     sprite = Sprite_new("cat00.png", dpos, dquad, LAYER_MIDGROUND1);
-    dpos = DrawPos_new(phys, 0, 0, 0, 0);
+    dpos = DrawPos_new(phys, 0, 0, 0, -16);
     textbox = Textbox_new(name, dpos, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
 
     PLAYER1 = Entity_new(phys, dquad, dpos, sprite, textbox);
@@ -63,7 +62,7 @@ static void GamePlay_loadPlayer2() {
     dquad = DrawQuad_new(768, 64, 64, 64);
     dpos = DrawPos_new(phys, 64, 64, 32, 32);
     sprite = Sprite_new("cat01.png", dpos, dquad, LAYER_MIDGROUND1);
-    dpos = DrawPos_new(phys, 0, 0, 0, 0);
+    dpos = DrawPos_new(phys, 0, 0, 0, -16);
     textbox = Textbox_new(name, dpos, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
 
     PLAYER2 = Entity_new(phys, dquad, dpos, sprite, textbox);

@@ -5,6 +5,10 @@ void GamePlay_load();
 /* () -> void
 Carrega as entidades da cena de gameplay do jogo (imagem de fundo, planeta, naves). */
 
+void GamePlay_close();
+/* () -> void
+Encerra e libera memória das entidades da cena de gameplay. */
+
 void GamePlay_setPlayer1(int id);
 /* (int) -> void
 Registra o ID da entidade que representa o player 1. */

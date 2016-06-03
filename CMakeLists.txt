@@ -24,7 +24,9 @@ set(
     src/actions/shootit.c
     src/actions/animate.c
     src/controllers/gameplay.c
+    src/controllers/pressstart.c
     src/scenes/gameplay.c
+    src/scenes/pressstart.c
     src/window.c
     src/action.c
     src/entity.c
