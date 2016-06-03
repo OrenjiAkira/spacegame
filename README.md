@@ -32,18 +32,18 @@ um arquivo texto `inputdata`, que contém os parâmetros de entrada padrão do j
 
 ## Como jogar
 
-A partir da v0.3 o jogo agora lê um arquivo de dados iniciais sozinho e não precisa receber uma entrada padrão. Isso deixa a execução do jogo mais fácil para o usuário. Basta abrir o executável que o jogo já roda. Pelo bash você pode rodar algo assim:
+A partir da v0.3 o jogo agora lê um arquivo de configuraçã sozinho e não precisa receber uma entrada padrão. Isso deixa a execução do jogo mais fácil para o usuário. Basta abrir o executável que o jogo já roda. Pelo bash você pode rodar algo assim:
 ```bash
 ./bin/game
 ```
 
-A nave `grumpy_cat` é controlada pelas setas direcionais. A nave `nyan_cat` é controlada pelas teclas WASD. O botão `escape` fecha o jogo.
+A nave `grumpy_cat` é controlada pelas setas direcionais. A nave `nyan_cat` é controlada pelas teclas WASD. Os botões `shift` atiram, cada um com um nave diferente.
 
 ## Dependências
 
 Para compilar, você vai precisar de [cmake](https://cmake.org),
 [make](https://www.gnu.org/software/make/),
-um [compilador C](https://gcc.gnu.org/),
+um [compilador C](https://gcc.gnu.org/), e
 [SDL2, SDL2_image e SDL2_ttf](https://www.libsdl.org/) instalados no seu computador.
 
 ## Sobre o Código
@@ -91,7 +91,7 @@ Sendo v o módulo da velocidade perpendicular ao raio, G a constante gravitacion
 
 Resolvemos utilizar a biblioteca SDL, que é um _wrapper_ do OpenGL, semelhantemente ao GLUT, pois acreditamos que sua documentação seria melhor, assim como também resultaria em maior facilidade de uso. Fora isso, é uma biblioteca feita para desenvolvimento de jogos, e é largamente utilizada nessa indústria. Ela possui diversos módulos e submódulos, como a SDL_image e a SDL_ttf, que servem para carregar imagens e fontes com maior suporte a diferentes formatos de arquivo.
 
-Ela precisa ser inicializada, e seus elementos alocados. Criamos dois módulos que cuidam disso: o Events e o Graphics. O módulo Events cuida de inputs e suas consequências na lógica do jogo. Também criamos um elemento Controllers, que mapeia quais inputs fazem o quê em determinado estado de jogo. Já o módulo Graphics cuida da janela, do renderer, e das imagens e textos desenhados neles. Ao terminar o jogo por input (seja fechando a janela com o botão x/botão vermelho no seu canto superior, seja apertando o botão `escape`, seja apertando `ctrl+c` no terminal que o executou), os módulos liberam os elementos da SDL que precisaram ser alocados.
+Ela precisa ser inicializada, e seus elementos alocados. Criamos dois módulos que cuidam disso: o Events e o Graphics. O módulo Events cuida de inputs e suas consequências na lógica do jogo. Também criamos um elemento Controllers, que mapeia quais inputs fazem o quê em determinado estado de jogo. Já o módulo Graphics cuida da janela, do renderer, e das imagens e textos desenhados neles. Ao terminar o jogo por input (seja fechando a janela com o botão x/botão vermelho no seu canto superior, seja apertando o botão `escape` (**retirado na versão 0.3**), seja apertando `ctrl+c` no terminal que o executou), os módulos liberam os elementos da SDL que precisaram ser alocados.
 
 Curiosamente o valgrind aponta a SDL como causa de vazamento de 230bytes. Gostaríamos de assegurar que não temos como evitar que isso aconteça, pois não sabemos o que a SDL faz no seu código para causar tal vazamento. Agradecemos a compreensão.
 
@@ -104,6 +104,11 @@ Isso significa que apenas um módulo consegue ver diretamente suas instâncias. 
 Outra coisa que fizemos é **destruir tipos de elementos**. Agora os elementos, renomeados como _entidades_, são compostos de **componentes**. Os componentes são o _Model_ do programa (traçando paralelo com a arquitetura de código _MVC_). Uma entidade se comporta de um jeito ou de outro de acordo com os componentes que possui. _Assim, entidades não tem tipo._
 
 Também criamos **Ações**. Ações são um pequeno módulo que servem para atuar sobre os componentes de certas entidades. Elas são basicamente listas de entidades que guardam quais destas sofrerão uma ação. Existe uma lista de entidades para cada ação, que pega os componentes dessas entidades e os modificam de alguma forma. As ações podem ser contínuas ou pontuais. Uma ação contínua, por exemplo, é a chamada do cálculo de gravidade. Uma ação pontual, por exemplo, é uma nave atirar um projétil. Uma ação contínua não se preocupa em tirar a entidade da sua lista. Uma ação pontual, após executar seu código, retira a entidade de sua lista. Elas funcionam como o _Controller_ do programa (de novo, da arquitetura _MVC_, mas não deve ser confundido com os **controllers de input** do programa).
+
+Também implementamos _features novas_:
+1. Colisão. As coisas colidem, morrem e explodem.
+2. Atirar. As naves atiram agora com o shift mais próximo do direcional usado (LSHIFT para controle WASD, RSHIFT para controle nos direcionais).
+3. Executar o programa é mais fácil. O antigo arquivo de entrada padrão agora é um arquivo de configuração. Ele é mais legível e não precisa ser passado como entrada padrão, o código se encarrega de o encontrar e o interpretar. Então é possível rodar o jogo apenas executando seu binário (contanto que você não tire os outros arquivos de leitura da pasta do binário, pois eles são importantes para sua execução).
 
 ## Créditos
 
