@@ -118,7 +118,7 @@ O código aqui exposto é de nossa autoria, com exceção dos arquivos de config
 
 As imagens foram feitas por Willian Akira Mizutani, e estão sob a licença [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/). Grumpy Cat® pertence a Tabatha & Bryan Bundesen, e Nyan Cat® pertence a Christopher Torres. As imagens representadas nesse jogo não possuem intenção comercial, e sim de uso acadêmico e paródico, e portanto não infringem leis de copyright dessas marcas.
 
-Para informações sobre a licença deste nosso projeto, leia o nosso arquivo [LICENSE](https://github.com/OrenjiAkira/gravity-labprog-game/blob/master/LICENSE).
+Para informações sobre a licença deste nosso projeto, leia o nosso arquivo [LICENSE](https://github.com/OrenjiAkira/spacegame/master/LICENSE).
 
 Para o uso da biblioteca SDL, utilizamos o tutorial do site [Lazy Foo](http://lazyfoo.net/tutorials/SDL/).
 
