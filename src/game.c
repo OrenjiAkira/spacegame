@@ -1,6 +1,5 @@
 
 #include "game.h"
-#include "factory.h"
 #include "window.h"
 #include "action.h"
 #include "input.h"
@@ -17,7 +16,7 @@
 #include "components/sprite.h"
 #include "components/textbox.h"
 #include "components/timer.h"
-#include "controllers/space.h"
+#include "scenes/gameplay.h"
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -25,33 +24,9 @@
 static long unsigned int framecount = 0;
 static bool QUIT = false;
 
-static int PLAYER1, PLAYER2;
-
 static void Game_load() {
-    Factory_loadBackground();
-    Factory_loadPlanet();
-    Factory_loadPlayer1();
-    Factory_loadPlayer2();
-
-    SpaceController_load();
-
+    GamePlay_load();
     printf("UNITS: \n [ %f, %f ]\n", Map_getUnitX(), Map_getUnitY());
-}
-
-void Game_setPlayer1(int id) {
-    PLAYER1 = id;
-}
-
-void Game_setPlayer2(int id) {
-    PLAYER2 = id;
-}
-
-int Game_getPlayer1() {
-    return PLAYER1;
-}
-
-int Game_getPlayer2() {
-    return PLAYER2;
 }
 
 void Game_init(char *execpath) {
@@ -119,9 +94,8 @@ void Game_close() {
     DrawQuad_close();
     Sprite_close();
     Textbox_close();
-    
+
     Font_close();
 
     Window_close();
 }
-

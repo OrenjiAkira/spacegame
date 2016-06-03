@@ -1,7 +1,7 @@
 
 #include "game.h"
-#include "factory.h"
 #include "action.h"
+#include "entity.h"
 #include "config/conf.h"
 #include "config/font.h"
 #include "utility/direction.h"
@@ -11,24 +11,28 @@
 #include "components/drawquad.h"
 #include "components/sprite.h"
 #include "components/textbox.h"
+#include "controllers/gameplay.h"
+#include "scenes/gameplay.h"
 
 #include <stdio.h>
 
-void Factory_loadPlanet() {
+static int PLAYER1 = -1, PLAYER2 = -1, BACKGROUND = -1, PLANET = -1;
+
+static void GamePlay_loadPlanet() {
     float m, r, x, y;
-    int phys, dquad, dpos, sprite, planet;
+    int phys, dquad, dpos, sprite;
 
     Conf_getPlanetValues(&m, &r, &x, &y);
     phys = Physics_new(m, r, x, y, 0, 0);
     dquad = DrawQuad_new(1408, 128, 128, 128);
     dpos = DrawPos_new(phys, 128, 128, 64, 64);
     sprite = Sprite_new("planetv2.png", dpos, dquad, LAYER_MIDGROUND1);
-    planet = Entity_new(phys, dquad, dpos, sprite, -1);
-    Action_add(ACTION_ANIMATE, planet);
-    printf("< PLANET ID #%d >\n", planet);
+    PLANET = Entity_new(phys, dquad, dpos, sprite, -1);
+    Action_add(ACTION_ANIMATE, PLANET);
+    printf("< PLANET ID #%d >\n", PLANET);
 }
 
-void Factory_loadPlayer1() {
+static void GamePlay_loadPlayer1() {
     float m, r, x, y, vx, vy;
     int phys, dquad, dpos, sprite, textbox;
     char name[32];
@@ -42,13 +46,13 @@ void Factory_loadPlayer1() {
     dpos = DrawPos_new(phys, 0, 0, 0, 0);
     textbox = Textbox_new(name, dpos, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
 
-    Game_setPlayer1( Entity_new(phys, dquad, dpos, sprite, textbox) );
-    Action_add(ACTION_GRAVITY, Game_getPlayer1());
-    Action_add(ACTION_COLLIDE, Game_getPlayer1());
-    printf("< SHIP1 ID #%d >\n", Game_getPlayer1());
+    PLAYER1 = Entity_new(phys, dquad, dpos, sprite, textbox);
+    Action_add(ACTION_GRAVITY, PLAYER1);
+    Action_add(ACTION_COLLIDE, PLAYER1);
+    printf("< SHIP1 ID #%d >\n", PLAYER1);
 }
 
-void Factory_loadPlayer2() {
+static void GamePlay_loadPlayer2() {
     float m, r, x, y, vx, vy;
     int phys, dquad, dpos, sprite, textbox;
     char name[32];
@@ -62,25 +66,56 @@ void Factory_loadPlayer2() {
     dpos = DrawPos_new(phys, 0, 0, 0, 0);
     textbox = Textbox_new(name, dpos, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
 
-    Game_setPlayer2( Entity_new(phys, dquad, dpos, sprite, textbox) );
-    Action_add(ACTION_GRAVITY, Game_getPlayer2());
-    Action_add(ACTION_COLLIDE, Game_getPlayer2());
-    printf("< SHIP2 ID #%d >\n", Game_getPlayer2());
+    PLAYER2 = Entity_new(phys, dquad, dpos, sprite, textbox);
+    Action_add(ACTION_GRAVITY, PLAYER2);
+    Action_add(ACTION_COLLIDE, PLAYER2);
+    printf("< SHIP2 ID #%d >\n", PLAYER2);
 }
 
-void Factory_loadBackground() {
+static void GamePlay_loadBackground() {
     Vector pos;
-    int dpos, sprite, bg;
+    int dpos, sprite;
 
     dpos = DrawPos_new(-1, 800, 600, 400, 300);
     Vector_set(&pos, 0, 0);
     DrawPos_setPos(dpos, &pos);
     sprite = Sprite_new("background.png", dpos, -1, LAYER_BACKGROUND);
-    bg = Entity_new(-1, -1, dpos, sprite, -1);
-    printf("< BACKGROUND ID #%d >\n", bg);
+    BACKGROUND = Entity_new(-1, -1, dpos, sprite, -1);
+    printf("< BACKGROUND ID #%d >\n", BACKGROUND);
 }
 
-void Factory_newBullet(int origin_body, float m, float r, float lt) {
+void GamePlay_setPlayer1(int id) {
+    PLAYER1 = id;
+}
+
+void GamePlay_setPlayer2(int id) {
+    PLAYER2 = id;
+}
+
+int GamePlay_getPlayer1() {
+    return PLAYER1;
+}
+
+int GamePlay_getPlayer2() {
+    return PLAYER2;
+}
+
+void GamePlay_load() {
+    GamePlay_loadBackground();
+    GamePlay_loadPlanet();
+    GamePlay_loadPlayer1();
+    GamePlay_loadPlayer2();
+    GamePlayController_load();
+}
+
+void GamePlay_close() {
+    Entity_destroy(PLAYER1);
+    Entity_destroy(PLAYER2);
+    Entity_destroy(PLANET);
+    Entity_destroy(BACKGROUND);
+}
+
+void GamePlay_newBullet(int origin_body, float m, float r, float lt) {
     Vector pos, aux;
     int phys, dquad, dpos, sprite;
     int dir, bullet;
@@ -119,7 +154,7 @@ void Factory_newBullet(int origin_body, float m, float r, float lt) {
     Action_add(ACTION_ANIMATE, bullet);
 }
 
-void Factory_newExplosion(int origin_body) {
+void GamePlay_newExplosion(int origin_body) {
     Vector pos;
     int dquad, dpos, sprite;
     int explosion;

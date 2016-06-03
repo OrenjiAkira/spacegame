@@ -23,12 +23,12 @@ set(
     src/actions/collide.c
     src/actions/shootit.c
     src/actions/animate.c
-    src/controllers/space.c
+    src/controllers/gameplay.c
+    src/scenes/gameplay.c
     src/window.c
     src/action.c
     src/entity.c
     src/input.c
-    src/factory.c
     src/game.c
     src/main.c
 )
@@ -58,5 +58,3 @@ target_link_libraries(
 
 configure_file(data ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/data COPYONLY)
 file(COPY assets DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-
-

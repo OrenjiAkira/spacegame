@@ -1,14 +1,13 @@
 
 #include "entity.h"
 #include "action.h"
-#include "factory.h"
 #include "config/conf.h"
 #include "components/physics.h"
 #include "actions/shootit.h"
+#include "scenes/gameplay.h"
 
 #include <stdbool.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 static float MASS = 0, RADIUS = 0, LIFETIME = 0;
 static bool isSet = false;
@@ -23,7 +22,7 @@ void ShootIt(int *POOL) {
     FOREACH_VALID_ENTITY(POOL) {
         GET_ENTITY(ACTION_SHOOTIT);
         if (!isSet) load_bullet_values();
-        Factory_newBullet(entity->physics, MASS, RADIUS, LIFETIME);
+        GamePlay_newBullet(entity->physics, MASS, RADIUS, LIFETIME);
         Action_remove(ACTION_SHOOTIT, POOL[i]);
     }
 }

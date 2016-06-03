@@ -59,8 +59,8 @@ bool Entity_isTimerDone(int id, int timer_type) {
 
 void Entity_destroy(int id) {
     int a, t;
-    if (ENTITIES[id] == NULL) return;
-    
+    if (id == -1 || ENTITIES[id] == NULL) return;
+
     for (a = 0; a < ACTION_LIST_SIZE; ++a) Action_remove(a, id);
     for (t = 0; t < TIMER_TYPES_TOTAL; ++t) Timer_kill(ENTITIES[id]->timers[t]);
     Physics_kill(ENTITIES[id]->physics);
@@ -68,15 +68,9 @@ void Entity_destroy(int id) {
     Textbox_kill(ENTITIES[id]->textbox);
     free(ENTITIES[id]);
     ENTITIES[id] = NULL;
-    if (id == Game_getPlayer1()) Game_setPlayer1(-1);
-    if (id == Game_getPlayer2()) Game_setPlayer2(-1);
 }
 
 void Entity_close() {
     int id;
     for (id = 0; id < ENTITY_POOL_SIZE; ++id) Entity_destroy(id);
 }
-
-
-
-
