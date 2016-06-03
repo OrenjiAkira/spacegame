@@ -104,13 +104,17 @@ Isso significa que apenas um módulo consegue ver diretamente suas instâncias. 
 
 Outra coisa que fizemos é **destruir tipos de elementos**. Agora os elementos, renomeados como _entidades_, são compostos de **componentes**. Os componentes são o _Model_ do programa (traçando paralelo com a arquitetura de código _MVC_). Uma entidade se comporta de um jeito ou de outro de acordo com os componentes que possui. _Assim, entidades não tem tipo._
 
-Também criamos **Ações**. Ações são um pequeno módulo que servem para atuar sobre os componentes de certas entidades. Elas são basicamente listas de entidades que guardam quais destas sofrerão uma ação. Existe uma lista de entidades para cada ação, que pega os componentes dessas entidades e os modificam de alguma forma. As ações podem ser contínuas ou pontuais. Uma ação contínua, por exemplo, é a chamada do cálculo de gravidade. Uma ação pontual, por exemplo, é uma nave atirar um projétil. Uma ação contínua não se preocupa em tirar a entidade da sua lista. Uma ação pontual, após executar seu código, retira a entidade de sua lista. Elas funcionam como o _Controller_ do programa (de novo, da arquitetura _MVC_, mas não deve ser confundido com os **controllers de input** do programa).
+Também criamos **Ações**. Ações são um pequeno módulo que serve para atuar sobre os componentes de certas entidades. Elas são basicamente listas de entidades que guardam quais destas sofrerão uma ação. Existe uma lista de entidades para cada ação, que pega os componentes dessas entidades e os modificam de alguma forma. As ações podem ser contínuas ou pontuais. Uma ação contínua, por exemplo, é a chamada do cálculo de gravidade. Uma ação pontual, por exemplo, é uma nave atirar um projétil. Uma ação contínua não se preocupa em tirar a entidade da sua lista. Uma ação pontual, após executar seu código, retira a entidade de sua lista. Elas funcionam como o _Controller_ do programa (de novo, da arquitetura _MVC_, mas não deve ser confundido com os **controllers de input** do programa).
 
 Também implementamos _features novas_:
 
 1. **Colisão.** As coisas colidem, morrem e explodem.
 2. **Atirar.** As naves atiram agora com o shift mais próximo do direcional usado (LSHIFT para controle WASD, RSHIFT para controle nos direcionais).
 3. **Executar o programa é mais fácil.** O antigo arquivo de entrada padrão agora é um arquivo de configuração. Ele é mais legível e não precisa ser passado como entrada padrão, o código se encarrega de o encontrar e o interpretar. Então é possível rodar o jogo apenas executando seu binário (contanto que você não tire os outros arquivos de leitura da pasta do binário, pois eles são importantes para sua execução).
+
+**Nota sobre memória:** usamos memória estática para a maioria das coisas, por questão de eficiência. As _pools_ são vetores de tamanho fixo, em geral de 256. Ou seja, assumindo a presença de duas naves, uma imagem de fundo, e um planeta no centro (ou seja, um total de 4 entidades), acreditamos ser humanamente impossível você atirar bullets o suficiente para criar mais que 252 outras entidades (em menos tempo que demora para elas morrerem sozinhas) e estourar a memória do jogo. As bullets apenas são criadas no evento do usuário pressionar a tecla de tiro, mas não no evento do usuário segurar a tecla, o que torna 60 tiros por segundo, na prática, impossível. Mesmo que isso ocorra, o jogo apenas dirá que a _pool_ estourou e vai fechar o programa de maneira correta, liberando as memórias que alocou.
+
+Ainda na nota sobre memória, a SDL ainda vaza uns 200 bytes de memória, mesmo fechando seus módulos de maneira correta. De novo, isso é culpa de sua implementação interna, fora de nosso controle. Pelo menos o valor é fixo.
 
 ## Créditos
 

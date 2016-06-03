@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-#define ENTITY_POOL_SIZE 128
+#define ENTITY_POOL_SIZE 256
 
 #define VERIFY_ENTITY(id) if (ENTITIES[id] == NULL) { printf("INVALID ENTITY ID #%d. ENTITY IS NOT ACTIVE.\n", id); return; }
 
