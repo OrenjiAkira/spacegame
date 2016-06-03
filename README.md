@@ -65,7 +65,7 @@ E, portanto, não precisamos calcular F (resultante) para saber a aceleração r
 Os valores constantes, como as massas e a constante gravitacional, devem ser devidamente ajustados quando tivermos uma simulação visual. Por enquanto, estão sendo utilizado valores arbitrários, respeitanto apenas:
 ```
 massa_planeta > massa_nave > massa_tiro
-``` 
+```
 
 ### v0.2
 **(Segunda entrega)**
@@ -99,6 +99,11 @@ Curiosamente o valgrind aponta a SDL como causa de vazamento de 230bytes. Gostar
 **(Terceira entrega)**
 
 Jogamos tudo fora e começamos de novo. Brinks, na verdade reorganizamos o código para ser mais consistente em sua arquitetura. Agora todas as instâncias dentro do jogo tem suas próprias _pools_ e compartimentalizam as suas instâncias.
+Isso significa que apenas um módulo consegue ver diretamente suas instâncias. Outros módulos, para acessarem informações externas, tem que chamar métodos dos outros módulos para tal. Por exemplo, uma instância do componente do tipo Sprite precisa de informação de uma instância do componente do tipo DrawPos para poder renderizar uma imagem na tela. Em vez de acessar diretamente a informação, o componente Sprite guarda em si um ID de uma instância de um componente DrawPos, e passa esse ID como parâmetro de uma função do gerenciador de componentes DrawPos para receber a informação que precisa (no caso a posição da imagem na janela).
+
+Outra coisa que fizemos é **destruir tipos de elementos**. Agora os elementos, renomeados como _entidades_, são compostos de **componentes**. Os componentes são o _Model_ do programa (traçando paralelo com a arquitetura de código _MVC_). Uma entidade se comporta de um jeito ou de outro de acordo com os componentes que possui. _Assim, entidades não tem tipo._
+
+Também criamos **Ações**. Ações são um pequeno módulo que servem para atuar sobre os componentes de certas entidades. Elas são basicamente listas de entidades que guardam quais destas sofrerão uma ação. Existe uma lista de entidades para cada ação, que pega os componentes dessas entidades e os modificam de alguma forma. As ações podem ser contínuas ou pontuais. Uma ação contínua, por exemplo, é a chamada do cálculo de gravidade. Uma ação pontual, por exemplo, é uma nave atirar um projétil. Uma ação contínua não se preocupa em tirar a entidade da sua lista. Uma ação pontual, após executar seu código, retira a entidade de sua lista. Elas funcionam como o _Controller_ do programa (de novo, da arquitetura _MVC_, mas não deve ser confundido com os **controllers de input** do programa).
 
 ## Créditos
 
@@ -118,4 +123,3 @@ Para informações sobre a licença deste nosso projeto, leia o nosso arquivo [L
 Para o uso da biblioteca SDL, utilizamos o tutorial do site [Lazy Foo](http://lazyfoo.net/tutorials/SDL/).
 
 Também utilizamos de referência o livro [Game Programming Patterns](http://gameprogrammingpatterns.com/) de Robert Nystrom.
-
