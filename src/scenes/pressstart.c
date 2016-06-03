@@ -14,12 +14,11 @@ static FRONTTEXT;
 static void PressStart_loadFrontText() {
     Vector pos;
     int dpos, textbox;
-    /* print press start on the screen */
 
     dpos = DrawPos_new(-1, 0, 0, 0, 0);
+    textbox = Textbox_new("[ PRESS SHIFT ]", dpos, TEXTALIGN_CENTER, FONTSIZE_MEDIUM, FONTCOLOR_WHITE);
     Vector_set(&pos, 0, 0);
     Vector_print(&pos);
-    textbox = Textbox_new("[ PRESS SHIFT ]", dpos, TEXTALIGN_CENTER, FONTSIZE_MEDIUM, FONTCOLOR_WHITE);
     DrawPos_setPos(dpos, &pos);
     FRONTTEXT = Entity_new(-1, -1, dpos, -1, textbox);
 }

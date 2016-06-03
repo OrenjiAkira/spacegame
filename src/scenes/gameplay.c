@@ -76,9 +76,9 @@ static void GamePlay_loadBackground() {
     int dpos, sprite;
 
     dpos = DrawPos_new(-1, 800, 600, 400, 300);
+    sprite = Sprite_new("background.png", dpos, -1, LAYER_BACKGROUND);
     Vector_set(&pos, 0, 0);
     DrawPos_setPos(dpos, &pos);
-    sprite = Sprite_new("background.png", dpos, -1, LAYER_BACKGROUND);
     BACKGROUND = Entity_new(-1, -1, dpos, sprite, -1);
     printf("< BACKGROUND ID #%d >\n", BACKGROUND);
 }
@@ -158,14 +158,11 @@ void GamePlay_newExplosion(int origin_body) {
     int dquad, dpos, sprite;
     int explosion;
 
-    /* Definindo posição */
     dpos = DrawPos_new(-1, 64, 64, 32, 32);
-    Vector_copy(&pos, Physics_getPos(origin_body));
-    DrawPos_setPos(dpos, &pos);
-
-    /* Criando quad e sprite */
     dquad = DrawQuad_new(512, 64, 64, 64);
     sprite = Sprite_new("explosion.png", dpos, dquad, LAYER_MIDGROUND2);
+    Vector_copy(&pos, Physics_getPos(origin_body));
+    DrawPos_setPos(dpos, &pos);
 
     /* Criando entidade */
     explosion = Entity_new(-1, dquad, dpos, sprite, -1);
