@@ -12,6 +12,7 @@ O projeto é um jogo baseado no antigo jogo Spacewar (1962).
   1. [Primeira Entrega](#v01)
   2. [Segunda Entrega](#v02)
     1. [Sobre a SDL](#sobre-a-sdl)
+  3. [Terceira Entrega](#v03)
 5. [Créditos](#créditos)
 
 
@@ -107,9 +108,9 @@ Também criamos **Ações**. Ações são um pequeno módulo que servem para atu
 
 Também implementamos _features novas_:
 
-1. Colisão. As coisas colidem, morrem e explodem.
-2. Atirar. As naves atiram agora com o shift mais próximo do direcional usado (LSHIFT para controle WASD, RSHIFT para controle nos direcionais).
-3. Executar o programa é mais fácil. O antigo arquivo de entrada padrão agora é um arquivo de configuração. Ele é mais legível e não precisa ser passado como entrada padrão, o código se encarrega de o encontrar e o interpretar. Então é possível rodar o jogo apenas executando seu binário (contanto que você não tire os outros arquivos de leitura da pasta do binário, pois eles são importantes para sua execução).
+1. **Colisão.** As coisas colidem, morrem e explodem.
+2. **Atirar.** As naves atiram agora com o shift mais próximo do direcional usado (LSHIFT para controle WASD, RSHIFT para controle nos direcionais).
+3. **Executar o programa é mais fácil.** O antigo arquivo de entrada padrão agora é um arquivo de configuração. Ele é mais legível e não precisa ser passado como entrada padrão, o código se encarrega de o encontrar e o interpretar. Então é possível rodar o jogo apenas executando seu binário (contanto que você não tire os outros arquivos de leitura da pasta do binário, pois eles são importantes para sua execução).
 
 ## Créditos
 
