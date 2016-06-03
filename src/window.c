@@ -27,7 +27,7 @@ void Window_init() {
         Game_quit();
     }
 
-    SDL_SetRenderDrawColor( WINDOW.renderer, 0xFF, 0x00, 0xFF, 0xFF );
+    SDL_SetRenderDrawColor( WINDOW.renderer, 0x00, 0x00, 0x00, 0xFF );
     printf("SDL and its components initialized. Window initialized.\n");
 }
 
