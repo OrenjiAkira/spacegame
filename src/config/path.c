@@ -1,4 +1,5 @@
 
+#include "debug.h"
 #include "config/path.h"
 
 #include <stdio.h>
@@ -23,11 +24,11 @@ void Path_init(char const *execpath) {
 
     strcpy(PATH.sprites, PATH.executable);
     strcat(PATH.sprites, "assets/sprites/");
-    printf("SPRITE FOLDER PATH: %s\n", PATH.sprites);
+    logprint("SPRITE FOLDER PATH: %s\n", PATH.sprites);
 
     strcpy(PATH.fonts, PATH.executable);
     strcat(PATH.fonts, "assets/fonts/");
-    printf("FONT FOLDER PATH: %s\n", PATH.fonts);
+    logprint("FONT FOLDER PATH: %s\n", PATH.fonts);
 }
 
 char* Path_toExecutable() {

@@ -1,32 +1,33 @@
 
+#include "debug.h"
 #include "game.h"
 #include "config/time.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-#include <stdio.h>
+/*#include <stdio.h>*/
 #include <stdbool.h>
 
 static bool init_libs() {
     do {
         if( SDL_Init( SDL_INIT_VIDEO ) < 0 ) {
-            printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
+            logprint( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
             break;
         }
         if( !( IMG_Init( IMG_INIT_PNG ) & IMG_INIT_PNG ) ) {
-            printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+            logprint( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
             break;
         }
         if( TTF_Init() == -1 ) {
-            printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+            logprint( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
             break;
         }
         return false;
     } while (0);
 
     /* ERROR */
-    printf("ERROR: SDL was not initialized. Program shutting down.\n");
+    logprint("ERROR: SDL was not initialized. Program shutting down.\n");
     return true;
 }
 
@@ -38,6 +39,8 @@ static void close_libs() {
 
 int main(int argc, char const *argv[]) {
     bool quit = init_libs();
+
+    logprint("RUNNING GAME IN DEBUG MODE, SOME LAGGING MAY OCCUR.\n");
 
     /* Inicializa programa. */
     Game_init( argv[0] );

@@ -1,4 +1,5 @@
 
+#include "debug.h"
 #include "action.h"
 #include "entity.h"
 #include "config/conf.h"
@@ -64,8 +65,8 @@ static void GamePlay_loadPlayer2() {
     PLAYER2 = Entity_new(phys, dquad, dpos, sprite, textbox);
     Action_add(ACTION_GRAVITY, PLAYER2);
     Action_add(ACTION_COLLIDE, PLAYER2);
-    printf("< SHIP2 ID #%d >\n", PLAYER2);
-    printf("%s", Conf_getString(CONF_SHIP2));
+    logprint("< SHIP2 ID #%d >\n", PLAYER2);
+    logprint("%s", Conf_getString(CONF_SHIP2));
 }
 
 static void GamePlay_loadBackground() {
@@ -77,7 +78,7 @@ static void GamePlay_loadBackground() {
     Vector_set(&pos, 0, 0);
     DrawPos_setPos(dpos, &pos);
     BACKGROUND = Entity_new(-1, -1, dpos, sprite, -1);
-    printf("< BACKGROUND ID #%d >\n", BACKGROUND);
+    logprint("< BACKGROUND ID #%d >\n", BACKGROUND);
 }
 
 void GamePlay_setPlayer1(int id) {

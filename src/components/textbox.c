@@ -1,4 +1,5 @@
 
+#include "debug.h"
 #include "game.h"
 #include "window.h"
 #include "config/font.h"
@@ -38,11 +39,11 @@ static void Textbox_loadTexture(int id, char* text, int size, int color) {
 
     textSurface = TTF_RenderText_Solid( Font_getFont(size), text, Font_getColor(color) );
     if( textSurface == NULL )
-        printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
+        logprint( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
 
     TEXTBOX[id].texture = SDL_CreateTextureFromSurface( Window_getRenderer(), textSurface );
     if( TEXTBOX[id].texture == NULL )
-        printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
+        logprint( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
 
     pos = DrawPos_getPos(TEXTBOX[id].dpos_id);
     pos->w = textSurface->w;

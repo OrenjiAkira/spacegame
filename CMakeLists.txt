@@ -31,12 +31,16 @@ set(
     src/action.c
     src/entity.c
     src/input.c
+    src/debug.c
     src/game.c
     src/main.c
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -g -O0 -std=c89 -pedantic-errors")
+if (DEBUG_MODE)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DDEBUG_MODE")
+endif(DEBUG_MODE)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
 
 add_executable(game ${source})

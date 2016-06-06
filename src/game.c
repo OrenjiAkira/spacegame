@@ -26,7 +26,7 @@ static bool QUIT = false;
 
 static void Game_load() {
     PressStart_load();
-    printf("UNITS: \n [ %f, %f ]\n", Map_getUnitX(), Map_getUnitY());
+    logprint("UNITS: \n [ %f, %f ]\n", Map_getUnitX(), Map_getUnitY());
 }
 
 void Game_init(char const *execpath) {
@@ -78,8 +78,8 @@ bool Game_update() {
 
     Window_update();
 /*
-    printf("[Running at %d FPS]\n", Time_getFramerate());
-    printf("Framecount: %lu\n\n", ++framecount);
+    logprint("[Running at %d FPS]\n", Time_getFramerate());
+    logprint("Framecount: %lu\n\n", ++framecount);
 */
     return QUIT;
 }

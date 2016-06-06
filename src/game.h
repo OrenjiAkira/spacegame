@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-#define GAME_ERROR(error) printf("ERROR: " #error "\n"); Game_quit()
+#define GAME_ERROR(error) logprint("ERROR: " #error "\n"); Game_quit()
 #define POOL_OVERFLOW(type) GAME_ERROR(#type " pool overflow"); return 0
 
 void Game_init(char const *execpath);

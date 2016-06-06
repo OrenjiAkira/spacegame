@@ -1,11 +1,12 @@
 #ifndef GAME_ENTITY_H
 #define GAME_ENTITY_H
 
+#include "debug.h"
 #include <stdbool.h>
 
 #define ENTITY_POOL_SIZE 256
 
-#define VERIFY_ENTITY(id) if (ENTITIES[id] == NULL) { printf("INVALID ENTITY ID #%d. ENTITY IS NOT ACTIVE.\n", id); return; }
+#define VERIFY_ENTITY(id) if (ENTITIES[id] == NULL) { logprint("INVALID ENTITY ID #%d. ENTITY IS NOT ACTIVE.\n", id); return; }
 
 enum _timer_types {
     TIMER_INPUTDELAY1,
