@@ -31,7 +31,7 @@ mkdir build; cd build; cmake ..; make
 O arquivo binário será criado numa subpasta `bin` com o nome `SpaceCats`. Junto dele estará
 um arquivo texto `inputdata`, que contém os parâmetros de entrada padrão do jogo, e a pasta de assets. Você pode também dar `cmake` e `make` direto da pasta raíz, mas vai ficar tudo bagunçado.
 
-Se passar para o cmake o parâmetro `-DDEBUG_MODE` prints de log serão ativados durante a execução do programa.
+Se passar para o cmake o parâmetro `-DDEBUG_MODE=TRUE` prints de log serão ativados durante a execução do programa.
 Se quiser desativar os prints depois de ter rodado o cmake com o argumento de debug, basta rodar o cmake com `-DDEBUG_MODE=FALSE`, e recompilar com o `make`.
 
 ## Como jogar
@@ -128,7 +128,7 @@ Ainda na nota sobre memória, a SDL ainda vaza uns 200 bytes de memória, mesmo 
 * Isabela Blucher (9298170)
 * Willian Akira Mizutani (8010041)
 
-O código aqui exposto é de nossa autoria, com exceção dos arquivos de configuração na pasta `cmake`, que são de autoria de [Brendan Whitfield](https://github.com/brendan-w) (saiba mais sobre seu projeto [collector](https://github.com/brendan-w/collector) e sua [licença](https://github.com/brendan-w/collector/blob/master/LICENSE).
+O código aqui exposto é de nossa autoria, com exceção dos arquivos de configuração na pasta `cmake`, que são de módulos de cmake de feitos específicos para a SDL2 e seus submódulos. Ver licenças nos próprios arquivos.
 
 As imagens foram feitas por Willian Akira Mizutani, e estão sob a licença [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/). Grumpy Cat® pertence a Tabatha & Bryan Bundesen, e Nyan Cat® pertence a Christopher Torres. As imagens representadas nesse jogo não possuem intenção comercial, e sim de uso acadêmico e paródico, e portanto não infringem leis de copyright dessas marcas.
 

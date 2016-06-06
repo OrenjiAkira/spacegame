@@ -6,12 +6,12 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-/*#include <stdio.h>*/
+#include <SDL_mixer.h>
 #include <stdbool.h>
 
 static bool init_libs() {
     do {
-        if( SDL_Init( SDL_INIT_VIDEO ) < 0 ) {
+        if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 ) {
             logprint( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
             break;
         }
@@ -23,6 +23,9 @@ static bool init_libs() {
             logprint( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
             break;
         }
+        if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ) {
+            break;
+        }
         return false;
     } while (0);
 
@@ -32,6 +35,7 @@ static bool init_libs() {
 }
 
 static void close_libs() {
+    Mix_CloseAudio();
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();

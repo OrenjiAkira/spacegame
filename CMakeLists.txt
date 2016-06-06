@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 project(new_space C)
 
 set(
-    source
+    SOURCE_FILES
     src/config/conf.c
     src/config/map.c
     src/config/path.c
@@ -43,16 +43,18 @@ if (DEBUG_MODE)
 endif(DEBUG_MODE)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
 
-add_executable(game ${source})
+add_executable(game ${SOURCE_FILES})
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_IMAGE REQUIRED)
 find_package(SDL2_TTF REQUIRED)
+find_package(SDL2_MIXER REQUIRED)
 
 include_directories(
     ${SDL2_INCLUDE_DIR}
     ${SDL2_IMAGE_INCLUDE_DIR}
     ${SDL2_TTF_INCLUDE_DIR}
+    ${SDL2_MIXER_INCLUDE_DIR}
     src)
 
 target_link_libraries(
@@ -60,6 +62,7 @@ target_link_libraries(
     ${SDL2_LIBRARY}
     ${SDL2_IMAGE_LIBRARY}
     ${SDL2_TTF_LIBRARY}
+    ${SDL2_MIXER_LIBRARY}
     m)
 
 configure_file(data ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/data COPYONLY)
