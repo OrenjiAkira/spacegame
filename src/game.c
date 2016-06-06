@@ -29,7 +29,7 @@ static void Game_load() {
     printf("UNITS: \n [ %f, %f ]\n", Map_getUnitX(), Map_getUnitY());
 }
 
-void Game_init(char *execpath) {
+void Game_init(char const *execpath) {
     /* Window */
     Window_init();
     Input_init();

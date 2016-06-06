@@ -12,21 +12,20 @@ struct _path {
 
 static Path PATH;
 
-void Path_init(char* execpath) {
+void Path_init(char const *execpath) {
     int i = strlen(execpath);
 
-    while (i-- > 0)
-        if (execpath[i] == '/') break;
-
-    execpath[i+1] = '\0';
-    
     strcpy(PATH.executable, execpath);
 
-    strcpy(PATH.sprites, execpath);
+    while (i-- > 0) if (PATH.executable[i] == '/') break;
+
+    PATH.executable[i+1] = '\0';
+
+    strcpy(PATH.sprites, PATH.executable);
     strcat(PATH.sprites, "assets/sprites/");
     printf("SPRITE FOLDER PATH: %s\n", PATH.sprites);
-    
-    strcpy(PATH.fonts, execpath);
+
+    strcpy(PATH.fonts, PATH.executable);
     strcat(PATH.fonts, "assets/fonts/");
     printf("FONT FOLDER PATH: %s\n", PATH.fonts);
 }
@@ -42,5 +41,3 @@ char* Path_toSprites() {
 char* Path_toFonts() {
     return PATH.fonts;
 }
-
-

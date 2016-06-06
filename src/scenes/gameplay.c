@@ -28,7 +28,6 @@ static void GamePlay_loadPlanet() {
     sprite = Sprite_new("planetv2.png", dpos, dquad, LAYER_MIDGROUND1);
     PLANET = Entity_new(phys, dquad, dpos, sprite, -1);
     Action_add(ACTION_ANIMATE, PLANET);
-    printf("< PLANET ID #%d >\n", PLANET);
 }
 
 static void GamePlay_loadPlayer1() {
@@ -47,8 +46,6 @@ static void GamePlay_loadPlayer1() {
     PLAYER1 = Entity_new(phys, dquad, dpos, sprite, textbox);
     Action_add(ACTION_GRAVITY, PLAYER1);
     Action_add(ACTION_COLLIDE, PLAYER1);
-    printf("< SHIP1 ID #%d >\n", PLAYER1);
-    printf("%s\n", Conf_getString(CONF_SHIP1));
 }
 
 static void GamePlay_loadPlayer2() {

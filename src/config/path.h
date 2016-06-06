@@ -8,7 +8,7 @@ e das pastas de assets utilizadas por outras partes do código.
 Isso serve para o jogo conseguir encontrar os assets dentro
 da pasta do executável. */
 
-void Path_init(char *execpath);
+void Path_init(char const *execpath);
 /* (char*) -> void
 Recebe o argv[0] do main, e armazena o caminho até a
 pasta do executável a partir de onde o programa está

@@ -36,7 +36,7 @@ static void close_libs() {
     SDL_Quit();
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char const *argv[]) {
     bool quit = init_libs();
 
     /* Inicializa programa. */
