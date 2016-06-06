@@ -90,35 +90,13 @@ void Game_init(char const *execpath) {
 bool Game_update() {
     /* Qualquer uma dessas funções podem chamar
     a função Game_quit() e mudar o valor de QUIT. */
-
-    logprint("\n[ UPDATING ]\n");
-
-    logprint("\n *CONTROLLER*\n");
-
-    logprint(" > Input\n");
     Input_update();
-
-    logprint(" > Actions\n");
     Action_update();
-
-    logprint("\n *MODEL*\n");
-    logprint(" > Timers\n");
     Timer_update();
-
-    logprint(" > Physics\n");
     Physics_update();
-
-    logprint(" > DrawPos\n");
     DrawPos_update();
-
-    logprint(" > Sprite\n");
     Sprite_update();
-
-    logprint(" > Textbox\n");
     Textbox_update();
-
-    logprint("\n *VIEW*\n");
-    logprint(" > Window\n");
     Window_update();
 /*
     logprint("[Running at %d FPS]\n", Time_getFramerate());

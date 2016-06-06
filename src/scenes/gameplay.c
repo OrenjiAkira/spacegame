@@ -16,6 +16,7 @@
 #include "scenes/gameplay.h"
 
 #include <stdio.h>
+#include <string.h>
 
 static int PLAYER1 = -1, PLAYER2 = -1, BACKGROUND = -1, PLANET = -1;
 
@@ -32,40 +33,38 @@ static void GamePlay_loadPlanet() {
     Action_add(ACTION_ANIMATE, PLANET);
 }
 
-static void GamePlay_loadPlayer1() {
+static void GamePlay_loadPlayer(int const which) {
     float m, r, x, y, vx, vy;
     int phys, dquad, dpos, sprite, textbox;
-    char name[32];
+    int player;
+    char name[32], filename[32], fileid[2] = {'0', '\0'};
 
-    Conf_getShipValues(0, name, &m, &r, &x, &y, &vx, &vy);
+    fileid[0] += (char)which;
+    filename[0] = '\0';
+    strcat(filename, "cat0");
+    strcat(filename, fileid);
+    strcat(filename, ".png\0");
+    logprint("FILENAME: %s\n", filename);
+
+    Conf_getShipValues(which, name, &m, &r, &x, &y, &vx, &vy);
     phys = Physics_new(m, r, x, y, vx, vy);
     dquad = DrawQuad_new(768, 64, 64, 64);
     dpos = DrawPos_new(phys, 64, 64, 32, 32);
-    sprite = Sprite_new("cat00.png", dpos, dquad, LAYER_MIDGROUND1);
+    sprite = Sprite_new(filename, dpos, dquad, LAYER_MIDGROUND1);
     dpos = DrawPos_new(phys, 0, 0, 0, -16);
     textbox = Textbox_new(name, dpos, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
 
-    PLAYER1 = Entity_new(phys, dquad, dpos, sprite, textbox);
-    Action_add(ACTION_GRAVITY, PLAYER1);
-    Action_add(ACTION_COLLIDE, PLAYER1);
-}
+    if (PLAYER1 == -1) {
+        PLAYER1 = Entity_new(phys, dquad, dpos, sprite, textbox);
+        player = PLAYER1;
+    } else if (PLAYER2 == -1) {
+        PLAYER2 = Entity_new(phys, dquad, dpos, sprite, textbox);
+        player = PLAYER2;
+    }
 
-static void GamePlay_loadPlayer2() {
-    float m, r, x, y, vx, vy;
-    int phys, dquad, dpos, sprite, textbox;
-    char name[32];
-
-    Conf_getShipValues(1, name, &m, &r, &x, &y, &vx, &vy);
-    phys = Physics_new(m, r, x, y, vx, vy);
-    dquad = DrawQuad_new(768, 64, 64, 64);
-    dpos = DrawPos_new(phys, 64, 64, 32, 32);
-    sprite = Sprite_new("cat01.png", dpos, dquad, LAYER_MIDGROUND1);
-    dpos = DrawPos_new(phys, 0, 0, 0, -16);
-    textbox = Textbox_new(name, dpos, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
-
-    PLAYER2 = Entity_new(phys, dquad, dpos, sprite, textbox);
-    Action_add(ACTION_GRAVITY, PLAYER2);
-    Action_add(ACTION_COLLIDE, PLAYER2);
+    Action_add(ACTION_GRAVITY, player);
+    Action_add(ACTION_COLLIDE, player);
+    logprint("< SHIP%d ID #%d >\n", which, player);
 }
 
 static void GamePlay_loadBackground() {
@@ -99,8 +98,8 @@ int GamePlay_getPlayer2() {
 void GamePlay_load() {
     GamePlay_loadBackground();
     GamePlay_loadPlanet();
-    GamePlay_loadPlayer1();
-    GamePlay_loadPlayer2();
+    GamePlay_loadPlayer(0);
+    GamePlay_loadPlayer(1);
     GamePlayController_load();
 }
 
