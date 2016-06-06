@@ -1,13 +1,13 @@
 #ifndef DEBUG_MODE
 
-void logprint(const char* fmt, ...) {}
+void logprint(char const *fmt, ...) {}
 
 #else
 
 #include <stdio.h>
 #include <stdarg.h>
 
-void logprint(char* const fmt, ...) {
+void logprint(char const *fmt, ...) {
     va_list args;
     va_start(args, fmt);
     vprintf(fmt, args);

@@ -31,6 +31,9 @@ mkdir build; cd build; cmake ..; make
 O arquivo binário será criado numa subpasta `bin` com o nome `SpaceCats`. Junto dele estará
 um arquivo texto `inputdata`, que contém os parâmetros de entrada padrão do jogo, e a pasta de assets. Você pode também dar `cmake` e `make` direto da pasta raíz, mas vai ficar tudo bagunçado.
 
+Se passar para o cmake o parâmetro `-DDEBUG_MODE` prints de log serão ativados durante a execução do programa.
+Se quiser desativar os prints depois de ter rodado o cmake com o argumento de debug, basta rodar o cmake com `-DDEBUG_MODE=FALSE`, e recompilar com o `make`.
+
 ## Como jogar
 
 A partir da v0.3 o jogo agora lê um arquivo de configuraçã sozinho e não precisa receber uma entrada padrão. Isso deixa a execução do jogo mais fácil para o usuário. Basta abrir o executável que o jogo já roda. Pelo bash você pode rodar algo assim:
