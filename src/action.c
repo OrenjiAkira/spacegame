@@ -1,4 +1,6 @@
 
+#include "debug.h"
+#include "game.h"
 #include "entity.h"
 #include "action.h"
 #include "actions/movefwd.h"
@@ -11,27 +13,37 @@
 
 #include <stdio.h>
 
-static int ACTIONS[ACTION_LIST_SIZE][ENTITY_POOL_SIZE];
+static int ACTIONS[ACTION_LIST_SIZE][ACTION_POOL_SIZE];
 
 void Action_init() {
     int i, j;
     for (i = 0; i < ACTION_LIST_SIZE; ++i)
-        for (j = 0; j < ENTITY_POOL_SIZE; ++j)
+        for (j = 0; j < ACTION_POOL_SIZE; ++j)
             ACTIONS[i][j] = -1;
 }
 
 void Action_add(int POOL, int id) {
-    int i, free = -1;
-    for (i = 0; i < ENTITY_POOL_SIZE; ++i) {
+    int i, freepos = -1;
+    for (i = 0; i < ACTION_POOL_SIZE; ++i) {
+        /* Action pool already has this entity */
         if (ACTIONS[POOL][i] == id) return;
-        if (free == -1 && ACTIONS[POOL][i] == -1) free = i;
+
+        /* Found a free position in the action pool */
+        if (freepos == -1 && ACTIONS[POOL][i] == -1) {
+            freepos = i;
+            logprint("Adding action of type #%d to entity of id #%d\n", POOL, freepos);
+        }
     }
-    ACTIONS[POOL][free] = id;
+    if (freepos == -1) {
+        GAME_ERROR("Action pool is full.");
+        return;
+    }
+    ACTIONS[POOL][freepos] = id;
 }
 
 void Action_remove(int POOL, int id) {
     int i;
-    for (i = 0; i < ENTITY_POOL_SIZE; ++i)
+    for (i = 0; i < ACTION_POOL_SIZE; ++i)
         if (ACTIONS[POOL][i] == id)
             ACTIONS[POOL][i] = -1;
 }
@@ -46,4 +58,3 @@ void Action_update() {
     ShootIt( ACTIONS[ACTION_SHOOTIT] );
     Animate( ACTIONS[ACTION_ANIMATE] );
 }
-

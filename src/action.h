@@ -1,6 +1,10 @@
 #ifndef GAME_ACTION_H
 #define GAME_ACTION_H
 
+#include "entity.h"
+
+#define ACTION_POOL_SIZE ENTITY_POOL_SIZE
+
 /* Itera por todas as entidades dentro da pool de ação.
 Idealmente usa um bloco de código entre chaves logo depois. */
 #define FOREACH_VALID_ENTITY(pool_pointer) \
