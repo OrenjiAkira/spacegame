@@ -9,6 +9,7 @@ CMakeCache.txt
 Makefile
 makefile
 SpaceCats
+*.o
 
 .DS_Store
 */.DS_Store
