@@ -14,4 +14,5 @@ ship2 nyan_cat   59700000 1.6  16  8 0 -0.158
 # Bullet Config (mass, rad, lifetime)
 bullet 6000 0.3 2.0
 
+
 EOF
