@@ -11,7 +11,7 @@
 #include "controllers/pressstart.h"
 #include "scenes/pressstart.h"
 
-static FRONTTEXT, TUTORIAL1, TUTORIAL2;
+static int FRONTTEXT, TUTORIAL1, TUTORIAL2;
 
 static void PressStart_loadFrontText() {
     Vector pos;
