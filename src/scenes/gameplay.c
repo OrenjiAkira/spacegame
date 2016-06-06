@@ -36,7 +36,6 @@ static void GamePlay_loadPlayer1() {
     int phys, dquad, dpos, sprite, textbox;
     char name[32];
 
-    printf("%s\n", Conf_getString(CONF_SHIP1));
     Conf_getShipValues(0, name, &m, &r, &x, &y, &vx, &vy);
     phys = Physics_new(m, r, x, y, vx, vy);
     dquad = DrawQuad_new(768, 64, 64, 64);
@@ -49,6 +48,7 @@ static void GamePlay_loadPlayer1() {
     Action_add(ACTION_GRAVITY, PLAYER1);
     Action_add(ACTION_COLLIDE, PLAYER1);
     printf("< SHIP1 ID #%d >\n", PLAYER1);
+    printf("%s\n", Conf_getString(CONF_SHIP1));
 }
 
 static void GamePlay_loadPlayer2() {
@@ -56,7 +56,6 @@ static void GamePlay_loadPlayer2() {
     int phys, dquad, dpos, sprite, textbox;
     char name[32];
 
-    printf("%s\n", Conf_getString(CONF_SHIP2));
     Conf_getShipValues(1, name, &m, &r, &x, &y, &vx, &vy);
     phys = Physics_new(m, r, x, y, vx, vy);
     dquad = DrawQuad_new(768, 64, 64, 64);
@@ -69,6 +68,7 @@ static void GamePlay_loadPlayer2() {
     Action_add(ACTION_GRAVITY, PLAYER2);
     Action_add(ACTION_COLLIDE, PLAYER2);
     printf("< SHIP2 ID #%d >\n", PLAYER2);
+    printf("%s", Conf_getString(CONF_SHIP2));
 }
 
 static void GamePlay_loadBackground() {
@@ -125,7 +125,6 @@ void GamePlay_newBullet(int origin_body, float m, float r, float lt) {
     dir = Physics_getDirection(origin_body);
     Vector_copy(&aux, Direction_getVector(dir));
     Vector_mult(&aux, (r + 2.5));
-    printf("BODY ID: #%d\n", origin_body);
     Vector_copy(&pos, Physics_getPos(origin_body));
     Vector_add(&pos, &aux);
 

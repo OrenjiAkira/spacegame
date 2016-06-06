@@ -12,6 +12,5 @@ void Gravity(int *POOL) {
     FOREACH_VALID_ENTITY(POOL) {
         GET_ENTITY(ACTION_GRAVITY);
         Physics_gravitate(entity->physics);
-        Physics_print(entity->physics);
     }
 }

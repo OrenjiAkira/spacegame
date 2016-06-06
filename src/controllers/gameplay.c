@@ -11,7 +11,6 @@
 static void keypress(int key) {
     switch (key) {
         case P1_MARU:
-            printf("\n\n[ PLAYER1: %d ]\\n", GamePlay_getPlayer1());
             Action_add(ACTION_SHOOTIT, GamePlay_getPlayer1());
             break;
         case P1_BATSU:
@@ -27,7 +26,6 @@ static void keypress(int key) {
         case P1_RIGHT:
             break;
         case P2_MARU:
-            printf("\n\n[ PLAYER2: %d ]\\n", GamePlay_getPlayer2());
             Action_add(ACTION_SHOOTIT, GamePlay_getPlayer2());
             break;
         case P2_BATSU:
