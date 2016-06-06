@@ -1,8 +1,11 @@
 
+#include "debug.h"
 #include "input.h"
 #include "scenes/gameplay.h"
 #include "scenes/pressstart.h"
 #include "controllers/pressstart.h"
+
+static InputController controller;
 
 static void keypress(int key) {
     switch (key) {
@@ -50,7 +53,9 @@ static void keyhold(int key) {
 }
 
 void PressStartController_load() {
-    Input_registerPress(keypress);
-    Input_registerRelease(keyrelease);
-    Input_registerHold(keyhold);
+    controller.keyPressed = keypress;
+    controller.keyReleased = keyrelease;
+    controller.keyHeld = keyhold;
+    logprint("Stacking press start scene...\n");
+    Input_loadSceneController(&controller);
 }

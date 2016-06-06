@@ -30,35 +30,60 @@ static void Game_load() {
 }
 
 void Game_init(char const *execpath) {
+
+    logprint("Initializing:\n");
+
+
     /* Window */
+    logprint(" > Window\n");
     Window_init();
+    logprint(" > Input\n");
     Input_init();
 
     /* Configuration */
+    logprint(" > Conf Path\n");
     Path_init(execpath);
+
+    logprint(" > Conf Strings\n");
     Conf_init();
+
+    logprint(" > Conf Time\n");
     Time_init();
+
+    logprint(" > Conf Map\n");
     Map_init();
+
+    logprint(" > Conf Font\n");
     Font_init();
 
     /* Utilities */
+    logprint(" > Direction\n");
     Direction_init();
 
     /* Components */
+    logprint(" > Timers\n");
     Timer_init();
+    logprint(" > Physics\n");
     Physics_init();
+    logprint(" > DrawPos\n");
     DrawPos_init();
+    logprint(" > DrawQuad\n");
     DrawQuad_init();
+    logprint(" > Sprite\n");
     Sprite_init();
+    logprint(" > Textbox\n");
     Textbox_init();
 
     /* Entities */
+    logprint(" > Entity\n");
     Entity_init();
 
     /* Actions */
+    logprint(" > Action\n");
     Action_init();
 
     /* Load game */
+    logprint("Loading game...\n");
     Game_load();
 }
 
@@ -66,16 +91,34 @@ bool Game_update() {
     /* Qualquer uma dessas funções podem chamar
     a função Game_quit() e mudar o valor de QUIT. */
 
+    logprint("\n[ UPDATING ]\n");
+
+    logprint("\n *CONTROLLER*\n");
+
+    logprint(" > Input\n");
     Input_update();
 
+    logprint(" > Actions\n");
     Action_update();
 
+    logprint("\n *MODEL*\n");
+    logprint(" > Timers\n");
     Timer_update();
+
+    logprint(" > Physics\n");
     Physics_update();
+
+    logprint(" > DrawPos\n");
     DrawPos_update();
+
+    logprint(" > Sprite\n");
     Sprite_update();
+
+    logprint(" > Textbox\n");
     Textbox_update();
 
+    logprint("\n *VIEW*\n");
+    logprint(" > Window\n");
     Window_update();
 /*
     logprint("[Running at %d FPS]\n", Time_getFramerate());
@@ -85,6 +128,7 @@ bool Game_update() {
 }
 
 void Game_quit() {
+    logprint("\t> Game quit called.\n");
     QUIT = true;
 }
 

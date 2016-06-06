@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+static InputController controller;
+
 static void keypress(int key) {
     switch (key) {
         case P1_MARU:
@@ -102,7 +104,9 @@ static void keyhold(int key) {
 }
 
 void GamePlayController_load() {
-    Input_registerPress(keypress);
-    Input_registerRelease(keyrelease);
-    Input_registerHold(keyhold);
+    controller.keyPressed = keypress;
+    controller.keyReleased = keyrelease;
+    controller.keyHeld = keyhold;
+    logprint("Stacking game play scene...\n");
+    Input_loadSceneController(&controller);
 }

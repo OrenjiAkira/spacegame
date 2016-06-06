@@ -1,10 +1,28 @@
+#ifndef GAME_INPUT_H
+#define GAME_INPUT_H
 
+#define MAX_SCENE_DEPTH 16
 
 typedef void(*Keyevent)(int key);
 /* Keyevent (int) -> void
 Tipo de ponteiro de função. Recebe um int
 representando um input e retorna void.
 Executa algum código com base no valor recebido. */
+
+typedef struct _input_controller {
+    Keyevent keyPressed;
+    Keyevent keyReleased;
+    Keyevent keyHeld;
+} InputController;
+/* InputController
+Struct que guarda funções que gerenciam o input.
+Possuem três ponteiros de função, um para cada
+tipo de input (press, release, e hold).
+
+No input.c há um pilha dessa struct que guarda
+os estados do jogo. Ela empilha uma nova struct
+quando uma subcena é carregada, e a desempilha
+quando essa subcena é encerrada. */
 
 enum _keymap {
     DEFAULT,
@@ -38,21 +56,12 @@ Verifica os inputs do usuário e chama os
 ponteiros de função que guardam os eventos
 de input da cena atual de jogo. */
 
-void Input_registerPress(Keyevent pressFunc);
-/* (Keyevent) -> void
-Registra uma função Keyevent para eventos de keypress. */
+void Input_loadSceneController(InputController *controller);
+/* (InputController*) -> void
+Recebe e empilha um ponteiro de InputController na pilha de controles. */
 
-void Input_registerRelease(Keyevent releaseFunc);
-/* (Keyevent) -> void
-Registra uma função Keyevent para eventos de keyrelease. */
+void Input_unloadSceneController();
+/* () -> void
+Desempilha um ponteiro de InputController da pilha de controles. */
 
-void Input_registerHold(Keyevent holdFunc);
-/* (Keyevent) -> void
-Registra uma função Keyevent para eventos de keyhold. */
-
-void __nothing(int key);
-/* (int) -> void
-Faz nada. Serve para ocupar um ponteiro de função de Keyevent
-quando este não faz nada (por exemplo, quando uma cena de jogo
-não utiliza input porque é uma cena em que o usuário não
-tem controle do jogo). */
+#endif

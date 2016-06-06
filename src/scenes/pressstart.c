@@ -1,4 +1,5 @@
 
+#include "input.h"
 #include "action.h"
 #include "entity.h"
 #include "config/map.h"
@@ -37,6 +38,7 @@ static void PressStart_loadTutorialText2() {
     dpos = DrawPos_new(-1, 0, 0, 0, 0);
     textbox = Textbox_new("use WASD keys to move", dpos, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
     Vector_set(&pos, -Map_getWidth()/4, Map_getHeight()/4);
+    Vector_print(&pos);
     DrawPos_setPos(dpos, &pos);
     TUTORIAL2 = Entity_new(-1, dquad, dpos, sprite, textbox);
 }
@@ -66,6 +68,7 @@ void PressStart_load() {
 }
 
 void PressStart_close() {
+    Input_unloadSceneController();
     Entity_destroy(FRONTTEXT);
     Entity_destroy(TUTORIAL1);
     Entity_destroy(TUTORIAL2);

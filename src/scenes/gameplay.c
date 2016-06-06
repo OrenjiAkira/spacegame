@@ -1,5 +1,6 @@
 
 #include "debug.h"
+#include "input.h"
 #include "action.h"
 #include "entity.h"
 #include "config/conf.h"
@@ -65,8 +66,6 @@ static void GamePlay_loadPlayer2() {
     PLAYER2 = Entity_new(phys, dquad, dpos, sprite, textbox);
     Action_add(ACTION_GRAVITY, PLAYER2);
     Action_add(ACTION_COLLIDE, PLAYER2);
-    logprint("< SHIP2 ID #%d >\n", PLAYER2);
-    logprint("%s", Conf_getString(CONF_SHIP2));
 }
 
 static void GamePlay_loadBackground() {
@@ -106,6 +105,7 @@ void GamePlay_load() {
 }
 
 void GamePlay_close() {
+    Input_unloadSceneController();
     Entity_destroy(PLAYER1);
     Entity_destroy(PLAYER2);
     Entity_destroy(PLANET);

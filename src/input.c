@@ -1,4 +1,5 @@
 
+#include "debug.h"
 #include "game.h"
 #include "input.h"
 #include "action.h"
@@ -11,9 +12,11 @@ static SDL_Event e;
 
 static bool isHeld[KEYMAP_SIZE];
 
-static Keyevent keyPressed = NULL;
-static Keyevent keyReleased = NULL;
-static Keyevent keyHeld = NULL;
+static InputController *SCENE_CONTROLLER[MAX_SCENE_DEPTH];
+static int SCENE_DEPTH = -1; /* -1 significa que não está nenhuma cena carregada */
+
+static InputController __noController;
+static void __nothing(int key) {}
 
 static int keyRead(SDL_Keycode key) {
     switch (key) {
@@ -66,9 +69,15 @@ static int keyRead(SDL_Keycode key) {
 }
 
 void Input_init() {
-    keyReleased = __nothing;
-    keyPressed = __nothing;
-    keyHeld = __nothing;
+    int i;
+    for (i = 0; i < MAX_SCENE_DEPTH; ++i) {
+        SCENE_CONTROLLER[i] = NULL;
+    }
+    __noController.keyPressed = __nothing;
+    __noController.keyReleased = __nothing;
+    __noController.keyHeld = __nothing;
+    Input_loadSceneController(&__noController);
+    logprint("Empty scene 0 loaded for security.\n");
 }
 
 void Input_update() {
@@ -76,32 +85,39 @@ void Input_update() {
 
     while( SDL_PollEvent( &e ) != 0 )
         if (e.type == SDL_QUIT) {
+            logprint("\t> Game quit by input\n");
             Game_quit();
         } else if (e.type == SDL_KEYDOWN) {
             key = keyRead(e.key.keysym.sym);
-            keyPressed(key);
+            SCENE_CONTROLLER[SCENE_DEPTH]->keyPressed(key);
             isHeld[key] = true;
-        } else if (e.type == SDL_KEYUP) {   
+        } else if (e.type == SDL_KEYUP) {
             key = keyRead(e.key.keysym.sym);
-            keyReleased(key);
+            SCENE_CONTROLLER[SCENE_DEPTH]->keyReleased(key);
             isHeld[key] = false;
         }
 
     for (key = 0; key < KEYMAP_SIZE; ++key)
-        if (isHeld[key]) keyHeld(key);
+        if (isHeld[key]) SCENE_CONTROLLER[SCENE_DEPTH]->keyHeld(key);
 }
 
-void Input_registerPress(Keyevent pressFunc) {
-    keyPressed = pressFunc;
+void Input_loadSceneController(InputController *controller) {
+    ++SCENE_DEPTH;
+    if (SCENE_DEPTH < MAX_SCENE_DEPTH) {
+        SCENE_CONTROLLER[SCENE_DEPTH] = controller;
+        logprint("LOADED SCENE IN DEPTH %d\n", SCENE_DEPTH);
+    } else {
+        GAME_ERROR("LOADED TOO MANY SUBSCENES, SCENE STACK OVERFLOW.");
+    }
 }
 
-void Input_registerRelease(Keyevent releaseFunc) {
-    keyReleased = releaseFunc;
+void Input_unloadSceneController() {
+    if (SCENE_DEPTH <= 0) {
+        logprint("NO SCENE CONTROLLER TO UNLOAD\n");
+        Game_quit();
+        return;
+    }
+    logprint("UNLOADED SCENE IN DEPTH %d\n", SCENE_DEPTH);
+    SCENE_CONTROLLER[SCENE_DEPTH] = NULL;
+    --SCENE_DEPTH;
 }
-
-void Input_registerHold(Keyevent holdFunc) {
-    keyHeld = holdFunc;
-}
-
-void __nothing(int key) {}
-
