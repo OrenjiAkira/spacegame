@@ -28,5 +28,9 @@ char* Path_toFonts();
 /* () -> char*
 Retorna o caminho para a pasta de fontes. */
 
+char* Path_toFX();
+/* () -> char*
+Retorna o caminho para a pasta de efeitos sonoros. */
+
 
 #endif
