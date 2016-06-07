@@ -30,6 +30,7 @@ set(
     src/scenes/pressstart.c
     src/window.c
     src/action.c
+    src/sound.c
     src/entity.c
     src/input.c
     src/debug.c
