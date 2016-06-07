@@ -23,7 +23,7 @@ static bool init_libs() {
             logprint( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
             break;
         }
-        if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ) {
+        if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) == -1 ) {
             break;
         }
         return false;
@@ -41,7 +41,7 @@ static void close_libs() {
     SDL_Quit();
 }
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char* const argv[]) {
     bool quit = init_libs();
 
     logprint("RUNNING GAME IN DEBUG MODE, SOME LAGGING MAY OCCUR.\n");
