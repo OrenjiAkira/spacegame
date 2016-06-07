@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-/*static long unsigned int framecount = 0;*/
+static long unsigned int framecount = 0;
 static bool QUIT = false;
 
 static void Game_load() {
@@ -103,10 +103,11 @@ bool Game_update() {
     Sprite_update();
     Textbox_update();
     Window_update();
-/*
-    logprint("[Running at %d FPS]\n", Time_getFramerate());
-    logprint("Framecount: %lu\n\n", ++framecount);
-*/
+
+    /* logprint("[Running at %d FPS]\n", Time_getFramerate());
+    logprint("Framecount: %lu\n\n", ++framecount); */
+    ++framecount;
+
     return QUIT;
 }
 
@@ -116,6 +117,8 @@ void Game_quit() {
 }
 
 void Game_close() {
+    logprint("Framecount: %lu (%f secs)\n\n", framecount, framecount*1.0/Time_getFramerate());
+
     Entity_close();
 
     DrawQuad_close();
