@@ -1,6 +1,7 @@
 
 #include "entity.h"
 #include "action.h"
+#include "sound.h"
 #include "config/conf.h"
 #include "components/physics.h"
 #include "actions/shootit.h"
@@ -22,6 +23,7 @@ void ShootIt(int *POOL) {
     FOREACH_VALID_ENTITY(POOL) {
         GET_ENTITY(ACTION_SHOOTIT);
         if (!isSet) load_bullet_values();
+        Sound_playSE(FX_SHOOT);
         GamePlay_newBullet(entity->physics, MASS, RADIUS, LIFETIME);
         Action_remove(ACTION_SHOOTIT, POOL[i]);
     }

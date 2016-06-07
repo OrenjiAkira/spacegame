@@ -1,5 +1,6 @@
 
 #include "debug.h"
+#include "sound.h"
 #include "input.h"
 #include "scenes/gameplay.h"
 #include "scenes/pressstart.h"
@@ -10,6 +11,7 @@ static InputController controller;
 static void keypress(int key) {
     switch (key) {
         case P1_MARU:
+            Sound_playSE(FX_SELECT);
             PressStart_close();
             GamePlay_load();
             break;
@@ -26,6 +28,7 @@ static void keypress(int key) {
         case P1_RIGHT:
             break;
         case P2_MARU:
+            Sound_playSE(FX_SELECT);
             PressStart_close();
             GamePlay_load();
             break;

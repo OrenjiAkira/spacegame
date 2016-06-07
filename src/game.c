@@ -2,6 +2,7 @@
 #include "game.h"
 #include "window.h"
 #include "action.h"
+#include "sound.h"
 #include "input.h"
 #include "config/path.h"
 #include "config/conf.h"
@@ -82,6 +83,10 @@ void Game_init(char const *execpath) {
     logprint(" > Action\n");
     Action_init();
 
+    /* Sound */
+    logprint(" > Sound\n");
+    Sound_init();
+
     /* Load game */
     logprint("Loading game...\n");
     Game_load();
@@ -118,6 +123,8 @@ void Game_close() {
     Textbox_close();
 
     Font_close();
+
+    Sound_close();
 
     Window_close();
 }
