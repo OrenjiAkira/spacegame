@@ -8,6 +8,7 @@ set(
     src/config/path.c
     src/config/time.c
     src/config/font.c
+    src/utility/string.c
     src/utility/vector.c
     src/utility/direction.c
     src/components/physics.c
