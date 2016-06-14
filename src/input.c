@@ -15,8 +15,8 @@ static bool isHeld[KEYMAP_SIZE];
 static InputController *SCENE_CONTROLLER[MAX_SCENE_DEPTH];
 static int SCENE_DEPTH = -1; /* -1 significa que não está nenhuma cena carregada */
 
-static InputController __noController;
-static void __nothing(int key) {}
+static InputController __noController__;
+static void __null_keyevent__(int key) {}
 
 static int keyRead(SDL_Keycode key) {
     switch (key) {
@@ -73,10 +73,10 @@ void Input_init() {
     for (i = 0; i < MAX_SCENE_DEPTH; ++i) {
         SCENE_CONTROLLER[i] = NULL;
     }
-    __noController.keyPressed = __nothing;
-    __noController.keyReleased = __nothing;
-    __noController.keyHeld = __nothing;
-    Input_loadSceneController(&__noController);
+    __noController__.keyPressed = __null_keyevent__;
+    __noController__.keyReleased = __null_keyevent__;
+    __noController__.keyHeld = __null_keyevent__;
+    Input_loadSceneController(&__noController__);
     logprint("Empty scene 0 loaded for security.\n");
 }
 
