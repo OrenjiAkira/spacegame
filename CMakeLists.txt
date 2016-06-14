@@ -29,6 +29,7 @@ set(
     src/scenes/gameplay.c
     src/scenes/pressstart.c
     src/window.c
+    src/scene.c
     src/action.c
     src/sound.c
     src/entity.c
