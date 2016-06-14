@@ -45,7 +45,7 @@ if (DEBUG_MODE)
 endif(DEBUG_MODE)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
 
-add_executable(game ${SOURCE_FILES})
+add_executable(SpaceCats ${SOURCE_FILES})
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_IMAGE REQUIRED)
@@ -60,7 +60,7 @@ include_directories(
     src)
 
 target_link_libraries(
-    game
+    SpaceCats
     ${SDL2_LIBRARY}
     ${SDL2_IMAGE_LIBRARY}
     ${SDL2_TTF_LIBRARY}
