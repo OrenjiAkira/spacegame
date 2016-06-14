@@ -40,7 +40,7 @@ typedef void (*KeyHandler)();
         NAME##Controller.keyHeld = keyhold; \
         logprint("Stacking " #NAME " scene...\n"); \
         Input_loadSceneController(&NAME##Controller); } \
-    static char *success_msg = "Controller" #NAME "initialized\n"
+    static char *success_msg = "> Controller " #NAME " initialized\n"
 
 /* Essa última linha de código serve para o uso
 da macro pedir o caracter ";" no fim da linha.
