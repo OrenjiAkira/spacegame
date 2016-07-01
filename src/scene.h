@@ -25,16 +25,20 @@ enum _scene_names {
     SCENE_LIST[ID].close = SNAME##_close
 
 void Scene_init();
-/* () -> void */
+/* () -> void
+Inicializa todas as cenas do jogo. */
 
 void Scene_load(int sname);
-/* () -> void */
+/* () -> void
+Recebe o nome de uma cena, e a torna atual. */
 
 void Scene_pause();
-/* () -> void */
+/* () -> void
+Pausa a cena atual. */
 
-void Scene_close();
-/* () -> void */
+void Scene_unpause();
+/* () -> void
+Despausa a cena atual. */
 
 
 #endif
