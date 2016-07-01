@@ -2,7 +2,7 @@
 framerate 60
 
 # Map config
-map 80 60
+map 64 48
 
 # Planets (mass, rad, x, y)
 planet 9e+9 4.8 0 0
