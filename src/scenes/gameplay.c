@@ -1,5 +1,6 @@
 
 #include "debug.h"
+#include "game.h"
 #include "input.h"
 #include "action.h"
 #include "entity.h"
@@ -60,6 +61,9 @@ static void GamePlay_loadPlayer(int const which) {
     } else if (PLAYER2 == -1) {
         PLAYER2 = Entity_new(phys, dquad, dpos, sprite, textbox);
         player = PLAYER2;
+    } else {
+        player = -1;
+        GAME_ERROR("Could not initialize player. Did you mess with the code?");
     }
 
     Action_add(ACTION_GRAVITY, player);
