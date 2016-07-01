@@ -53,10 +53,10 @@ de input da cena atual de jogo. */
 
 void Input_loadSceneController(InputController *controller);
 /* (InputController*) -> void
-Recebe e empilha um ponteiro de InputController na pilha de controles. */
+Recebe um ponteiro de InputController e o coloca como atual. */
 
 void Input_unloadSceneController();
 /* () -> void
-Desempilha um ponteiro de InputController da pilha de controles. */
+Coloca um InputController nulo como atual. */
 
 #endif
