@@ -1,9 +1,9 @@
 
 #include "debug.h"
+#include "scene.h"
 #include "sound.h"
 #include "input.h"
 #include "controller.h"
-#include "scenes/gameplay.h"
 #include "scenes/pressstart.h"
 #include "controllers/pressstart.h"
 
@@ -14,8 +14,7 @@ NEW_CONTROLLER(PressStart);
 
 static void press_any_shift() {
     Sound_playSE(FX_SELECT);
-    PressStart_close();
-    GamePlay_load();
+    Scene_load(SCENE_GAMEPLAY);
 }
 
 static void PressStartController_init() {

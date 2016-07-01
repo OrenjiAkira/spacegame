@@ -107,6 +107,9 @@ void GamePlay_load() {
     GamePlayController_load();
 }
 
+void GamePlay_pause() {}
+void GamePlay_unpause() {}
+
 void GamePlay_close() {
     Input_unloadSceneController();
     Entity_destroy(PLAYER1);

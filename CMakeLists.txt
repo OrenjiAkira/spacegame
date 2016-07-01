@@ -26,8 +26,10 @@ set(
     src/actions/animate.c
     src/controllers/gameplay.c
     src/controllers/pressstart.c
+    src/controllers/chooseyourcat.c
     src/scenes/gameplay.c
     src/scenes/pressstart.c
+    src/scenes/chooseyourcat.c
     src/window.c
     src/scene.c
     src/action.c

@@ -1,6 +1,7 @@
 
 #include "game.h"
 #include "window.h"
+#include "scene.h"
 #include "action.h"
 #include "sound.h"
 #include "input.h"
@@ -26,7 +27,7 @@ static long unsigned int framecount = 0;
 static bool QUIT = false;
 
 static void Game_load() {
-    PressStart_load();
+    Scene_load(SCENE_PRESSSTART);
     logprint("UNITS: \n [ %f, %f ]\n", Map_getUnitX(), Map_getUnitY());
 }
 
@@ -86,6 +87,9 @@ void Game_init(char const *execpath) {
     /* Sound */
     logprint(" > Sound\n");
     Sound_init();
+
+    /* Scenes */
+    Scene_init();
 
     /* Load game */
     logprint("Loading game...\n");

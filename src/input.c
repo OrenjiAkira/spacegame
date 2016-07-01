@@ -10,10 +10,8 @@
 
 static SDL_Event e;
 
+static InputController *CURRENT_CONTROLLER;
 static bool isHeld[KEYMAP_SIZE];
-
-static InputController *SCENE_CONTROLLER[MAX_SCENE_DEPTH];
-static int SCENE_DEPTH = -1; /* -1 significa que não está nenhuma cena carregada */
 
 static InputController __noController__;
 static void __null_keyevent__(int key) {}
@@ -69,15 +67,11 @@ static int keyRead(SDL_Keycode key) {
 }
 
 void Input_init() {
-    int i;
-    for (i = 0; i < MAX_SCENE_DEPTH; ++i) {
-        SCENE_CONTROLLER[i] = NULL;
-    }
     __noController__.keyPressed = __null_keyevent__;
     __noController__.keyReleased = __null_keyevent__;
     __noController__.keyHeld = __null_keyevent__;
     Input_loadSceneController(&__noController__);
-    logprint("Empty scene 0 loaded for security.\n");
+    logprint("Empty controller loaded for security.\n");
 }
 
 void Input_update() {
@@ -89,35 +83,22 @@ void Input_update() {
             Game_quit();
         } else if (e.type == SDL_KEYDOWN) {
             key = keyRead(e.key.keysym.sym);
-            SCENE_CONTROLLER[SCENE_DEPTH]->keyPressed(key);
+            CURRENT_CONTROLLER->keyPressed(key);
             isHeld[key] = true;
         } else if (e.type == SDL_KEYUP) {
             key = keyRead(e.key.keysym.sym);
-            SCENE_CONTROLLER[SCENE_DEPTH]->keyReleased(key);
+            CURRENT_CONTROLLER->keyReleased(key);
             isHeld[key] = false;
         }
 
     for (key = 0; key < KEYMAP_SIZE; ++key)
-        if (isHeld[key]) SCENE_CONTROLLER[SCENE_DEPTH]->keyHeld(key);
-}
-
-void Input_loadSceneController(InputController *controller) {
-    ++SCENE_DEPTH;
-    if (SCENE_DEPTH < MAX_SCENE_DEPTH) {
-        SCENE_CONTROLLER[SCENE_DEPTH] = controller;
-        logprint("LOADED SCENE IN DEPTH %d\n", SCENE_DEPTH);
-    } else {
-        GAME_ERROR("LOADED TOO MANY SUBSCENES, SCENE STACK OVERFLOW.");
-    }
+        if (isHeld[key]) CURRENT_CONTROLLER->keyHeld(key);
 }
 
 void Input_unloadSceneController() {
-    if (SCENE_DEPTH <= 0) {
-        logprint("NO SCENE CONTROLLER TO UNLOAD\n");
-        Game_quit();
-        return;
-    }
-    logprint("UNLOADED SCENE IN DEPTH %d\n", SCENE_DEPTH);
-    SCENE_CONTROLLER[SCENE_DEPTH] = NULL;
-    --SCENE_DEPTH;
+    CURRENT_CONTROLLER = &__noController__;
+}
+
+void Input_loadSceneController(InputController *controller) {
+    CURRENT_CONTROLLER = controller;
 }

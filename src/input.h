@@ -17,12 +17,7 @@ typedef struct _input_controller {
 /* InputController
 Struct que guarda funções que gerenciam o input.
 Possuem três ponteiros de função, um para cada
-tipo de input (press, release, e hold).
-
-No input.c há um pilha dessa struct que guarda
-os estados do jogo. Ela empilha uma nova struct
-quando uma subcena é carregada, e a desempilha
-quando essa subcena é encerrada. */
+tipo de input (press, release, e hold). */
 
 enum _keymap {
     DEFAULT,

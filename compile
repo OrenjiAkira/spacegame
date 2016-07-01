@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DEBUG_FLAG=""
+
+if [[ "$1" == "-debug" ]]; then
+  DEBUG_FLAG="-DDEBUG_MODE=TRUE"
+else
+  DEBUG_FLAG="-DDEBUG_MODE=FALSE"
+fi
+
+mkdir build; cd build; cmake $DEBUG_FLAG .. && make;
+

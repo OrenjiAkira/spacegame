@@ -38,7 +38,7 @@ typedef void (*KeyHandler)();
         NAME##Controller.keyPressed = keypress; \
         NAME##Controller.keyReleased = keyrelease; \
         NAME##Controller.keyHeld = keyhold; \
-        logprint("Stacking " #NAME " scene...\n"); \
+        logprint("Loading " #NAME " controller...\n"); \
         Input_loadSceneController(&NAME##Controller); } \
     static char *success_msg = "> Controller " #NAME " initialized\n"
 

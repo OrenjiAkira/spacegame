@@ -2,44 +2,48 @@
 #include "debug.h"
 #include "game.h"
 #include "scene.h"
+#include "controllers/gameplay.h"
 #include "scenes/gameplay.h"
+#include "controllers/pressstart.h"
 #include "scenes/pressstart.h"
+#include "controllers/chooseyourcat.h"
+#include "scenes/chooseyourcat.h"
 
 #include <stdlib.h>
 
-static Scene *SCENE[SCENE_STACK_SIZE];
-static int SCENE_STACK_HEAD = -1;
+static void null_scene_load() {}
+static void null_scene_pause() {}
+static void null_scene_unpause() {}
+static void null_scene_close() {}
 
-static Scene __noScene__;
-static void __null_scene__() {}
+static Scene *CURRENT_SCENE = NULL;
+static Scene SCENE_LIST[SCENE_TOTAL];
 
 void Scene_init() {
-    int i;
-    for (i = 0; i < SCENE_STACK_SIZE; ++i) SCENE[i] = NULL;
+    SCENE_INITIALIZE(SCENE_DEFAULT, null_scene);
+    SCENE_INITIALIZE(SCENE_GAMEPLAY, GamePlay);
+    SCENE_INITIALIZE(SCENE_PRESSSTART, PressStart);
+    SCENE_INITIALIZE(SCENE_CHOOSEYOURCAT, ChooseYourCat);
 
-    __noScene__.load = __null_scene__;
-    __noScene__.pause = __null_scene__;
-    __noScene__.close = __null_scene__;
-    Scene_load(&__noScene__);
+    Scene_load(SCENE_DEFAULT);
 }
 
-void Scene_load(Scene* scene) {
-    if (SCENE_STACK_HEAD > 0) Scene_close();
-    ++SCENE_STACK_HEAD;
-    SCENE[SCENE_STACK_HEAD] = scene;
-    SCENE[SCENE_STACK_HEAD]->load();
+void Scene_load(int sname) {
+    if (CURRENT_SCENE != NULL) Scene_close();
+    CURRENT_SCENE = &SCENE_LIST[sname];
+    CURRENT_SCENE->load();
 }
 
-void Scene_stack(Scene* scene) {
-    if (SCENE_STACK_HEAD >= 0) SCENE[SCENE_STACK_HEAD]->pause();
-    ++SCENE_STACK_HEAD;
-    SCENE[SCENE_STACK_HEAD] = scene;
-    SCENE[SCENE_STACK_HEAD]->load();
+void Scene_pause() {
+    CURRENT_SCENE->pause();
+}
+
+void Scene_unpause() {
+    CURRENT_SCENE->unpause();
 }
 
 void Scene_close() {
-    if (SCENE_STACK_HEAD < 0) { GAME_ERROR("Unable to close unstacked scene"); return; }
-    if (SCENE_STACK_HEAD == 0) { logprint("\t> All scenes unloaded, closing game"); Game_quit(); }
-    SCENE[SCENE_STACK_HEAD]->close();
-    --SCENE_STACK_HEAD;
+    logprint("\n[ Closing current scene ]\n");
+    CURRENT_SCENE->close();
+    CURRENT_SCENE = NULL;
 }

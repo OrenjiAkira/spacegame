@@ -4,26 +4,33 @@
 typedef struct _scene {
     void (*load)();
     void (*pause)();
+    void (*unpause)();
     void (*close)();
 } Scene;
 
+typedef void (*SceneMethod)();
+
 enum _scene_names {
+    SCENE_DEFAULT,
     SCENE_GAMEPLAY,
     SCENE_PRESSSTART,
-    SCENE_PAUSE,
-    SCENE_TEXT,
+    SCENE_CHOOSEYOURCAT,
     SCENE_TOTAL
 };
 
-#define SCENE_STACK_SIZE SCENE_TOTAL*2
+#define SCENE_INITIALIZE(ID, SNAME) \
+    SCENE_LIST[ID].load = SNAME##_load; \
+    SCENE_LIST[ID].pause = SNAME##_pause; \
+    SCENE_LIST[ID].unpause = SNAME##_unpause; \
+    SCENE_LIST[ID].close = SNAME##_close
 
 void Scene_init();
 /* () -> void */
 
-void Scene_load(Scene* scene);
+void Scene_load(int sname);
 /* () -> void */
 
-void Scene_stack(Scene* scene);
+void Scene_pause();
 /* () -> void */
 
 void Scene_close();

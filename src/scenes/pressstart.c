@@ -67,6 +67,10 @@ void PressStart_load() {
     PressStartController_load();
 }
 
+void PressStart_pause() {}
+
+void PressStart_unpause() {}
+
 void PressStart_close() {
     Input_unloadSceneController();
     Entity_destroy(FRONTTEXT);
