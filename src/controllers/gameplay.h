@@ -1,8 +1,8 @@
-#ifndef GAME_SPACECONTROLLER_H
-#define GAME_SPACECONTROLLER_H
+#ifndef GAME_GAMEPLAY_CONTROLLER_H
+#define GAME_GAMEPLAY_CONTROLLER_H
 
 void GamePlayController_load();
 /* () -> void
-Carrega os controles de input da cena de espaço. */
+Carrega os controles de input da cena de game play. */
 
 #endif

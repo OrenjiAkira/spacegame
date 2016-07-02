@@ -1,5 +1,7 @@
 
+#include "debug.h"
 #include "game.h"
+#include "input.h"
 #include "action.h"
 #include "entity.h"
 #include "config/conf.h"
@@ -11,10 +13,11 @@
 #include "components/drawquad.h"
 #include "components/sprite.h"
 #include "components/textbox.h"
-#include "controllers/gameplay.h"
 #include "scenes/gameplay.h"
+#include "controllers/gameplay.h"
 
 #include <stdio.h>
+#include <string.h>
 
 static int PLAYER1 = -1, PLAYER2 = -1, BACKGROUND = -1, PLANET = -1;
 
@@ -29,47 +32,43 @@ static void GamePlay_loadPlanet() {
     sprite = Sprite_new("planetv2.png", dpos, dquad, LAYER_MIDGROUND1);
     PLANET = Entity_new(phys, dquad, dpos, sprite, -1);
     Action_add(ACTION_ANIMATE, PLANET);
-    printf("< PLANET ID #%d >\n", PLANET);
 }
 
-static void GamePlay_loadPlayer1() {
+static void GamePlay_loadPlayer(int const which) {
     float m, r, x, y, vx, vy;
     int phys, dquad, dpos, sprite, textbox;
-    char name[32];
+    int player;
+    char name[32], filename[32], fileid[2] = {'0', '\0'};
 
-    printf("%s\n", Conf_getString(CONF_SHIP1));
-    Conf_getShipValues(0, name, &m, &r, &x, &y, &vx, &vy);
+    fileid[0] += (char)which;
+    filename[0] = '\0';
+    strcat(filename, "cat0");
+    strcat(filename, fileid);
+    strcat(filename, ".png\0");
+    logprint("FILENAME: %s\n", filename);
+
+    Conf_getShipValues(which, name, &m, &r, &x, &y, &vx, &vy);
     phys = Physics_new(m, r, x, y, vx, vy);
     dquad = DrawQuad_new(768, 64, 64, 64);
     dpos = DrawPos_new(phys, 64, 64, 32, 32);
-    sprite = Sprite_new("cat00.png", dpos, dquad, LAYER_MIDGROUND1);
-    dpos = DrawPos_new(phys, 0, 0, 0, 0);
+    sprite = Sprite_new(filename, dpos, dquad, LAYER_MIDGROUND1);
+    dpos = DrawPos_new(phys, 0, 0, 0, -16);
     textbox = Textbox_new(name, dpos, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
 
-    PLAYER1 = Entity_new(phys, dquad, dpos, sprite, textbox);
-    Action_add(ACTION_GRAVITY, PLAYER1);
-    Action_add(ACTION_COLLIDE, PLAYER1);
-    printf("< SHIP1 ID #%d >\n", PLAYER1);
-}
+    if (PLAYER1 == -1) {
+        PLAYER1 = Entity_new(phys, dquad, dpos, sprite, textbox);
+        player = PLAYER1;
+    } else if (PLAYER2 == -1) {
+        PLAYER2 = Entity_new(phys, dquad, dpos, sprite, textbox);
+        player = PLAYER2;
+    } else {
+        player = -1;
+        GAME_ERROR("Could not initialize player. Did you mess with the code?");
+    }
 
-static void GamePlay_loadPlayer2() {
-    float m, r, x, y, vx, vy;
-    int phys, dquad, dpos, sprite, textbox;
-    char name[32];
-
-    printf("%s\n", Conf_getString(CONF_SHIP2));
-    Conf_getShipValues(1, name, &m, &r, &x, &y, &vx, &vy);
-    phys = Physics_new(m, r, x, y, vx, vy);
-    dquad = DrawQuad_new(768, 64, 64, 64);
-    dpos = DrawPos_new(phys, 64, 64, 32, 32);
-    sprite = Sprite_new("cat01.png", dpos, dquad, LAYER_MIDGROUND1);
-    dpos = DrawPos_new(phys, 0, 0, 0, 0);
-    textbox = Textbox_new(name, dpos, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
-
-    PLAYER2 = Entity_new(phys, dquad, dpos, sprite, textbox);
-    Action_add(ACTION_GRAVITY, PLAYER2);
-    Action_add(ACTION_COLLIDE, PLAYER2);
-    printf("< SHIP2 ID #%d >\n", PLAYER2);
+    Action_add(ACTION_GRAVITY, player);
+    Action_add(ACTION_COLLIDE, player);
+    logprint("< SHIP%d ID #%d >\n", which, player);
 }
 
 static void GamePlay_loadBackground() {
@@ -77,11 +76,11 @@ static void GamePlay_loadBackground() {
     int dpos, sprite;
 
     dpos = DrawPos_new(-1, 800, 600, 400, 300);
+    sprite = Sprite_new("background.png", dpos, -1, LAYER_BACKGROUND);
     Vector_set(&pos, 0, 0);
     DrawPos_setPos(dpos, &pos);
-    sprite = Sprite_new("background.png", dpos, -1, LAYER_BACKGROUND);
     BACKGROUND = Entity_new(-1, -1, dpos, sprite, -1);
-    printf("< BACKGROUND ID #%d >\n", BACKGROUND);
+    logprint("< BACKGROUND ID #%d >\n", BACKGROUND);
 }
 
 void GamePlay_setPlayer1(int id) {
@@ -103,12 +102,16 @@ int GamePlay_getPlayer2() {
 void GamePlay_load() {
     GamePlay_loadBackground();
     GamePlay_loadPlanet();
-    GamePlay_loadPlayer1();
-    GamePlay_loadPlayer2();
+    GamePlay_loadPlayer(0);
+    GamePlay_loadPlayer(1);
     GamePlayController_load();
 }
 
+void GamePlay_pause() {}
+void GamePlay_unpause() {}
+
 void GamePlay_close() {
+    Input_unloadSceneController();
     Entity_destroy(PLAYER1);
     Entity_destroy(PLAYER2);
     Entity_destroy(PLANET);
@@ -126,7 +129,6 @@ void GamePlay_newBullet(int origin_body, float m, float r, float lt) {
     dir = Physics_getDirection(origin_body);
     Vector_copy(&aux, Direction_getVector(dir));
     Vector_mult(&aux, (r + 2.5));
-    printf("BODY ID: #%d\n", origin_body);
     Vector_copy(&pos, Physics_getPos(origin_body));
     Vector_add(&pos, &aux);
 
@@ -159,14 +161,11 @@ void GamePlay_newExplosion(int origin_body) {
     int dquad, dpos, sprite;
     int explosion;
 
-    /* Definindo posição */
     dpos = DrawPos_new(-1, 64, 64, 32, 32);
-    Vector_copy(&pos, Physics_getPos(origin_body));
-    DrawPos_setPos(dpos, &pos);
-
-    /* Criando quad e sprite */
     dquad = DrawQuad_new(512, 64, 64, 64);
     sprite = Sprite_new("explosion.png", dpos, dquad, LAYER_MIDGROUND2);
+    Vector_copy(&pos, Physics_getPos(origin_body));
+    DrawPos_setPos(dpos, &pos);
 
     /* Criando entidade */
     explosion = Entity_new(-1, dquad, dpos, sprite, -1);

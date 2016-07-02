@@ -1,4 +1,5 @@
 
+#include "debug.h"
 #include "game.h"
 #include "input.h"
 #include "action.h"
@@ -9,11 +10,11 @@
 
 static SDL_Event e;
 
+static InputController *CURRENT_CONTROLLER;
 static bool isHeld[KEYMAP_SIZE];
 
-static Keyevent keyPressed = NULL;
-static Keyevent keyReleased = NULL;
-static Keyevent keyHeld = NULL;
+static InputController __noController__;
+static void __null_keyevent__(int key) {}
 
 static int keyRead(SDL_Keycode key) {
     switch (key) {
@@ -44,7 +45,7 @@ static int keyRead(SDL_Keycode key) {
         case SDLK_LALT:
             return P2_BATSU;
             break;
-        case SDLK_r:
+        case SDLK_ESCAPE:
             return P2_PAUSE;
             break;
         case SDLK_w:
@@ -66,9 +67,11 @@ static int keyRead(SDL_Keycode key) {
 }
 
 void Input_init() {
-    keyReleased = __nothing;
-    keyPressed = __nothing;
-    keyHeld = __nothing;
+    __noController__.keyPressed = __null_keyevent__;
+    __noController__.keyReleased = __null_keyevent__;
+    __noController__.keyHeld = __null_keyevent__;
+    Input_loadSceneController(&__noController__);
+    logprint("Empty controller loaded for security.\n");
 }
 
 void Input_update() {
@@ -76,32 +79,26 @@ void Input_update() {
 
     while( SDL_PollEvent( &e ) != 0 )
         if (e.type == SDL_QUIT) {
+            logprint("\t> Game quit by input\n");
             Game_quit();
         } else if (e.type == SDL_KEYDOWN) {
             key = keyRead(e.key.keysym.sym);
-            keyPressed(key);
+            CURRENT_CONTROLLER->keyPressed(key);
             isHeld[key] = true;
-        } else if (e.type == SDL_KEYUP) {   
+        } else if (e.type == SDL_KEYUP) {
             key = keyRead(e.key.keysym.sym);
-            keyReleased(key);
+            CURRENT_CONTROLLER->keyReleased(key);
             isHeld[key] = false;
         }
 
     for (key = 0; key < KEYMAP_SIZE; ++key)
-        if (isHeld[key]) keyHeld(key);
+        if (isHeld[key]) CURRENT_CONTROLLER->keyHeld(key);
 }
 
-void Input_registerPress(Keyevent pressFunc) {
-    keyPressed = pressFunc;
+void Input_unloadSceneController() {
+    CURRENT_CONTROLLER = &__noController__;
 }
 
-void Input_registerRelease(Keyevent releaseFunc) {
-    keyReleased = releaseFunc;
+void Input_loadSceneController(InputController *controller) {
+    CURRENT_CONTROLLER = controller;
 }
-
-void Input_registerHold(Keyevent holdFunc) {
-    keyHeld = holdFunc;
-}
-
-void __nothing(int key) {}
-

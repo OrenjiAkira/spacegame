@@ -1,4 +1,5 @@
 
+#include "debug.h"
 #include "window.h"
 #include "game.h"
 #include "config/path.h"
@@ -32,13 +33,13 @@ static SDL_Texture* Sprite_loadTexture(char* filename) {
 
     temp_srf = IMG_Load(path_to_image);
     if (temp_srf == NULL) {
-        printf( "Unable to load image %s! SDL_image Error: %s\n", path_to_image, IMG_GetError() );
+        logprint( "Unable to load image %s! SDL_image Error: %s\n", path_to_image, IMG_GetError() );
         return NULL;
     }
 
     texture = SDL_CreateTextureFromSurface( Window_getRenderer(), temp_srf );
     if (texture == NULL) {
-        printf( "Unable to create texture from %s! SDL Error: %s\n", path_to_image, SDL_GetError() );
+        logprint( "Unable to create texture from %s! SDL Error: %s\n", path_to_image, SDL_GetError() );
         return NULL;
     }
 
@@ -81,7 +82,7 @@ static void Sprite_draw(int id) {
 
 void Sprite_init() {
     int id, l;
-    
+
     for (id = 0; id < SPRITE_POOL_SIZE; ++id) {
         for (l = 0; l < LAYER_COUNT; ++l) LAYERS[l][id] = -1;
 
@@ -134,7 +135,7 @@ void Sprite_update() {
 void Sprite_close() {
     int id;
 
-    for (id = 0; id < SPRITE_POOL_SIZE; ++id) {   
+    for (id = 0; id < SPRITE_POOL_SIZE; ++id) {
         Sprite_kill(id);
     }
 }

@@ -26,12 +26,12 @@ static void DrawPos_alignWithoutPhysics(int id, Vector* position) {
 
 static void DrawPos_align(int id) {
     Vector *position;
-    
+
     if (DRAWPOS[id].phys_id != -1) {
         position = Physics_getPos(DRAWPOS[id].phys_id);
         DrawPos_alignWithoutPhysics(id, position);
     }
-    
+
 }
 
 void DrawPos_init() {

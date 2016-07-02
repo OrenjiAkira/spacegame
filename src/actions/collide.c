@@ -1,6 +1,7 @@
 
 #include "entity.h"
 #include "action.h"
+#include "sound.h"
 #include "components/physics.h"
 #include "actions/collide.h"
 #include "scenes/gameplay.h"
@@ -12,6 +13,7 @@ void Collide(int *POOL) {
     FOREACH_VALID_ENTITY(POOL) {
         GET_ENTITY(ACTION_COLLIDE);
         if ( Physics_isColliding(entity->physics) ) {
+            Sound_playSE(FX_EXPLODE);
             GamePlay_newExplosion(entity->physics);
             if (POOL[i] == GamePlay_getPlayer1()) GamePlay_setPlayer1(-1);
             if (POOL[i] == GamePlay_getPlayer2()) GamePlay_setPlayer2(-1);

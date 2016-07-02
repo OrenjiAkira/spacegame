@@ -1,4 +1,5 @@
 
+#include "debug.h"
 #include "game.h"
 #include "config/map.h"
 #include "utility/vector.h"
@@ -88,7 +89,7 @@ void Physics_gravitate(int id) {
     Vector accvec;
     float acc;
     int jd;
-    
+
     for (jd = 0; jd < PHYSICS_POOL_SIZE; ++jd) {
         /* Iteramos por todos os elementos físicos. */
         if (jd != id && PHYSICS[jd].active) {
@@ -102,7 +103,7 @@ void Physics_gravitate(int id) {
                 accvec.x = Map_getWidth() - accvec.x;
             if (fabs(accvec.y) > Map_getHeight()/2)
                 accvec.y = Map_getHeight() - accvec.y;
-                
+
             /* Calculando aceleração:
             F = R = acc * mass_a = (mass_a * mass_b * GCONST / dist^2)
             => acc = F/mass_a
@@ -156,10 +157,8 @@ void Physics_changedir(int id, int dir) {
 }
 
 void Physics_print(int id) {
-    printf("Body has %f units of mass and %f units of radius. It is in position:\n", PHYSICS[id].mass, PHYSICS[id].radius);
+    logprint("Body has %f units of mass and %f units of radius. It is in position:\n", PHYSICS[id].mass, PHYSICS[id].radius);
     Vector_print(&PHYSICS[id].pos);
-    printf("It has speed of:\n");
+    logprint("It has speed of:\n");
     Vector_print(&PHYSICS[id].speed);
 }
-
-

@@ -1,4 +1,5 @@
 
+#include "debug.h"
 #include "config/conf.h"
 #include "config/time.h"
 
@@ -16,6 +17,7 @@ void Time_init() {
     Conf_getFramerateValue(&TIMECONF.framerate);
     TIMECONF.frameunit = 1.0/TIMECONF.framerate;
     TIMECONF.framems = (int)(1000*TIMECONF.frameunit);
+    logprint("FPS: %d\n", TIMECONF.framerate);
 }
 
 double Time_getFrameunit() {
@@ -29,5 +31,3 @@ int Time_getFramerate() {
 int Time_getFramemilisec() {
     return TIMECONF.framems;
 }
-
-

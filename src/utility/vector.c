@@ -1,7 +1,7 @@
 
+#include "debug.h"
 #include "utility/vector.h"
 
-#include <stdio.h>
 #include <float.h>
 #include <math.h>
 
@@ -40,11 +40,9 @@ void Vector_magnitude(Vector *v, float mag) {
 }
 
 void Vector_print(Vector *v) {
-    printf("[ %f, %f ]\n", v->x, v->y);
+    logprint("[ %f, %f ]\n", v->x, v->y);
 }
 
 float Vector_get_sqrlen(Vector *v) {
     return (v->x * v->x) + (v->y * v->y);
 }
-
-

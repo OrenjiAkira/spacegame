@@ -1,4 +1,5 @@
 
+#include "debug.h"
 #include "game.h"
 #include "window.h"
 #include "config/font.h"
@@ -23,12 +24,12 @@ static Textbox TEXTBOX[TEXTBOX_POOL_SIZE];
 static void Textbox_align(int id, int align) {
     SDL_Rect *pos = DrawPos_getPos(TEXTBOX[id].dpos_id);
     Vector *offset = DrawPos_getOffset(TEXTBOX[id].dpos_id);
-    offset->y = -16;
 
+    offset->y += pos->h/2;
     if (align == TEXTALIGN_CENTER) {
-        offset->x = pos->w/2;
-    } else if (align == TEXTALIGN_CENTER) {
-        offset->x = pos->w;
+        offset->x += pos->w/2;
+    } else if (align == TEXTALIGN_RIGHT) {
+        offset->x += pos->w;
     }
 }
 
@@ -38,11 +39,11 @@ static void Textbox_loadTexture(int id, char* text, int size, int color) {
 
     textSurface = TTF_RenderText_Solid( Font_getFont(size), text, Font_getColor(color) );
     if( textSurface == NULL )
-        printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
+        logprint( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
 
     TEXTBOX[id].texture = SDL_CreateTextureFromSurface( Window_getRenderer(), textSurface );
     if( TEXTBOX[id].texture == NULL )
-        printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
+        logprint( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
 
     pos = DrawPos_getPos(TEXTBOX[id].dpos_id);
     pos->w = textSurface->w;
@@ -53,12 +54,11 @@ static void Textbox_loadTexture(int id, char* text, int size, int color) {
 
 void Textbox_init() {
     int id;
-    
+
     for (id = 0; id < TEXTBOX_POOL_SIZE; ++id) {
         TEXTBOX[id].active = false;
         TEXTBOX[id].texture = NULL;
         TEXTBOX[id].dpos_id = -1;
-
     }
 }
 
@@ -98,7 +98,3 @@ void Textbox_close() {
         Textbox_kill(id);
     }
 }
-
-
-
-
