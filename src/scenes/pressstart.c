@@ -9,8 +9,8 @@
 #include "components/drawquad.h"
 #include "components/sprite.h"
 #include "components/textbox.h"
-#include "controllers/pressstart.h"
 #include "scenes/pressstart.h"
+#include "controllers/pressstart.h"
 
 static int FRONTTEXT, TUTORIAL1, TUTORIAL2;
 

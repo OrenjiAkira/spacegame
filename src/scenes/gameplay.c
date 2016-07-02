@@ -13,8 +13,8 @@
 #include "components/drawquad.h"
 #include "components/sprite.h"
 #include "components/textbox.h"
-#include "controllers/gameplay.h"
 #include "scenes/gameplay.h"
+#include "controllers/gameplay.h"
 
 #include <stdio.h>
 #include <string.h>
