@@ -2,12 +2,12 @@
 #include "debug.h"
 #include "game.h"
 #include "scene.h"
-#include "controllers/gameplay.h"
 #include "scenes/gameplay.h"
-#include "controllers/pressstart.h"
 #include "scenes/pressstart.h"
-#include "controllers/chooseyourcat.h"
 #include "scenes/chooseyourcat.h"
+#include "controllers/gameplay.h"
+#include "controllers/pressstart.h"
+#include "controllers/chooseyourcat.h"
 
 #include <stdlib.h>
 
