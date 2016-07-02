@@ -45,7 +45,7 @@ static int keyRead(SDL_Keycode key) {
         case SDLK_LALT:
             return P2_BATSU;
             break;
-        case SDLK_r:
+        case SDLK_ESCAPE:
             return P2_PAUSE;
             break;
         case SDLK_w:
