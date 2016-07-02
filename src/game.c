@@ -27,7 +27,7 @@ static long unsigned int framecount = 0;
 static bool QUIT = false;
 
 static void Game_load() {
-    Scene_load(SCENE_PRESSSTART);
+    Scene_load(SCENE_CHOOSEYOURCAT);
     logprint("UNITS: \n [ %f, %f ]\n", Map_getUnitX(), Map_getUnitY());
 }
 
