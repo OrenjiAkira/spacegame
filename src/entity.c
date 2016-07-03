@@ -57,6 +57,18 @@ bool Entity_isTimerDone(int id, int timer_type) {
     return Timer_isDone(ENTITIES[id]->timers[timer_type]);
 }
 
+void Entity_hide(int id) {
+    if (id == -1 || ENTITIES[id] == NULL) return;
+    Sprite_hide(ENTITIES[id]->sprite);
+    Textbox_hide(ENTITIES[id]->textbox);
+}
+
+void Entity_show(int id) {
+    if (id == -1 || ENTITIES[id] == NULL) return;
+    Sprite_show(ENTITIES[id]->sprite);
+    Textbox_show(ENTITIES[id]->textbox);
+}
+
 void Entity_destroy(int id) {
     int a, t;
     if (id == -1 || ENTITIES[id] == NULL) return;

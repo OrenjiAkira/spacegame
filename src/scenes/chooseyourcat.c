@@ -20,15 +20,30 @@
 /* LOGIC */
 static int CHOICE = 0;
 static int P1_HAS_CHOSEN = false;
+/*  false -> P1 escolhe o gato;
+    true -> P2 escolhe o gato. */
 
 /* UI */
 static int CAT_PANEL = -1, CONTROL_PANEL = -1, CAT_CURSOR = -1;
 static int TEXT_P1 = -1, TEXT_P1_DISABLE = -1, TEXT_P2 = -1, TEXT_P2_DISABLE = -1;
+static int CAT1[CAT_NUM] = { -1, -1, -1 };
+static int CAT2[CAT_NUM] = { -1, -1, -1 };
+static char* CATNAMES[] = {
+    "Grumpy Cat\0",
+    "Nyan Cat\0",
+    "???\0"
+};
 
 static Vector cursor_pos[CATS_TOTAL];
 
-/*  false -> P1 escolhe o gato;
-    true -> P2 escolhe o gato. */
+
+static char* get_player_cat_filename(char *string, int cat_id) {
+    char id[2] = { '0', '\0' };
+    id[0] += cat_id;
+    String_join(string, "cat0", id);
+    String_join(string, string, ".png\0");
+    return string;
+}
 
 static void UI_loadControlPanel() {
     Vector pos;
@@ -53,7 +68,7 @@ static void UI_loadCatPanel() {
 }
 
 static void UI_loadPlayerTextDisplay() {
-    Vector pos1, pos2, pos3, pos4;
+    Vector pos;
     int dpos1, dpos2, dpos3, dpos4;
 
     dpos1 = DrawPos_new(-1, 0, 0, 0, 48);
@@ -66,15 +81,13 @@ static void UI_loadPlayerTextDisplay() {
     TEXT_P2         = Textbox_new("PLAYER 2", dpos3, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
     TEXT_P2_DISABLE = Textbox_new("PLAYER 2", dpos4, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_GREY);
 
-    Vector_set(&pos1, -Map_getWidth()/6, -Map_getHeight()/6);
-    Vector_set(&pos2, -Map_getWidth()/6, -Map_getHeight()/6);
-    Vector_set(&pos3,  Map_getWidth()/6, -Map_getHeight()/6);
-    Vector_set(&pos4,  Map_getWidth()/6, -Map_getHeight()/6);
+    Vector_set(&pos, -Map_getWidth()/6, -Map_getHeight()/6);
+    DrawPos_setPos(dpos1, &pos);
+    DrawPos_setPos(dpos2, &pos);
 
-    DrawPos_setPos(dpos1, &pos1);
-    DrawPos_setPos(dpos2, &pos2);
-    DrawPos_setPos(dpos3, &pos4);
-    DrawPos_setPos(dpos4, &pos4);
+    Vector_set(&pos, Map_getWidth()/6, -Map_getHeight()/6);
+    DrawPos_setPos(dpos3, &pos);
+    DrawPos_setPos(dpos4, &pos);
 
     DrawPos_print(dpos1);
     DrawPos_print(dpos2);
@@ -85,6 +98,63 @@ static void UI_loadPlayerTextDisplay() {
     Textbox_hide(TEXT_P1_DISABLE);
     Textbox_hide(TEXT_P2);
     Textbox_show(TEXT_P2_DISABLE);
+}
+
+static void UI_newCat(int cat_id, bool isP1) {
+    Vector pos;
+    int dpos_spr, dpos_txt, dquad, sprite, textbox;
+    char filename[32];
+
+    dquad = DrawQuad_new(768, 64, 64, 64);
+    dpos_spr = DrawPos_new(-1, 64, 64, 32, 32);
+    dpos_txt = DrawPos_new(-1,  0,  0,  0, -24);
+    sprite = Sprite_new(get_player_cat_filename(filename, cat_id), dpos_spr, dquad, LAYER_MIDGROUND2);
+    textbox = Textbox_new(CATNAMES[cat_id], dpos_txt, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
+
+    if (isP1) Vector_set(&pos, -Map_getWidth()/6, -Map_getHeight()/6);
+    else      Vector_set(&pos,  Map_getWidth()/6, -Map_getHeight()/6);
+
+    DrawPos_setPos(dpos_spr, &pos);
+    DrawPos_setPos(dpos_txt, &pos);
+
+    if (isP1) CAT1[cat_id] = Entity_new(-1, dquad, dpos_spr, sprite, textbox);
+    else      CAT2[cat_id] = Entity_new(-1, dquad, dpos_spr, sprite, textbox);
+}
+
+static void UI_animateUnknownCats() {
+    Action_add(ACTION_ANIMATE, CAT1[CAT_UNKNOWN]);
+    Action_add(ACTION_ANIMATE, CAT2[CAT_UNKNOWN]);
+}
+
+static void UI_loadPlayerCatDisplay() {
+    int cat_id;
+    for (cat_id = 0; cat_id < CAT_NUM; ++cat_id) {
+        UI_newCat(cat_id, true);
+        UI_newCat(cat_id, false);
+    }
+    UI_animateUnknownCats();
+}
+
+static void UI_updatePlayerCatDisplay() {
+    int cat_id;
+    for (cat_id = 0; cat_id < CAT_NUM; ++cat_id) {
+        if (!P1_HAS_CHOSEN) Entity_hide(CAT1[cat_id]);
+        Entity_hide(CAT2[cat_id]);
+    }
+    switch (CHOICE) {
+        case CAT_GRUMPY:
+            if (!P1_HAS_CHOSEN) Entity_show(CAT1[CAT_GRUMPY]);
+            else Entity_show(CAT2[CAT_GRUMPY]);
+            break;
+        case CAT_NYAN:
+            if (!P1_HAS_CHOSEN) Entity_show(CAT1[CAT_NYAN]);
+            else Entity_show(CAT2[CAT_NYAN]);
+            break;
+        default:
+            if (!P1_HAS_CHOSEN) Entity_show(CAT1[CAT_UNKNOWN]);
+            else Entity_show(CAT2[CAT_UNKNOWN]);
+            break;
+    }
 }
 
 static void UI_initCursor() {
@@ -128,6 +198,7 @@ void ChooseYourCat_chooseForPlayer(bool isP2) {
             Textbox_show(TEXT_P2);
             Textbox_hide(TEXT_P2_DISABLE);
             UI_updateCursor();
+            UI_updatePlayerCatDisplay();
         }
         else {
             Globals_set(GLOBAL_P2CAT, CHOICE);
@@ -160,6 +231,7 @@ void ChooseYourCat_changeChoice(bool isP2, int dir) {
             break;
     }
     UI_updateCursor();
+    UI_updatePlayerCatDisplay();
 }
 
 void ChooseYourCat_load() {
@@ -167,6 +239,8 @@ void ChooseYourCat_load() {
     UI_loadCatPanel();
     UI_loadControlPanel();
     UI_loadPlayerTextDisplay();
+    UI_loadPlayerCatDisplay();
+    UI_updatePlayerCatDisplay();
     UI_initCursor();
     UI_loadCursor();
 }
@@ -174,11 +248,16 @@ void ChooseYourCat_load() {
 void ChooseYourCat_pause() {}
 
 void ChooseYourCat_close() {
+    int i;
+    for (i = 0; i < CAT_NUM; i++) {
+        Entity_destroy(CAT1[i]);
+        Entity_destroy(CAT2[i]);
+    }
+    Entity_destroy(CONTROL_PANEL);
+    Entity_destroy(CAT_CURSOR);
+    Entity_destroy(CAT_PANEL);
     Textbox_kill(TEXT_P1);
     Textbox_kill(TEXT_P2);
     Textbox_kill(TEXT_P1_DISABLE);
     Textbox_kill(TEXT_P2_DISABLE);
-    Entity_destroy(CONTROL_PANEL);
-    Entity_destroy(CAT_CURSOR);
-    Entity_destroy(CAT_PANEL);
 }
