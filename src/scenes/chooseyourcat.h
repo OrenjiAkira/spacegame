@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
+#define CATS_TOTAL 8
+
 enum _cat_choices {
     CAT_GRUMPY,
     CAT_NYAN,
@@ -10,6 +12,12 @@ enum _cat_choices {
     CAT_NUM
 };
 
+enum _cursor_dirs {
+    DIR_UP,
+    DIR_RIGHT,
+    DIR_DOWN,
+    DIR_LEFT
+};
 
 void ChooseYourCat_load();
 /* () -> void
@@ -28,7 +36,7 @@ void ChooseYourCat_chooseForPlayer(bool isP2);
 /* (bool) -> void
 Confirma a escolha do gato em destaque para um jogador. */
 
-void ChooseYourCat_changeChoice(bool isP2, bool next);
+void ChooseYourCat_changeChoice(bool isP2, int dir);
 /* (bool) -> void
 Modifica o gato em destaque. */
 
