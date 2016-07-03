@@ -13,7 +13,8 @@
 NEW_CONTROLLER(PressStart);
 
 static void press_any_shift() {
-    Sound_playSE(FX_SELECT);
+    Sound_playSE(FX_MARU);
+    Scene_close();
     Scene_load(SCENE_GAMEPLAY);
 }
 

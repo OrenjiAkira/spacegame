@@ -5,11 +5,7 @@ Carrega as entidades da cena de press start (imagem de fundo, texto). */
 
 void PressStart_pause();
 /* () -> void
- */
-
-void PressStart_unpause();
-/* () -> void
- */
+Faz nada. Cena não foi feita para ser pausada. */
 
 void PressStart_close();
 /* () -> void
