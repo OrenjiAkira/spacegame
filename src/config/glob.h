@@ -18,4 +18,9 @@ int Globals_get(int global_id);
 Retorna a global requisitada, se ela existir.
 Se não existir, o jogo fecha. */
 
+void Globals_set(int global_id, int value);
+/* (int) -> int
+Seta a global requisitada, se ela existir.
+Se não existir, o jogo fecha. */
+
 #endif

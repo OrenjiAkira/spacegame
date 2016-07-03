@@ -1,12 +1,15 @@
 #!/bin/bash
 
-DEBUG_FLAG=""
+DEBUG_FLAG="-DDEBUG_MODE=FALSE"
+MUSIC_FLAG="-DNO_MUSIC=FALSE"
 
-if [[ "$1" == "-debug" ]]; then
-  DEBUG_FLAG="-DDEBUG_MODE=TRUE"
-else
-  DEBUG_FLAG="-DDEBUG_MODE=FALSE"
-fi
+for var in "$@"; do
+    if [[ "$var" == "--debug" ]]; then
+        DEBUG_FLAG="-DDEBUG_MODE=TRUE"
+    fi
+    if [[ "$var" == "--no-music" ]]; then
+        MUSIC_FLAG="-DNO_MUSIC=TRUE"
+    fi
+done
 
-mkdir build; cd build; cmake $DEBUG_FLAG .. && make;
-
+mkdir build; cd build; cmake $DEBUG_FLAG $MUSIC_FLAG .. && make;

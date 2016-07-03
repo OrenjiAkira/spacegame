@@ -19,46 +19,46 @@ static void __null_keyevent__(int key) {}
 static int keyRead(SDL_Keycode key) {
     switch (key) {
         case SDLK_RSHIFT:
-            return P1_MARU;
-            break;
-        case SDLK_RALT:
-            return P1_BATSU;
-            break;
-        case SDLK_p:
-            return P1_PAUSE;
-            break;
-        case SDLK_UP:
-            return P1_UP;
-            break;
-        case SDLK_DOWN:
-            return P1_DOWN;
-            break;
-        case SDLK_LEFT:
-            return P1_LEFT;
-            break;
-        case SDLK_RIGHT:
-            return P1_RIGHT;
-            break;
-        case SDLK_LSHIFT:
             return P2_MARU;
             break;
-        case SDLK_LALT:
+        case SDLK_RALT:
             return P2_BATSU;
             break;
-        case SDLK_ESCAPE:
+        case SDLK_p:
             return P2_PAUSE;
             break;
-        case SDLK_w:
+        case SDLK_UP:
             return P2_UP;
             break;
-        case SDLK_s:
+        case SDLK_DOWN:
             return P2_DOWN;
             break;
-        case SDLK_a:
+        case SDLK_LEFT:
             return P2_LEFT;
             break;
-        case SDLK_d:
+        case SDLK_RIGHT:
             return P2_RIGHT;
+            break;
+        case SDLK_LSHIFT:
+            return P1_MARU;
+            break;
+        case SDLK_LALT:
+            return P1_BATSU;
+            break;
+        case SDLK_ESCAPE:
+            return P1_PAUSE;
+            break;
+        case SDLK_w:
+            return P1_UP;
+            break;
+        case SDLK_s:
+            return P1_DOWN;
+            break;
+        case SDLK_a:
+            return P1_LEFT;
+            break;
+        case SDLK_d:
+            return P1_RIGHT;
             break;
         default:
             return DEFAULT;

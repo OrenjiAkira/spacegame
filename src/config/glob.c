@@ -11,9 +11,19 @@ void Globals_init() {
 }
 
 int Globals_get(int global_id) {
-    logprint("Requested global id #%d", global_id);
+    logprint("Requested global id #%d\n", global_id);
     if (global_id < 0 || global_id >= GLOBAL_TOTAL) {
         GAME_ERROR("INVALID GLOBAL ID REQUESTED. Preventing segmentation fault, but shutting down game.");
         return 0;
-    } else return GLOBALS[global_id];
+    }
+    return GLOBALS[global_id];
+}
+
+void Globals_set(int global_id, int value) {
+    logprint("Requested global id #%d\n", global_id);
+    if (global_id < 0 || global_id >= GLOBAL_TOTAL) {
+        GAME_ERROR("INVALID GLOBAL ID REQUESTED. Preventing segmentation fault, but shutting down game.");
+        return;
+    }
+    GLOBALS[global_id] = value;
 }

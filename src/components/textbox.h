@@ -35,6 +35,16 @@ void Textbox_update();
 /* () -> void
 Desenha os textbox ativos da pool. */
 
+void Textbox_hide(int id);
+/* (int) -> void
+Faz o textbox não ser desenhado no update.
+O padrão é ser desenhado. */
+
+void Textbox_show(int id);
+/* (int) -> void
+Faz o textbox ser desenhado no update.
+O padrão é ser desenhado. */
+
 void Textbox_close();
 /* () -> void
 Libera a pool inteira, destruindo textbox ativos. */

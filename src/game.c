@@ -28,8 +28,13 @@ static bool QUIT = false;
 
 static void Game_load() {
     Scene_load(SCENE_CHOOSEYOURCAT);
-    Sound_playBGM();
     logprint("UNITS: \n [ %f, %f ]\n", Map_getUnitX(), Map_getUnitY());
+    #ifndef NO_MUSIC
+    Sound_playBGM();
+    logprint("Playing music...\n");
+    #else
+    logprint("Not playing music...\n");
+    #endif
 }
 
 void Game_init(char const *execpath) {

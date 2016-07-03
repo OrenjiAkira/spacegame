@@ -2,8 +2,12 @@
 #include "input.h"
 #include "action.h"
 #include "entity.h"
+#include "scene.h"
+#include "sound.h"
 #include "config/map.h"
 #include "config/font.h"
+#include "config/glob.h"
+#include "utility/string.h"
 #include "utility/vector.h"
 #include "components/drawpos.h"
 #include "components/drawquad.h"
@@ -12,7 +16,7 @@
 #include "scenes/pressstart.h"
 #include "controllers/pressstart.h"
 
-static int FRONTTEXT, TUTORIAL1, TUTORIAL2;
+static int FRONTTEXT, PLAYER1, PLAYER2;
 
 static void PressStart_loadFrontText() {
     Vector pos;
@@ -26,45 +30,44 @@ static void PressStart_loadFrontText() {
     FRONTTEXT = Entity_new(-1, -1, dpos, -1, textbox);
 }
 
-static void PressStart_loadTutorialText2() {
-    Vector pos;
-    int dpos, dquad, textbox, sprite;
-
-    dpos = DrawPos_new(-1, 64, 64, 32, 32);
-    dquad = DrawQuad_new(768, 64, 64, 64);
-    sprite = Sprite_new("cat01.png", dpos, dquad, LAYER_MIDGROUND1);
-    Vector_set(&pos, -Map_getWidth()/4, Map_getHeight()/4 - 3);
-    DrawPos_setPos(dpos, &pos);
-    dpos = DrawPos_new(-1, 0, 0, 0, 0);
-    textbox = Textbox_new("use WASD keys to move", dpos, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
-    Vector_set(&pos, -Map_getWidth()/4, Map_getHeight()/4);
-    Vector_print(&pos);
-    DrawPos_setPos(dpos, &pos);
-    TUTORIAL2 = Entity_new(-1, dquad, dpos, sprite, textbox);
+static char* get_player_cat_filename(char *string, bool isP1) {
+    char id[2] = { '0', '\0' };
+    if (isP1) id[0] += Globals_get(GLOBAL_P1CAT);
+    else id[0] += Globals_get(GLOBAL_P2CAT);
+    String_join(string, "cat0", id);
+    String_join(string, string, ".png\0");
+    return string;
 }
 
-static void PressStart_loadTutorialText1() {
+static void PressStart_loadPlayer(bool isP1) {
     Vector pos;
-    int dpos, dquad, textbox, sprite;
+    char filename[32];
+    int dpos, dquad, sprite, textbox;
 
     dpos = DrawPos_new(-1, 64, 64, 32, 32);
     dquad = DrawQuad_new(768, 64, 64, 64);
-    sprite = Sprite_new("cat00.png", dpos, dquad, LAYER_MIDGROUND1);
-    Vector_set(&pos, Map_getWidth()/4, Map_getHeight()/4 - 3);
+    sprite = Sprite_new(get_player_cat_filename(filename, isP1), dpos, dquad, LAYER_MIDGROUND1);
+    if (isP1) Vector_set(&pos, -Map_getWidth()/6, Map_getHeight()/4);
+    else Vector_set(&pos, Map_getWidth()/6, Map_getHeight()/4);
     DrawPos_setPos(dpos, &pos);
-    dpos = DrawPos_new(-1, 0, 0, 0, 0);
-    textbox = Textbox_new("use directional keys to move", dpos, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
-    Vector_set(&pos, Map_getWidth()/4, Map_getHeight()/4);
-    Vector_print(&pos);
+    dpos = DrawPos_new(-1, 0, 0, 0, -24);
+    if (isP1) textbox = Textbox_new("PLAYER 1", dpos, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
+    else textbox = Textbox_new("PLAYER 2", dpos, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
     DrawPos_setPos(dpos, &pos);
-    TUTORIAL1 = Entity_new(-1, dquad, dpos, sprite, textbox);
+    PLAYER1 = Entity_new(-1, dquad, dpos, sprite, textbox);
 }
 
 void PressStart_load() {
-    PressStart_loadTutorialText1();
-    PressStart_loadTutorialText2();
+    PressStart_loadPlayer(true);
+    PressStart_loadPlayer(false);
     PressStart_loadFrontText();
     PressStartController_load();
+}
+
+void PressStart_confirm() {
+    Sound_playSE(FX_MARU);
+    Scene_close();
+    Scene_load(SCENE_GAMEPLAY);
 }
 
 void PressStart_pause() {}
@@ -72,6 +75,6 @@ void PressStart_pause() {}
 void PressStart_close() {
     Input_unloadSceneController();
     Entity_destroy(FRONTTEXT);
-    Entity_destroy(TUTORIAL1);
-    Entity_destroy(TUTORIAL2);
+    Entity_destroy(PLAYER1);
+    Entity_destroy(PLAYER2);
 }

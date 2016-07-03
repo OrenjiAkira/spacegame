@@ -41,4 +41,8 @@ Vector* DrawPos_getOffset(int id);
 /* (int) -> Vector*
 Retorna o offset de um DrawPos. */
 
+void DrawPos_print(int id);
+/* (int) -> void
+Imprime no log as informações de um DrawPos. */
+
 #endif

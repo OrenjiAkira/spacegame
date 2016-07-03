@@ -72,6 +72,16 @@ bool Entity_isTimerDone(int id, int timer_type);
 Verifica se o timer <timer_type> de uma entidade terminou.
 Retorna true se sim, falso se não. */
 
+void Entity_hide(int id);
+/* (int) -> void
+Esconde os elementos visuais de uma entidade.
+O padrão é mostrar. */
+
+void Entity_show(int id);
+/* (int) -> void
+Mostra os elementos visuais de uma entidade.
+O padrão é mostrar. */
+
 void Entity_destroy(int id);
 /* (int) -> void
 Destrói uma entidade. */

@@ -42,7 +42,9 @@ void Sound_init() {
 
     /* Inicializando BGM */
     String_join(filepath, Path_toBGM(), BGM_PATH);
+    logprint("Loading bgm from file: '%s'...\n", filepath);
     if ( (BGM = Mix_LoadMUS(filepath)) == NULL ) load_error(filepath);
+    else logprint(">> BGM succesfully loaded.\n");
 
 }
 
@@ -52,7 +54,7 @@ void Sound_playSE(int fx_name) {
 }
 
 void Sound_playBGM() {
-    if (Mix_PlayingMusic() == 0) Mix_PlayMusic( BGM, -1 );
+    if (Mix_PlayingMusic() == 0 && BGM != NULL) Mix_PlayMusic( BGM, -1 );
 }
 
 void Sound_stopBGM() {
