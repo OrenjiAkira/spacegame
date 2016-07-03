@@ -36,7 +36,6 @@ static char* CATNAMES[] = {
 
 static Vector cursor_pos[CATS_TOTAL];
 
-
 static char* get_player_cat_filename(char *string, int cat_id) {
     char id[2] = { '0', '\0' };
     id[0] += cat_id;
@@ -47,13 +46,21 @@ static char* get_player_cat_filename(char *string, int cat_id) {
 
 static void UI_loadControlPanel() {
     Vector pos;
-    int dpos, sprite;
+    int dpos, dquad, sprite;
+
+    dpos = DrawPos_new(-1, 192, 160, 96, 80);
+    dquad = DrawQuad_new(384, 160, 192, 160);
+    sprite = Sprite_new("controls_frame.png", dpos, dquad, LAYER_MIDGROUND1);
 
     Vector_set(&pos, Map_getWidth()/6, Map_getHeight()/6);
-    dpos = DrawPos_new(-1, 192, 160, 96, 80);
     DrawPos_setPos(dpos, &pos);
-    sprite = Sprite_new("controls_frame.png", dpos, -1, LAYER_MIDGROUND1);
-    CONTROL_PANEL = Entity_new(-1, -1, dpos, sprite, -1);
+
+    CONTROL_PANEL = Entity_new(-1, dquad, dpos, sprite, -1);
+}
+
+static void UI_updateControlPanel() {
+    Entity *entity = Entity_get(CONTROL_PANEL);
+    DrawQuad_next(entity->drawquad);
 }
 
 static void UI_loadCatPanel() {
@@ -199,6 +206,7 @@ void ChooseYourCat_chooseForPlayer(bool isP2) {
             Textbox_hide(TEXT_P2_DISABLE);
             UI_updateCursor();
             UI_updatePlayerCatDisplay();
+            UI_updateControlPanel();
         }
         else {
             Globals_set(GLOBAL_P2CAT, CHOICE);
