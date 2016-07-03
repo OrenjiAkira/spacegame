@@ -23,7 +23,7 @@ static void PressStart_loadFrontText() {
     int dpos, textbox;
 
     dpos = DrawPos_new(-1, 0, 0, 0, 0);
-    textbox = Textbox_new("[ PRESS ANY SHIFT ]", dpos, TEXTALIGN_CENTER, FONTSIZE_MEDIUM, FONTCOLOR_WHITE);
+    textbox = Textbox_new("[ PRESS ANY SHIFT, ENTER, OR SPACE ]", dpos, TEXTALIGN_CENTER, FONTSIZE_MEDIUM, FONTCOLOR_WHITE);
     Vector_set(&pos, 0, 0);
     Vector_print(&pos);
     DrawPos_setPos(dpos, &pos);
