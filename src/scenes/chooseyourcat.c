@@ -64,7 +64,7 @@ static void ChooseYourCat_loadCatDisplay() {
     int dpos, dquad;
     char catfilepath[32], id[2];
 
-    Vector_set(&pos, -Map_getWidth()/4, 0);
+    Vector_set(&pos, 0, 0);
     dpos = DrawPos_new(-1, 64, 64, 32, 32);
     DrawPos_setPos(dpos, &pos);
     dquad = DrawQuad_new(768, 64, 64, 64);
@@ -82,11 +82,11 @@ static void ChooseYourCat_loadCatDisplay() {
 static void ChooseYourCat_loadPlayerDisplay() {
     Vector pos;
     int dpos1, dpos2;
-    Vector_set(&pos, -Map_getWidth()/4, 0);
+    Vector_set(&pos, 0, 0);
     dpos1 = DrawPos_new(-1, 0, 0, 0, -32);
     dpos2 = DrawPos_new(-1, 0, 0, 0, -32);
-    TEXT_P1 = Textbox_new("Player 1", dpos1, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_GREY);
-    TEXT_P2 = Textbox_new("Player 2", dpos2, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_GREY);
+    TEXT_P1 = Textbox_new("player 1", dpos1, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
+    TEXT_P2 = Textbox_new("player 2", dpos2, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
     DrawPos_setPos(dpos1, &pos);
     DrawPos_setPos(dpos2, &pos);
     Textbox_hide(TEXT_P1);

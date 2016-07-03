@@ -29,26 +29,34 @@ static void p2_confirm() {
     }
 }
 
-static void nextChoice() {
-    ChooseYourCat_changeChoice(true);
+static void p1_nextChoice() {
+    if (!P1_HAS_CHOSEN) ChooseYourCat_changeChoice(true);
 }
 
-static void prevChoice() {
-    ChooseYourCat_changeChoice(false);
+static void p1_prevChoice() {
+    if (!P1_HAS_CHOSEN) ChooseYourCat_changeChoice(false);
+}
+
+static void p2_nextChoice() {
+    if (P1_HAS_CHOSEN) ChooseYourCat_changeChoice(true);
+}
+
+static void p2_prevChoice() {
+    if (P1_HAS_CHOSEN) ChooseYourCat_changeChoice(false);
 }
 
 static void ChooseYourCatController_init() {
     EVENT_ASSOCIATE(press, P1_MARU, p1_confirm);
     EVENT_ASSOCIATE(press, P2_MARU, p2_confirm);
 
-    EVENT_ASSOCIATE(press, P1_UP, prevChoice);
-    EVENT_ASSOCIATE(press, P1_LEFT, prevChoice);
-    EVENT_ASSOCIATE(press, P2_UP, prevChoice);
-    EVENT_ASSOCIATE(press, P2_LEFT, prevChoice);
+    EVENT_ASSOCIATE(press, P1_UP, p1_prevChoice);
+    EVENT_ASSOCIATE(press, P1_LEFT, p1_prevChoice);
+    EVENT_ASSOCIATE(press, P2_UP, p2_prevChoice);
+    EVENT_ASSOCIATE(press, P2_LEFT, p2_prevChoice);
 
-    EVENT_ASSOCIATE(press, P1_DOWN, nextChoice);
-    EVENT_ASSOCIATE(press, P1_RIGHT, nextChoice);
-    EVENT_ASSOCIATE(press, P2_DOWN, nextChoice);
-    EVENT_ASSOCIATE(press, P2_RIGHT, nextChoice);
+    EVENT_ASSOCIATE(press, P1_DOWN, p1_nextChoice);
+    EVENT_ASSOCIATE(press, P1_RIGHT, p1_nextChoice);
+    EVENT_ASSOCIATE(press, P2_DOWN, p2_nextChoice);
+    EVENT_ASSOCIATE(press, P2_RIGHT, p2_nextChoice);
     logprint(success_msg);
 }
