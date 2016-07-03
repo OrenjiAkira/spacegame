@@ -8,8 +8,8 @@ map 64 48
 planet 9e+9 4.8 0 0
 
 # Ships (name, mass, rad, x, y)
-ship1 player_1 59700000 1.6 -16 -8 0  0.158
-ship2 player_2 59700000 1.6  16  8 0 -0.158
+ship1 PLAYER_1 59700000 1.6 -16 -8 0  0.158
+ship2 PLAYER_2 59700000 1.6  16  8 0 -0.158
 
 # Bullet Config (mass, rad, lifetime)
 bullet 6000 0.3 2.0
