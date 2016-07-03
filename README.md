@@ -37,7 +37,11 @@ Se quiser desativar os prints depois de ter rodado o cmake com o argumento de de
 
 Um outro parâmeto que você pode passar para o cmake é `-DNO_MUSIC=TRUE`. Isso faz o jogo rodar sem música de fundo. A música causa um bug em sistemas Mac OSX, e por isso essa flag foi criada. Se estiver tendo problemas para rodar o jogo com música, experimente usar essa flag. De novo, para desativar a flag, basta rodar de novo o cmake com a flag `-DNO_MUSIC=FALSE`.
 
-Se estiver com preguiça, como a gente, basta usar o script bash novo [da versão 0.4](#v04), `compile`. Ele está na pasta raíz do repositório, e gerencia as flags para você. Basta passar, ou não, os parâmetros `--debug` e `--no-music`. Se passar, essas flags acima viram `TRUE`, se não, viram `FALSE`.
+Se estiver com preguiça, como a gente, basta usar o script bash novo [da versão 0.4](#v04):
+```bash
+./compile [parâmetros]
+```
+Ele está na pasta raíz do repositório, e gerencia as flags para você. Basta passar, ou não, os parâmetros `--debug` e `--no-music`. Se passar, essas flags acima viram `TRUE`, se não, viram `FALSE`.
 
 
 ## Como jogar
@@ -128,7 +132,7 @@ Ainda na nota sobre memória, a SDL ainda vaza uns 200 bytes de memória, mesmo 
 ### v0.4
 **(Quarta entrega)**
 
-As mais recentes atualizações incluem SOM! Sim, som! Temos efeitos sonoros e adicionamos a biblioteca SDL_mixer, também parte da SDL. Tudo bem que no espaço o som não se propaga, mas quem se importa? É legal, dá feedback pro jogador, é _juicy_. Adicionamos uma música ambiente também, porém, ao menos em sistemas MAC OSX, ao tocá-la acontece, de maneira inconsistente, um _segmentation fault_. Inconsistente, sim. Logo, a culpa não é nossa. Adicionamos uma flag de compilação para o jogo não tocar a música, o que não é ideal. Se ocorrer esse bug para você usando outro sistema operacional, você pode submeter uma issue, ou mandar email pra gente mesmo.
+As mais recentes atualizações incluem SOM! Sim, som! Temos efeitos sonoros e adicionamos a biblioteca SDL_mixer, também parte da SDL. Tudo bem que no espaço o som não se propaga, mas quem se importa? É legal, dá feedback pro jogador, é _juicy_. Adicionamos uma música ambiente também, porém, ao menos em sistemas Mac OSX, ao tocá-la acontece, de maneira inconsistente, um _segmentation fault_. Inconsistente, sim. Logo, a culpa não é nossa. Adicionamos uma flag de compilação para o jogo não tocar a música, o que não é ideal. Se ocorrer esse bug para você usando outro sistema operacional, você pode submeter uma issue, ou mandar email pra gente mesmo.
 
 Fora isso, melhoramos o sistema de cenas, e criamos macros para gerar os controles para a gente. Os arquivos de `controllers` ficaram bem menores, e as cenas agora cuidam de fazer a interação de maneira mais complexa. Por exemplo, agora temos uma tela de "Choose your ~~character~~ cat", na qual cada jogador pode escolher com que gato irá jogar! Legal, né?
 
