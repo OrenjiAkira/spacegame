@@ -53,7 +53,7 @@ void Entity_addTimer(int id, int timer_type, double secs) {
 }
 
 bool Entity_isTimerDone(int id, int timer_type) {
-    if (ENTITIES[id] == NULL) return true; /* ??? Don't know what might happen */
+    if (id == -1 || ENTITIES[id] == NULL) return true; /* ??? Don't know what might happen */
     return Timer_isDone(ENTITIES[id]->timers[timer_type]);
 }
 
