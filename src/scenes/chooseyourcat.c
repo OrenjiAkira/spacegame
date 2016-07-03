@@ -61,15 +61,15 @@ static void UI_loadPlayerTextDisplay() {
     dpos3 = DrawPos_new(-1, 0, 0, 0, 48);
     dpos4 = DrawPos_new(-1, 0, 0, 0, 48);
 
-    TEXT_P1 = Textbox_new("PLAYER 1", dpos1, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
+    TEXT_P1         = Textbox_new("PLAYER 1", dpos1, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
     TEXT_P1_DISABLE = Textbox_new("PLAYER 1", dpos2, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_GREY);
-    TEXT_P2 = Textbox_new("PLAYER 2", dpos3, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
+    TEXT_P2         = Textbox_new("PLAYER 2", dpos3, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
     TEXT_P2_DISABLE = Textbox_new("PLAYER 2", dpos4, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_GREY);
 
     Vector_set(&pos1, -Map_getWidth()/6, -Map_getHeight()/6);
     Vector_set(&pos2, -Map_getWidth()/6, -Map_getHeight()/6);
-    Vector_set(&pos3, Map_getWidth()/6, -Map_getHeight()/6);
-    Vector_set(&pos4, Map_getWidth()/6, -Map_getHeight()/6);
+    Vector_set(&pos3,  Map_getWidth()/6, -Map_getHeight()/6);
+    Vector_set(&pos4,  Map_getWidth()/6, -Map_getHeight()/6);
 
     DrawPos_setPos(dpos1, &pos1);
     DrawPos_setPos(dpos2, &pos2);
