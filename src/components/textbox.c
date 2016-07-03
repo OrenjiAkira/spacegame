@@ -71,6 +71,8 @@ int Textbox_new(char* text, int dpos_id, int align, int size, int color) {
             Textbox_loadTexture(id, text, size, color);
             Textbox_align(id, align);
             TEXTBOX[id].active = true;
+            TEXTBOX[id].hide = false;
+
             return id;
         }
     }

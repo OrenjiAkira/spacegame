@@ -3,12 +3,14 @@
 #include "scene.h"
 #include "sound.h"
 #include "config/map.h"
+#include "config/font.h"
 #include "config/glob.h"
 #include "utility/vector.h"
 #include "utility/string.h"
 #include "components/drawpos.h"
 #include "components/drawquad.h"
 #include "components/sprite.h"
+#include "components/textbox.h"
 #include "scenes/chooseyourcat.h"
 #include "controllers/chooseyourcat.h"
 
@@ -17,6 +19,7 @@
 static int CAT_PANEL = -1, CONTROL_PANEL = -1;
 static int CHOICE = 0;
 static int CATS[CATS_TOTAL];
+static int TEXT_P1 = -1, TEXT_P2 = -1;
 
 static void ChooseYourCat_updateChoiceDisplay() {
     int i;
@@ -24,6 +27,13 @@ static void ChooseYourCat_updateChoiceDisplay() {
         Sprite_hide(CATS[i]);
     }
     Sprite_show(CATS[CHOICE]);
+}
+
+static void ChooseYourCat_updateChoosingPlayer(int text) {
+    logprint("Making textbox #%d visible\n", text);
+    Textbox_hide(TEXT_P1);
+    Textbox_hide(TEXT_P2);
+    Textbox_show(text);
 }
 
 static void ChooseYourCat_loadControlPanel() {
@@ -69,12 +79,28 @@ static void ChooseYourCat_loadCatDisplay() {
     ChooseYourCat_updateChoiceDisplay();
 }
 
+static void ChooseYourCat_loadPlayerDisplay() {
+    Vector pos;
+    int dpos1, dpos2;
+    Vector_set(&pos, -Map_getWidth()/4, 0);
+    dpos1 = DrawPos_new(-1, 0, 0, 0, -32);
+    dpos2 = DrawPos_new(-1, 0, 0, 0, -32);
+    TEXT_P1 = Textbox_new("Player 1", dpos1, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_GREY);
+    TEXT_P2 = Textbox_new("Player 2", dpos2, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_GREY);
+    DrawPos_setPos(dpos1, &pos);
+    DrawPos_setPos(dpos2, &pos);
+    Textbox_hide(TEXT_P1);
+    Textbox_hide(TEXT_P2);
+    ChooseYourCat_updateChoosingPlayer(TEXT_P1);
+}
+
 void ChooseYourCat_chooseForPlayer(bool isP1) {
     Sound_playSE(FX_MARU);
     if (isP1) {
         Globals_set(GLOBAL_P1CAT, CHOICE);
         CHOICE = 0;
         ChooseYourCat_updateChoiceDisplay();
+        ChooseYourCat_updateChoosingPlayer(TEXT_P2);
     }
     else {
         Globals_set(GLOBAL_P2CAT, CHOICE);
@@ -98,6 +124,7 @@ void ChooseYourCat_load() {
     ChooseYourCat_loadCatPanel();
     ChooseYourCat_loadControlPanel();
     ChooseYourCat_loadCatDisplay();
+    ChooseYourCat_loadPlayerDisplay();
 }
 
 void ChooseYourCat_pause() {}
@@ -105,6 +132,8 @@ void ChooseYourCat_pause() {}
 void ChooseYourCat_close() {
     int i;
     for (i = 0; i < CATS_TOTAL; ++i) Sprite_kill(CATS[i]);
+    Textbox_kill(TEXT_P1);
+    Textbox_kill(TEXT_P2);
     Entity_destroy(CONTROL_PANEL);
     Entity_destroy(CAT_PANEL);
 }
