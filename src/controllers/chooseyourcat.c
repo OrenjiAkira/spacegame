@@ -4,24 +4,33 @@
 #include "scene.h"
 #include "sound.h"
 #include "controller.h"
+#include "scenes/chooseyourcat.h"
 #include "controllers/chooseyourcat.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
+static int P1_HAS_CHOSEN = false;
+/*  false -> P1 escolhe o gato;
+    true -> P2 escolhe o gato. */
+
 NEW_CONTROLLER(ChooseYourCat);
 
 static void p1_confirm() {
-    Sound_playSE(FX_SELECT);
-    Scene_close();
-    Scene_load(SCENE_PRESSSTART);
+    if (!P1_HAS_CHOSEN) {
+        Sound_playSE(FX_SELECT);
+        P1_HAS_CHOSEN = true;
+    }
 }
 
 static void p2_confirm() {
-    Sound_playSE(FX_SELECT);
-    Scene_close();
-    Scene_load(SCENE_PRESSSTART);
+    if (P1_HAS_CHOSEN) {
+        /* code */
+        Sound_playSE(FX_SELECT);
+        Scene_close();
+        Scene_load(SCENE_PRESSSTART);
+    }
 }
 
 static void ChooseYourCatController_init() {
