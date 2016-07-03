@@ -42,6 +42,7 @@ void Sound_init() {
 
     /* Inicializando BGM */
     String_join(filepath, Path_toBGM(), BGM_PATH);
+    logprint("Loading bgm from file: '%s'...\n", filepath);
     if ( (BGM = Mix_LoadMUS(filepath)) == NULL ) load_error(filepath);
 
 }
