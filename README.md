@@ -13,6 +13,7 @@ O projeto é um jogo baseado no antigo jogo Spacewar (1962).
   2. [Segunda Entrega](#v02)
     1. [Sobre a SDL](#sobre-a-sdl)
   3. [Terceira Entrega](#v03)
+  4. [Quarta Entrega](#v04)
 5. [Créditos](#créditos)
 
 
@@ -48,7 +49,7 @@ A nave `grumpy_cat` é controlada pelas setas direcionais. A nave `nyan_cat` é 
 Para compilar, você vai precisar de [cmake](https://cmake.org),
 [make](https://www.gnu.org/software/make/),
 um [compilador C](https://gcc.gnu.org/), e
-[SDL2, SDL2_image e SDL2_ttf](https://www.libsdl.org/) instalados no seu computador.
+[SDL2, SDL2_image, SDL2_ttf, e SDL2_mixer](https://www.libsdl.org/) instalados no seu computador.
 
 ## Sobre o Código
 
@@ -118,6 +119,11 @@ Também implementamos _features novas_:
 **Nota sobre memória:** usamos memória estática para a maioria das coisas, por questão de eficiência. As _pools_ são vetores de tamanho fixo, em geral de 256. Ou seja, assumindo a presença de duas naves, uma imagem de fundo, e um planeta no centro (ou seja, um total de 4 entidades), acreditamos ser humanamente impossível você atirar bullets o suficiente para criar mais que 252 outras entidades (em menos tempo que demora para elas morrerem sozinhas) e estourar a memória do jogo. As bullets apenas são criadas no evento do usuário pressionar a tecla de tiro, mas não no evento do usuário segurar a tecla, o que torna 60 tiros por segundo, na prática, impossível. Mesmo que isso ocorra, o jogo apenas dirá que a _pool_ estourou e vai fechar o programa de maneira correta, liberando as memórias que alocou.
 
 Ainda na nota sobre memória, a SDL ainda vaza uns 200 bytes de memória, mesmo fechando seus módulos de maneira correta. De novo, isso é culpa de sua implementação interna, fora de nosso controle. Pelo menos o valor é fixo.
+
+### v0.4
+**(Quarta entrega)**
+
+As mais recentes atualizações incluem SOM! Sim, som! Temos efeitos sonoros e adicionamos a biblioteca SDL_mixer, também parte da SDL.
 
 ## Créditos
 
