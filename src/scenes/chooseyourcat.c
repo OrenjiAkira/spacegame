@@ -53,18 +53,34 @@ static void UI_loadCatPanel() {
 }
 
 static void UI_loadPlayerTextDisplay() {
-    Vector pos1, pos2;
-    int dpos1, dpos2;
-    Vector_set(&pos1, -Map_getWidth()/6, -Map_getHeight()/6);
-    Vector_set(&pos2, Map_getWidth()/6, -Map_getHeight()/6);
+    Vector pos1, pos2, pos3, pos4;
+    int dpos1, dpos2, dpos3, dpos4;
+
     dpos1 = DrawPos_new(-1, 0, 0, 0, 48);
     dpos2 = DrawPos_new(-1, 0, 0, 0, 48);
+    dpos3 = DrawPos_new(-1, 0, 0, 0, 48);
+    dpos4 = DrawPos_new(-1, 0, 0, 0, 48);
+
     TEXT_P1 = Textbox_new("PLAYER 1", dpos1, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
-    TEXT_P1_DISABLE = Textbox_new("PLAYER 1", dpos1, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_GREY);
-    TEXT_P2 = Textbox_new("PLAYER 2", dpos2, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
-    TEXT_P2_DISABLE = Textbox_new("PLAYER 2", dpos2, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_GREY);
+    TEXT_P1_DISABLE = Textbox_new("PLAYER 1", dpos2, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_GREY);
+    TEXT_P2 = Textbox_new("PLAYER 2", dpos3, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
+    TEXT_P2_DISABLE = Textbox_new("PLAYER 2", dpos4, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_GREY);
+
+    Vector_set(&pos1, -Map_getWidth()/6, -Map_getHeight()/6);
+    Vector_set(&pos2, -Map_getWidth()/6, -Map_getHeight()/6);
+    Vector_set(&pos3, Map_getWidth()/6, -Map_getHeight()/6);
+    Vector_set(&pos4, Map_getWidth()/6, -Map_getHeight()/6);
+
     DrawPos_setPos(dpos1, &pos1);
     DrawPos_setPos(dpos2, &pos2);
+    DrawPos_setPos(dpos3, &pos4);
+    DrawPos_setPos(dpos4, &pos4);
+
+    DrawPos_print(dpos1);
+    DrawPos_print(dpos2);
+    DrawPos_print(dpos3);
+    DrawPos_print(dpos4);
+
     Textbox_show(TEXT_P1);
     Textbox_hide(TEXT_P1_DISABLE);
     Textbox_hide(TEXT_P2);

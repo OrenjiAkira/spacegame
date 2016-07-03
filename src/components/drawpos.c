@@ -86,3 +86,10 @@ Vector* DrawPos_getOffset(int id) {
     if (id == -1 || !DRAWPOS[id].active) return NULL;
     return &DRAWPOS[id].offset;
 }
+
+void DrawPos_print(int id) {
+    if (id == -1 || !DRAWPOS[id].active) return;
+    logprint(">> DRAWPOS INFO: #%d\n", id);
+    logprint(">>       RECT [ x: %d, y: %d, w: %d, h: %d ]\n", DRAWPOS[id].pos.x, DRAWPOS[id].pos.y, DRAWPOS[id].pos.w, DRAWPOS[id].pos.h);
+    logprint(">>     OFFSET [ ox: %f, oy: %f ]\n", DRAWPOS[id].offset.x, DRAWPOS[id].offset.y);
+}
