@@ -1,6 +1,7 @@
 
 #include "debug.h"
 #include "scene.h"
+#include "sound.h"
 #include "config/map.h"
 #include "config/glob.h"
 #include "utility/vector.h"
@@ -69,15 +70,21 @@ static void ChooseYourCat_loadCatDisplay() {
 }
 
 void ChooseYourCat_chooseForPlayer(bool isP1) {
+    Sound_playSE(FX_MARU);
     if (isP1) {
         Globals_set(GLOBAL_P1CAT, CHOICE);
         CHOICE = 0;
         ChooseYourCat_updateChoiceDisplay();
     }
-    else Globals_set(GLOBAL_P2CAT, CHOICE);
+    else {
+        Globals_set(GLOBAL_P2CAT, CHOICE);
+        Scene_close();
+        Scene_load(SCENE_PRESSSTART);
+    }
 }
 
 void ChooseYourCat_changeChoice(bool next) {
+    Sound_playSE(FX_SELECT);
     if (next) {
         CHOICE = (CHOICE + 1) % CATS_TOTAL;
     } else {

@@ -2,6 +2,8 @@
 #include "input.h"
 #include "action.h"
 #include "entity.h"
+#include "scene.h"
+#include "sound.h"
 #include "config/map.h"
 #include "config/font.h"
 #include "utility/vector.h"
@@ -65,6 +67,12 @@ void PressStart_load() {
     PressStart_loadTutorialText2();
     PressStart_loadFrontText();
     PressStartController_load();
+}
+
+void PressStart_confirm() {
+    Sound_playSE(FX_MARU);
+    Scene_close();
+    Scene_load(SCENE_GAMEPLAY);
 }
 
 void PressStart_pause() {}
