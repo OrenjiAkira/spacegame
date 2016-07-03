@@ -6,6 +6,7 @@
 #include "entity.h"
 #include "config/conf.h"
 #include "config/font.h"
+#include "config/glob.h"
 #include "utility/direction.h"
 #include "utility/vector.h"
 #include "components/physics.h"
@@ -41,7 +42,8 @@ static void GamePlay_loadPlayer(int const which) {
     int player;
     char name[32], filename[32], fileid[2] = {'0', '\0'};
 
-    fileid[0] += (char)which;
+    /*fileid[0] += (char)which;*/
+    fileid[0] += (char)Globals_get(GLOBAL_P1CAT + which);
     filename[0] = '\0';
     strcat(filename, "cat0");
     strcat(filename, fileid);
