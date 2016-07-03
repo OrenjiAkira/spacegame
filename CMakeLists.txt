@@ -45,8 +45,13 @@ set(
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -g -O0 -std=c89 -pedantic-errors")
 if (DEBUG_MODE)
+    message("Debug mode set to true")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DDEBUG_MODE")
 endif(DEBUG_MODE)
+if (NO_MUSIC)
+    message("No music mode set to true")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DNO_MUSIC")
+endif(NO_MUSIC)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
 
 add_executable(SpaceCats ${SOURCE_FILES})
