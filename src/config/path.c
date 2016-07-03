@@ -9,6 +9,7 @@
 struct _path {
     char executable[128];
     char sprites[128];
+    char bgm[128];
     char se[128];
     char fonts[128];
 };
@@ -32,6 +33,9 @@ void Path_init(char const *execpath) {
 
     String_join(PATH.se, PATH.executable, "assets/se/");
     logprint("SE FOLDER PATH: %s\n", PATH.se);
+
+    String_join(PATH.bgm, PATH.executable, "assets/music/");
+    logprint("BGM FOLDER PATH: %s\n", PATH.bgm);
 }
 
 char* Path_toExecutable() {
@@ -48,4 +52,8 @@ char* Path_toFonts() {
 
 char* Path_toFX() {
     return PATH.se;
+}
+
+char* Path_toBGM() {
+    return PATH.bgm;
 }

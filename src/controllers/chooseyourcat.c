@@ -19,7 +19,7 @@ NEW_CONTROLLER(ChooseYourCat);
 
 static void p1_confirm() {
     if (!P1_HAS_CHOSEN) {
-        Sound_playSE(FX_SELECT);
+        Sound_playSE(FX_MARU);
         P1_HAS_CHOSEN = true;
     }
 }
@@ -27,7 +27,7 @@ static void p1_confirm() {
 static void p2_confirm() {
     if (P1_HAS_CHOSEN) {
         /* code */
-        Sound_playSE(FX_SELECT);
+        Sound_playSE(FX_MARU);
         Scene_close();
         Scene_load(SCENE_PRESSSTART);
     }

@@ -32,5 +32,8 @@ char* Path_toFX();
 /* () -> char*
 Retorna o caminho para a pasta de efeitos sonoros. */
 
+char* Path_toBGM();
+/* () -> char*
+Retorna o caminho para a pasta de trilha sonora. */
 
 #endif
