@@ -30,19 +30,24 @@ mkdir build; cd build; cmake ..; make
 ```
 
 O arquivo binário será criado numa subpasta `bin` com o nome `SpaceCats`. Junto dele estará
-um arquivo texto `inputdata`, que contém os parâmetros de entrada padrão do jogo, e a pasta de assets. Você pode também dar `cmake` e `make` direto da pasta raíz, mas vai ficar tudo bagunçado.
+um arquivo texto `data`, que contém os parâmetros de entrada padrão do jogo, e a pasta de assets. Você pode também dar `cmake` e `make` direto da pasta raíz, mas vai ficar tudo bagunçado.
 
 Se passar para o cmake o parâmetro `-DDEBUG_MODE=TRUE` prints de log serão ativados durante a execução do programa.
 Se quiser desativar os prints depois de ter rodado o cmake com o argumento de debug, basta rodar o cmake com `-DDEBUG_MODE=FALSE`, e recompilar com o `make`.
 
+Um outro parâmeto que você pode passar para o cmake é `-DNO_MUSIC=TRUE`. Isso faz o jogo rodar sem música de fundo. A música causa um bug em sistemas Mac OSX, e por isso essa flag foi criada. Se estiver tendo problemas para rodar o jogo com música, experimente usar essa flag. De novo, para desativar a flag, basta rodar de novo o cmake com a flag `-DNO_MUSIC=FALSE`.
+
+Se estiver com preguiça, como a gente, basta usar o script bash novo [da versão 0.4](#v04), `compile`. Ele está na pasta raíz do repositório, e gerencia as flags para você. Basta passar, ou não, os parâmetros `--debug` e `--no-music`. Se passar, essas flags acima viram `TRUE`, se não, viram `FALSE`.
+
+
 ## Como jogar
 
-A partir da v0.3 o jogo agora lê um arquivo de configuraçã sozinho e não precisa receber uma entrada padrão. Isso deixa a execução do jogo mais fácil para o usuário. Basta abrir o executável que o jogo já roda. Pelo bash você pode rodar algo assim:
+A partir da v0.3 o jogo agora lê um arquivo de configuração sozinho e não precisa receber uma entrada padrão. Isso deixa a execução do jogo mais fácil para o usuário. Basta abrir o executável que o jogo já roda. Pelo bash você pode rodar algo assim:
 ```bash
-./bin/game
+./build/bin/SpaceCats
 ```
 
-A nave `grumpy_cat` é controlada pelas setas direcionais. A nave `nyan_cat` é controlada pelas teclas WASD. Os botões `shift` atiram, cada um com um nave diferente.
+Os controles são visíveis na cena de escolher personagem. O PLAYER 1 controla a nave com os botões WASD, e atira com SPACE e LSHIFT. O PLAYER 2 controla a nave com os direcionais, e atira com ENTER e RSHIFT.
 
 ## Dependências
 
@@ -123,7 +128,11 @@ Ainda na nota sobre memória, a SDL ainda vaza uns 200 bytes de memória, mesmo 
 ### v0.4
 **(Quarta entrega)**
 
-As mais recentes atualizações incluem SOM! Sim, som! Temos efeitos sonoros e adicionamos a biblioteca SDL_mixer, também parte da SDL.
+As mais recentes atualizações incluem SOM! Sim, som! Temos efeitos sonoros e adicionamos a biblioteca SDL_mixer, também parte da SDL. Tudo bem que no espaço o som não se propaga, mas quem se importa? É legal, dá feedback pro jogador, é _juicy_. Adicionamos uma música ambiente também, porém, ao menos em sistemas MAC OSX, ao tocá-la acontece, de maneira inconsistente, um _segmentation fault_. Inconsistente, sim. Logo, a culpa não é nossa. Adicionamos uma flag de compilação para o jogo não tocar a música, o que não é ideal. Se ocorrer esse bug para você usando outro sistema operacional, você pode submeter uma issue, ou mandar email pra gente mesmo.
+
+Fora isso, melhoramos o sistema de cenas, e criamos macros para gerar os controles para a gente. Os arquivos de `controllers` ficaram bem menores, e as cenas agora cuidam de fazer a interação de maneira mais complexa. Por exemplo, agora temos uma tela de "Choose your ~~character~~ cat", na qual cada jogador pode escolher com que gato irá jogar! Legal, né?
+
+E ah, sim, melhorias na compilação. Criar uma pasta build é muito chato e repetitivo. Fizemos um script em bash para isso. Claro, ainda funciona compilar do mesmo jeito (`cmake` + `make`), mas agora você pode compilar com um só comando `./compile`. Ele já cria a pasta e compila as coisas lá. Ele também aceita flags de compilação. Dá uma olhada na seção [Instalar](#instalar).
 
 ## Créditos
 

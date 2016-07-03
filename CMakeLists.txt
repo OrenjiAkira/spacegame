@@ -43,7 +43,7 @@ set(
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -g -O0 -std=c89 -pedantic-errors")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -g -O0 -std=c89 -pedantic-errors")
 if (DEBUG_MODE)
     message("Debug mode set to true")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DDEBUG_MODE")
