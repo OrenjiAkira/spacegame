@@ -35,7 +35,7 @@ void Font_init() {
     fontpath[0] = '\0';
     strcat(fontpath, Path_toFonts());
     strcat(fontpath, "/PressStart2P.ttf");
-    FONTCONF.font[0] = TTF_OpenFont(fontpath, 10);
+    FONTCONF.font[0] = TTF_OpenFont(fontpath, 8);
     FONTCONF.font[1] = TTF_OpenFont(fontpath, 14);
     FONTCONF.font[2] = TTF_OpenFont(fontpath, 21);
     FONTCONF.font[3] = TTF_OpenFont(fontpath, 28);
