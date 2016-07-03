@@ -14,11 +14,13 @@ NEW_CONTROLLER(ChooseYourCat);
 
 static void p1_confirm() {
     Sound_playSE(FX_SELECT);
+    Scene_close();
     Scene_load(SCENE_PRESSSTART);
 }
 
 static void p2_confirm() {
     Sound_playSE(FX_SELECT);
+    Scene_close();
     Scene_load(SCENE_PRESSSTART);
 }
 

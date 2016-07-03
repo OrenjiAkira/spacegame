@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <string.h>
 
+static bool LOADED = false;
 static int PLAYER1 = -1, PLAYER2 = -1, BACKGROUND = -1, PLANET = -1;
 
 static void GamePlay_loadPlanet() {
@@ -99,16 +100,19 @@ int GamePlay_getPlayer2() {
     return PLAYER2;
 }
 
+static void GamePlay_unpause() {}
+
 void GamePlay_load() {
+    if (LOADED) GamePlay_unpause();
     GamePlay_loadBackground();
     GamePlay_loadPlanet();
     GamePlay_loadPlayer(0);
     GamePlay_loadPlayer(1);
     GamePlayController_load();
+    LOADED = true;
 }
 
 void GamePlay_pause() {}
-void GamePlay_unpause() {}
 
 void GamePlay_close() {
     Input_unloadSceneController();
@@ -116,6 +120,7 @@ void GamePlay_close() {
     Entity_destroy(PLAYER2);
     Entity_destroy(PLANET);
     Entity_destroy(BACKGROUND);
+    LOADED = false;
 }
 
 void GamePlay_newBullet(int origin_body, float m, float r, float lt) {

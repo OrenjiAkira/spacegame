@@ -3,15 +3,13 @@
 
 void GamePlay_load();
 /* () -> void
-Carrega as entidades da cena de gameplay do jogo (imagem de fundo, planeta, naves). */
+Carrega as entidades da cena de gameplay do
+jogo (imagem de fundo, planeta, naves). */
 
 void GamePlay_pause();
 /* () -> void
- */
-
-void GamePlay_unpause();
-/* () -> void
- */
+Pausa a cena. Para as animações, a lógica, e os
+movimentos, mas mantém os elementos na tela. */
 
 void GamePlay_close();
 /* () -> void

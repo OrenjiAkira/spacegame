@@ -13,20 +13,10 @@
 
 static void null_scene_load() {}
 static void null_scene_pause() {}
-static void null_scene_unpause() {}
 static void null_scene_close() {}
 
 static Scene *CURRENT_SCENE = NULL;
 static Scene SCENE_LIST[SCENE_TOTAL];
-
-static void Scene_close() {
-    /* Essa função é static, porque não faz sentido fechar uma cena
-    se você não for carregar outra. Logo, é melhor fazer que
-    quem chama essa função é só o Scene_load(). */
-    logprint("\n[ Closing current scene ]\n");
-    CURRENT_SCENE->close();
-    CURRENT_SCENE = NULL;
-}
 
 void Scene_init() {
     SCENE_INITIALIZE(SCENE_DEFAULT, null_scene);
@@ -38,15 +28,16 @@ void Scene_init() {
 }
 
 void Scene_load(int sname) {
-    if (CURRENT_SCENE != NULL) Scene_close();
     CURRENT_SCENE = &SCENE_LIST[sname];
     CURRENT_SCENE->load();
 }
 
-void Scene_pause() {
-    CURRENT_SCENE->pause();
+void Scene_close() {
+    logprint("\n[ Closing current scene ]\n");
+    if (CURRENT_SCENE != NULL) CURRENT_SCENE->close();
+    CURRENT_SCENE = NULL;
 }
 
-void Scene_unpause() {
-    CURRENT_SCENE->unpause();
+void Scene_pause() {
+    CURRENT_SCENE->pause();
 }
