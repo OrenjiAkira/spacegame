@@ -6,8 +6,10 @@
 enum _cat_choices {
     CAT_GRUMPY,
     CAT_NYAN,
-    CATS_TOTAL
+    CAT_UNKNOWN,
+    CAT_NUM
 };
+
 
 void ChooseYourCat_load();
 /* () -> void
@@ -22,11 +24,11 @@ void ChooseYourCat_close();
 /* () -> void
 Libera os elementos da cena. */
 
-void ChooseYourCat_chooseForPlayer(bool isP1);
+void ChooseYourCat_chooseForPlayer(bool isP2);
 /* (bool) -> void
 Confirma a escolha do gato em destaque para um jogador. */
 
-void ChooseYourCat_changeChoice(bool next);
+void ChooseYourCat_changeChoice(bool isP2, bool next);
 /* (bool) -> void
 Modifica o gato em destaque. */
 

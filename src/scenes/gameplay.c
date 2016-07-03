@@ -55,7 +55,7 @@ static void GamePlay_loadPlayer(int const which) {
     dquad = DrawQuad_new(768, 64, 64, 64);
     dpos = DrawPos_new(phys, 64, 64, 32, 32);
     sprite = Sprite_new(filename, dpos, dquad, LAYER_MIDGROUND1);
-    dpos = DrawPos_new(phys, 0, 0, 0, -16);
+    dpos = DrawPos_new(phys, 0, 0, 0, -24);
     textbox = Textbox_new(name, dpos, TEXTALIGN_CENTER, FONTSIZE_SMALL, FONTCOLOR_WHITE);
 
     if (PLAYER1 == -1) {

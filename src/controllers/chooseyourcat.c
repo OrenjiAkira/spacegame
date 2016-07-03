@@ -9,40 +9,30 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-static int P1_HAS_CHOSEN = false;
-/*  false -> P1 escolhe o gato;
-    true -> P2 escolhe o gato. */
-
 NEW_CONTROLLER(ChooseYourCat);
 
 static void p1_confirm() {
-    if (!P1_HAS_CHOSEN) {
-        ChooseYourCat_chooseForPlayer(true);
-        P1_HAS_CHOSEN = true;
-    }
+    ChooseYourCat_chooseForPlayer(false);
 }
 
 static void p2_confirm() {
-    if (P1_HAS_CHOSEN) {
-        /* code */
-        ChooseYourCat_chooseForPlayer(false);
-    }
+    ChooseYourCat_chooseForPlayer(true);
 }
 
 static void p1_nextChoice() {
-    if (!P1_HAS_CHOSEN) ChooseYourCat_changeChoice(true);
+    ChooseYourCat_changeChoice(false, true);
 }
 
 static void p1_prevChoice() {
-    if (!P1_HAS_CHOSEN) ChooseYourCat_changeChoice(false);
+    ChooseYourCat_changeChoice(false, false);
 }
 
 static void p2_nextChoice() {
-    if (P1_HAS_CHOSEN) ChooseYourCat_changeChoice(true);
+    ChooseYourCat_changeChoice(true, true);
 }
 
 static void p2_prevChoice() {
-    if (P1_HAS_CHOSEN) ChooseYourCat_changeChoice(false);
+    ChooseYourCat_changeChoice(true, false);
 }
 
 static void ChooseYourCatController_init() {
