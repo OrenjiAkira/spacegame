@@ -37,6 +37,16 @@ void Sprite_update();
 /* () -> void
 Desenha os sprites existentes na pool. */
 
+void Sprite_hide(int id);
+/* (int) -> void
+Faz o sprite não ser desenhado no update.
+O padrão é ser desenhado. */
+
+void Sprite_show(int id);
+/* (int) -> void
+Faz o sprite ser desenhado no update.
+O padrão é ser desenhado. */
+
 void Sprite_close();
 /* () -> void
 Libera a pool inteira, destruindo sprites ativos. */

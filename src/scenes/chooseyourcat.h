@@ -3,6 +3,12 @@
 
 #include <stdbool.h>
 
+enum _cat_choices {
+    CAT_GRUMPY,
+    CAT_NYAN,
+    CATS_TOTAL
+};
+
 void ChooseYourCat_load();
 /* () -> void
 Carrega os elementos da cena e seu controller.

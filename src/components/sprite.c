@@ -15,6 +15,7 @@ struct _sprite {
     SDL_Texture *texture;
     int dpos_id;
     int dquad_id;
+    bool hide;
     bool active;
 };
 
@@ -72,7 +73,7 @@ static void Sprite_removeFromLayer(int id) {
 }
 
 static void Sprite_draw(int id) {
-    if (SPRITES[id].active)
+    if (SPRITES[id].active && !SPRITES[id].hide)
         SDL_RenderCopy(
             Window_getRenderer(),
             SPRITES[id].texture,
@@ -100,6 +101,7 @@ int Sprite_new(char* filename, int dpos_id, int dquad_id, int layer) {
             SPRITES[id].dpos_id = dpos_id;
             SPRITES[id].dquad_id = dquad_id;
             SPRITES[id].active = true;
+            SPRITES[id].hide = false;
 
             Sprite_addToLayer(id, layer);
 
@@ -130,6 +132,16 @@ void Sprite_update() {
         for (i = 0; i < SPRITE_POOL_SIZE; ++i)
             if (LAYERS[layer][i] != -1)
                 Sprite_draw(LAYERS[layer][i]);
+}
+
+void Sprite_hide(int id) {
+    if (id == -1 || !SPRITES[id].active) return;
+    SPRITES[id].hide = true;
+}
+
+void Sprite_show(int id) {
+    if (id == -1 || !SPRITES[id].active) return;
+    SPRITES[id].hide = false;
 }
 
 void Sprite_close() {
