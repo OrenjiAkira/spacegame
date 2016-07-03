@@ -16,6 +16,7 @@
 struct _textbox {
     SDL_Texture *texture;
     int dpos_id;
+    bool hide;
     bool active;
 };
 
@@ -88,8 +89,18 @@ void Textbox_kill(int id) {
 void Textbox_update() {
     int id;
     for (id = 0; id < TEXTBOX_POOL_SIZE; ++id)
-        if (TEXTBOX[id].active)
+        if (TEXTBOX[id].active && !TEXTBOX[id].hide)
             SDL_RenderCopy( Window_getRenderer(), TEXTBOX[id].texture, NULL, DrawPos_getPos(TEXTBOX[id].dpos_id) );
+}
+
+void Textbox_hide(int id) {
+    if (id == -1 || !TEXTBOX[id].active) return;
+    TEXTBOX[id].hide = true;
+}
+
+void Textbox_show(int id) {
+    if (id == -1 || !TEXTBOX[id].active) return;
+    TEXTBOX[id].hide = false;
 }
 
 void Textbox_close() {
