@@ -3,9 +3,9 @@
 
 #include "entity.h"
 
-#include <stdbool.h>
+#include "utility/bool.h"
 
-#define TIMER_POOL_SIZE TIMER_TYPES_TOTAL*ENTITY_POOL_SIZE
+#define TIMER_POOL_SIZE TIMER_TYPES_TOTAL *ENTITY_POOL_SIZE
 
 typedef struct _timer Timer;
 /* Timer

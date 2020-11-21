@@ -4,7 +4,7 @@
 #include "entity.h"
 #include "utility/vector.h"
 
-#include <stdbool.h>
+#include "utility/bool.h"
 
 #define GCONST 6.67e-11
 #define SPEEDLIMIT 0.5
@@ -27,10 +27,10 @@ int Physics_new(float m, float r, float x, float y, float vx, float vy);
 Cria um novo corpo físico e devolve seu id. */
 
 void Physics_update();
-/* () -> void 
+/* () -> void
 Atualiza a posição e velocidade de todos os corpos físicos. */
 
-Vector* Physics_getPos(int id);
+Vector *Physics_getPos(int id);
 /* (int) -> Vector*
 Retorna a posição de um corpo físico. */
 

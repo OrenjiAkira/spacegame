@@ -4,7 +4,7 @@
 
 #include <SDL.h>
 #include <stdio.h>
-#include <stdbool.h>
+#include "utility/bool.h"
 
 struct _drawquad {
     SDL_Rect *quads;

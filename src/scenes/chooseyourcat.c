@@ -15,7 +15,7 @@
 #include "scenes/chooseyourcat.h"
 #include "controllers/chooseyourcat.h"
 
-#include <stdbool.h>
+#include "utility/bool.h"
 
 /* LOGIC */
 static int CHOICE = 0;
@@ -110,7 +110,7 @@ static void UI_loadPlayerTextDisplay() {
 static void UI_newCat(int cat_id, bool isP1) {
     Vector pos;
     int dpos_spr, dpos_txt, dquad, sprite, textbox;
-    char filename[32];
+    char filename[64];
 
     dquad = DrawQuad_new(768, 64, 64, 64);
     dpos_spr = DrawPos_new(-1, 64, 64, 32, 32);

@@ -7,7 +7,7 @@
 #include "components/physics.h"
 
 #include <stdio.h>
-#include <stdbool.h>
+#include "utility/bool.h"
 #include <math.h>
 
 struct _physics {

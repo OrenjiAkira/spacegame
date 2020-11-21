@@ -7,7 +7,7 @@
 #include "components/drawpos.h"
 
 #include <SDL.h>
-#include <stdbool.h>
+#include "utility/bool.h"
 #include <stdio.h>
 
 struct _drawpos {

@@ -1,23 +1,13 @@
 #ifndef GAME_CHOOSEYOURCAT_H
 #define GAME_CHOOSEYOURCAT_H
 
-#include <stdbool.h>
+#include "utility/bool.h"
 
 #define CATS_TOTAL 8
 
-enum _cat_choices {
-    CAT_GRUMPY,
-    CAT_NYAN,
-    CAT_UNKNOWN,
-    CAT_NUM
-};
+enum _cat_choices { CAT_GRUMPY, CAT_NYAN, CAT_UNKNOWN, CAT_NUM };
 
-enum _cursor_dirs {
-    DIR_UP,
-    DIR_RIGHT,
-    DIR_DOWN,
-    DIR_LEFT
-};
+enum _cursor_dirs { DIR_UP, DIR_RIGHT, DIR_DOWN, DIR_LEFT };
 
 void ChooseYourCat_load();
 /* () -> void
@@ -40,5 +30,4 @@ void ChooseYourCat_changeChoice(bool isP2, int dir);
 /* (bool) -> void
 Modifica o gato em destaque. */
 
-
- #endif
+#endif

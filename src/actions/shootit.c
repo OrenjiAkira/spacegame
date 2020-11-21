@@ -7,7 +7,7 @@
 #include "actions/shootit.h"
 #include "scenes/gameplay.h"
 
-#include <stdbool.h>
+#include "utility/bool.h"
 #include <stdlib.h>
 
 static float MASS = 0, RADIUS = 0, LIFETIME = 0;

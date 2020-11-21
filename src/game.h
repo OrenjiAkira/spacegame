@@ -1,10 +1,14 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <stdbool.h>
+#include "utility/bool.h"
 
-#define GAME_ERROR(error) logprint("ERROR: " #error "\n"); Game_quit()
-#define POOL_OVERFLOW(type) GAME_ERROR(#type " pool overflow"); return 0
+#define GAME_ERROR(error)                                                      \
+  logprint("ERROR: " #error "\n");                                             \
+  Game_quit()
+#define POOL_OVERFLOW(type)                                                    \
+  GAME_ERROR(#type " pool overflow");                                          \
+  return 0
 
 void Game_init(char const *execpath);
 /* () -> void

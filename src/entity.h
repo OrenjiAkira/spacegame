@@ -2,31 +2,35 @@
 #define GAME_ENTITY_H
 
 #include "debug.h"
-#include <stdbool.h>
+#include "utility/bool.h"
 
 #define ENTITY_POOL_SIZE 256
 
-#define VERIFY_ENTITY(id) if (ENTITIES[id] == NULL) { logprint("INVALID ENTITY ID #%d. ENTITY IS NOT ACTIVE.\n", id); return; }
+#define VERIFY_ENTITY(id)                                                      \
+  if (ENTITIES[id] == NULL) {                                                  \
+    logprint("INVALID ENTITY ID #%d. ENTITY IS NOT ACTIVE.\n", id);            \
+    return;                                                                    \
+  }
 
 enum _timer_types {
-    TIMER_INPUTDELAY1,
-    TIMER_INPUTDELAY2,
-    TIMER_COUNTDOWN1,
-    TIMER_COUNTDOWN2,
-    TIMER_ANIMATION,
-    TIMER_TYPES_TOTAL
+  TIMER_INPUTDELAY1,
+  TIMER_INPUTDELAY2,
+  TIMER_COUNTDOWN1,
+  TIMER_COUNTDOWN2,
+  TIMER_ANIMATION,
+  TIMER_TYPES_TOTAL
 };
 /* Cada elemento possui uma lista de timers separados
 cada um para uma função específica. Dessa forma evitamos
 conflitos entre timers. */
 
 typedef struct _entity {
-    int physics;
-    int drawpos;
-    int drawquad;
-    int sprite;
-    int textbox;
-    int timers[TIMER_TYPES_TOTAL];
+  int physics;
+  int drawpos;
+  int drawquad;
+  int sprite;
+  int textbox;
+  int timers[TIMER_TYPES_TOTAL];
 } Entity;
 /* Entity
 Uma struct básica que pode armazenar vários componentes.
@@ -43,7 +47,7 @@ O ID pode ser -1 para indicar que a entidade não
 usa aquele componente. Retorna um valor inteiro que
 representa o índice da entidade na pool. */
 
-Entity* Entity_get(int id);
+Entity *Entity_get(int id);
 /* (int) -> Entity*
 Recebe um ID de entidade, e retorna o seu ponteiro.
 Deve-se ao máximo evitar de usar essa função. Ela

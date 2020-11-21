@@ -7,7 +7,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
-#include <stdbool.h>
+#include "utility/bool.h"
 
 static bool init_libs() {
     do {

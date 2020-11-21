@@ -8,7 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
+#include "utility/bool.h"
 
 /* Criamos um código pedante de mapeamento de controle usando macros */
 NEW_CONTROLLER(GamePlay);

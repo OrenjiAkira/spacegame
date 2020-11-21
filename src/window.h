@@ -1,8 +1,8 @@
 #ifndef GAME_WINDOW_H
 #define GAME_WINDOW_H
 
+#include "utility/bool.h"
 #include <SDL.h>
-#include <stdbool.h>
 
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
@@ -13,7 +13,7 @@ void Window_init();
 /* () -> void
 Inicializa janela e renderer. */
 
-SDL_Renderer* Window_getRenderer();
+SDL_Renderer *Window_getRenderer();
 /* () -> SDL_Surface*
 Retorna o renderer principal da janela do programa. */
 

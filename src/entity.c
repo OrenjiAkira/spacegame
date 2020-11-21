@@ -8,7 +8,7 @@
 #include "components/timer.h"
 
 #include <stdio.h>
-#include <stdbool.h>
+#include "utility/bool.h"
 #include <stdlib.h>
 
 static Entity *ENTITIES[ENTITY_POOL_SIZE];

@@ -9,7 +9,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
-#include <stdbool.h>
+#include "utility/bool.h"
 
 struct _sprite {
     SDL_Texture *texture;

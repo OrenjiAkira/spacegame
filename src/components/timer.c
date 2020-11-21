@@ -3,7 +3,7 @@
 #include "config/time.h"
 #include "components/timer.h"
 
-#include <stdbool.h>
+#include "utility/bool.h"
 #include <stdio.h>
 
 struct _timer {
@@ -67,7 +67,3 @@ bool Timer_isDone(int id) {
             
     return done;
 }
-
-
-
-

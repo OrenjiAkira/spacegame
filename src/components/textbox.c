@@ -10,7 +10,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <stdio.h>
-#include <stdbool.h>
+#include "utility/bool.h"
 #include <string.h>
 
 struct _textbox {

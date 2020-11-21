@@ -21,7 +21,7 @@
 #include "scenes/pressstart.h"
 
 #include <stdio.h>
-#include <stdbool.h>
+#include "utility/bool.h"
 
 static long unsigned int framecount = 0;
 static bool QUIT = false;

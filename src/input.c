@@ -6,7 +6,7 @@
 
 #include <SDL.h>
 #include <stdio.h>
-#include <stdbool.h>
+#include "utility/bool.h"
 
 static SDL_Event e;
 

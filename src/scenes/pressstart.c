@@ -41,7 +41,7 @@ static char* get_player_cat_filename(char *string, bool isP1) {
 
 static void PressStart_loadPlayer(bool isP1) {
     Vector pos;
-    char filename[32];
+    char filename[64];
     int dpos, dquad, sprite, textbox;
 
     dpos = DrawPos_new(-1, 64, 64, 32, 32);
